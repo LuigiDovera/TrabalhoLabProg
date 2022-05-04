@@ -1,13 +1,13 @@
-package com.labprog.patrimonio;
+package com.labprog.egressos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PatrimonioApplication {
+public class EgressosApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PatrimonioApplication.class, args);
+		SpringApplication.run(EgressosApplication.class, args);
 	}
 
 }
