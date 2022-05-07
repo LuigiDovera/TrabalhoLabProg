@@ -1,10 +1,13 @@
 package com.labprog.egressos.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -38,5 +41,8 @@ public class Egresso {
 
     @Column(name = "url_foto")
     private String url_foto;
+
+    @OneToMany(mappedBy = "egresso")
+    private List<ContatoEgresso> contatos;
 
 }

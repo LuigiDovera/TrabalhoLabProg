@@ -1,8 +1,11 @@
 package com.labprog.egressos.model;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -11,17 +14,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="contato")
+@Table(name="contato_egresso")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContatoEgresso {
-    @Id
-    @OneToMany(mappedBy = "egresso")
-    private Long egresso_id;
+    @EmbeddedId
+    private ContatoEgressoPK id;
 
-    @Id
-    @OneToMany(mappedBy = "contato")
-    private Long contato_id;
+    @ManyToOne
+    @JoinColumn(name="egresso_id")
+    private Egresso egresso;
+    
+    @ManyToOne
+    @JoinColumn(name="contato_id")
+    private Contato contato;
 }
