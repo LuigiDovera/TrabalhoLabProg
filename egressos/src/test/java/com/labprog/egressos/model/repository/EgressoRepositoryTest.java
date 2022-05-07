@@ -1,6 +1,6 @@
-package com.labprog.egressos.model;
+package com.labprog.egressos.model.repository;
 
-import com.labprog.egressos.model.repository.EgressoRepo;
+import com.labprog.egressos.model.Egresso;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +20,9 @@ public class EgressoRepositoryTest{
         //cenário
         Egresso novo = Egresso.builder().nome("tuludan")
                                         .email("a@a.com")
-                                        .senha("123")
+                                        .cpf("321")
+                                        .resumo("resumo exemplo")
+                                        .url_foto("urldafotodoegresso")
                                         .build();
         
         //ação
