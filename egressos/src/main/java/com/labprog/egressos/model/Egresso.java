@@ -13,14 +13,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="egressos")
+@Table(name="egresso")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Egresso {
     @Id
-    @Column(name = "id_egressos")
+    @Column(name = "id_egresso")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 

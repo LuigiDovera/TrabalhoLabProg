@@ -10,29 +10,34 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class EgressoRepositoryTest{
+public class EgressoRepositoryTest {
     @Autowired
     EgressoRepo repo;
 
-
     @Test
-    public void deveSalvarEgresso(){
-        //cenário
-        Egresso novo = Egresso.builder().nome("tuludan")
-                                        .email("a@a.com")
-                                        .senha("123")
-                                        .build();
-        
-        //ação
+    public void deveSalvarEgresso() {
+        // cenário
+        Egresso novo = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .url_foto("teste")
+                .build();
+
+        // ação
         Egresso retorno = repo.save(novo);
 
-        //verificação
+        // verificação
         Assertions.assertNotNull(retorno);
         Assertions.assertEquals(novo.getNome(), retorno.getNome());
         Assertions.assertEquals(novo.getEmail(), retorno.getEmail());
         Assertions.assertEquals(novo.getCpf(), retorno.getCpf());
         Assertions.assertEquals(novo.getResumo(), retorno.getResumo());
         Assertions.assertEquals(novo.getUrl_foto(), retorno.getUrl_foto());
+
+        // rollback
+        repo.delete(retorno);
     }
 
 }
