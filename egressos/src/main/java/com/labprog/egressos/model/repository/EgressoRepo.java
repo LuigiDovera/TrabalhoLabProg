@@ -12,7 +12,7 @@ public interface EgressoRepo
         Egresso findByEmail(String email);
         boolean existsByEmail(String email);
 
-        @Query("select e from egresso e where e.nome:=nomeEgresso")
+        @Query("select e from Egresso e where e.nome =: nomeEgresso")
         Egresso obterEgressoPorNome(
             @Param("nomeEgresso") String nomeEgresso
         );
