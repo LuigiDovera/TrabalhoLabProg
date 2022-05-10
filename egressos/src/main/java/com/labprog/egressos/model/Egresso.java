@@ -1,10 +1,13 @@
 package com.labprog.egressos.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +26,9 @@ public class Egresso {
     @Column(name = "id_egresso")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @OneToMany(mappedBy = "egresso")
+    private List<ProfEgresso> profsEgressos;
 
     @Column(name = "nome")
     private String nome;
