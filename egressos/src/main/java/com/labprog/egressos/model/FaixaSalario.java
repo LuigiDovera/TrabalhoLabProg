@@ -28,7 +28,7 @@ public class FaixaSalario {
     private long id;
 
     @OneToMany(mappedBy = "faixa_salario")
-    private List<ProfEgresso> profEgressos;
+    private List<ProfEgresso> profsEgressos;
 
     @Column(name = "descricao")
     private String descricao;
