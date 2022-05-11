@@ -16,36 +16,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="egresso")
+@Table(name="faixa_salario")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Egresso {
+public class FaixaSalario {
     @Id
-    @Column(name = "id_egresso")
+    @Column(name = "id_faixa_salario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(mappedBy = "egresso")
+    @OneToMany(mappedBy = "faixa_salario")
     private List<ProfEgresso> profsEgressos;
 
-    @Column(name = "nome")
-    private String nome;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "cpf")
-    private String cpf;
-
-    @Column(name = "resumo")
-    private String resumo;
-
-    @Column(name = "url_foto")
-    private String url_foto;
-
-    @OneToMany(mappedBy = "egresso")
-    private List<ContatoEgresso> contatos;
-
+    @Column(name = "descricao")
+    private String descricao;
 }

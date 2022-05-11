@@ -15,37 +15,26 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
-@Table(name="egresso")
+@Table(name = "cargo")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Egresso {
+public class Cargo {
     @Id
-    @Column(name = "id_egresso")
+    @Column(name = "id_cargo")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(mappedBy = "egresso")
+    @OneToMany(mappedBy = "cargo")
     private List<ProfEgresso> profsEgressos;
 
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "cpf")
-    private String cpf;
-
-    @Column(name = "resumo")
-    private String resumo;
-
-    @Column(name = "url_foto")
-    private String url_foto;
-
-    @OneToMany(mappedBy = "egresso")
-    private List<ContatoEgresso> contatos;
-
+    @Column(name = "descricao")
+    private String descricao;
+    
 }
