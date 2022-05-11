@@ -28,12 +28,51 @@ public class CargoRepositoryTest {
         // ação
         Cargo retorno = repo.save(cargo);
 
+        repo.delete(retorno); //rollback
+
         // verificação
         Assertions.assertNotNull(retorno);
         Assertions.assertEquals(cargo.getNome(), retorno.getNome());
         Assertions.assertEquals(cargo.getDescricao(), retorno.getDescricao());
+        
+    }
 
-        // rollback
-        repo.delete(retorno);
+    @Test
+    public void deveRemoverEgresso() {
+        // cenário
+        Cargo cargo = Cargo.builder()
+                .nome("Gerente teste")
+                .descricao("tuludan")
+                .build();
+
+        // ação
+        Cargo salvo = repo.save(cargo);
+        Long id = salvo.getId();
+        repo.deleteById(id);
+
+        // verificação
+        Optional<Cargo> temp = repo.findById(id);
+        Assertions.assertFalse(temp.isPresent());
+    }
+
+    @Test
+    public void deveObterPorNomeCargo(){
+        // cenário
+        String nome = "Gerente teste";
+        Cargo cargo = Cargo.builder()
+                .nome(nome)
+                .descricao("tuludan")
+                .build();
+
+        // ação
+        Cargo retorno = repo.save(cargo);
+        Cargo consulta = repo.obterCargoPorNome(nome)
+
+        repo.delete(retorno); //rollback
+
+        // verificação
+        Assertions.assertNotNull(consulta);
+        Assertions.assertEquals(cargo.getNome(), consulta.getNome());
+        Assertions.assertEquals(cargo.getDescricao(), consulta.getDescricao());
     }
 }
