@@ -66,7 +66,7 @@ public class CargoRepositoryTest {
 
         // ação
         Cargo retorno = repo.save(cargo);
-        Cargo consulta = repo.obterCargoPorNome(nome)
+        Cargo consulta = repo.obterCargoPorNome(nome);
 
         repo.delete(retorno); //rollback
 
