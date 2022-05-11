@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface ProfEgressoRepo
         extends JpaRepository<ProfEgresso, Long> {
             
-            @Query("select p from prof_egresso p where p.empresa = :empresaProfEgresso")
+            @Query("select p from ProfEgresso p where p.empresa = :empresaProfEgresso")
             ProfEgresso obterProfEgressoPorEmpresa(
                 @Param("empresaProfEgresso") String empresaProfEgresso
             );

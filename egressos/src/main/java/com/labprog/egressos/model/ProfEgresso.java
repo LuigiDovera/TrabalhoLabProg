@@ -1,5 +1,7 @@
 package com.labprog.egressos.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,7 +48,7 @@ public class ProfEgresso {
     private String descricao;
 
     @Column(name = "data_registro")
-    private Data dataRegistro;
+    private Date dataRegistro;
 
 
 }    

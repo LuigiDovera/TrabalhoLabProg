@@ -27,7 +27,7 @@ public class FaixaSalario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(mappedBy = "faixa_salario")
+    @OneToMany(mappedBy = "faixaSalario")
     private List<ProfEgresso> profsEgressos;
 
     @Column(name = "descricao")

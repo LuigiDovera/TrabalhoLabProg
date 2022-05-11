@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface CargoRepo 
     extends JpaRepository<Cargo, Long>{
     
-        @Query("select c from cargo c where c.nome = :nomeCargo")
+        @Query("select c from Cargo c where c.nome = :nomeCargo")
         Cargo obterCargoPorNome(
             @Param("nomeCargo") String nomeCargo
         );

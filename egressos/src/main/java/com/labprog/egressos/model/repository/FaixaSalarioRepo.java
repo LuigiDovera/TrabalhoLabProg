@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface FaixaSalarioRepo 
     extends JpaRepository<FaixaSalario, Long>{
     
-        @Query("select f from faixa_salario f where f.descricao = :descricaoFaixaSalario")
+        @Query("select f from FaixaSalario f where f.descricao = :descricaoFaixaSalario")
         FaixaSalario obterFaixaSalarioPorDescricao(
             @Param("descricaoFaixaSalario") String descricaoFaixaSalario
         );
