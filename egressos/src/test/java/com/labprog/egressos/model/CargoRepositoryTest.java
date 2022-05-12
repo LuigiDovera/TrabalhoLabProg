@@ -38,7 +38,7 @@ public class CargoRepositoryTest {
     }
 
     @Test
-    public void deveRemoverEgresso() {
+    public void deveRemoverCargo() {
         // cenário
         Cargo cargo = Cargo.builder()
                 .nome("Gerente teste")

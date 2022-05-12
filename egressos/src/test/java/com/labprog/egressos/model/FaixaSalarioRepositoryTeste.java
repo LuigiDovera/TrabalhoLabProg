@@ -35,7 +35,7 @@ public class FaixaSalarioRepositoryTeste {
     }
 
     @Test
-    public void deveRemoverEgresso() {
+    public void deveRemoverFaixaSalario() {
         // cenário
         FaixaSalario faixaSalario = FaixaSalario.builder()
                 .descricao("2000 - 3000")
@@ -52,7 +52,7 @@ public class FaixaSalarioRepositoryTeste {
     }
 
     @Test
-    public void deveObterPorNomeCargo(){
+    public void deveObterPorDescricaoFaixaSalario(){
         // cenário
         String descricao = "2000 - 3000";
         FaixaSalario faixaSalario = FaixaSalario.builder()
