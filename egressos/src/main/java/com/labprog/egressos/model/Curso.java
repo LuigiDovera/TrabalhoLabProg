@@ -1,6 +1,5 @@
 package com.labprog.egressos.model;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -17,36 +16,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="egresso")
+@Table(name="curso")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Egresso {
+public class Curso {
     @Id
-    @Column(name = "id_egresso")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_curso")
     private long id;
 
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "nivel")
+    private String nivel;
 
-    @Column(name = "cpf")
-    private String cpf;
-
-    @Column(name = "resumo")
-    private String resumo;
-
-    @Column(name = "url_foto")
-    private String url_foto;
-
-    @OneToMany(mappedBy = "egresso")
-    private List<ContatoEgresso> contatos;
-    
-    @OneToMany(mappedBy = "egresso")
+    @OneToMany(mappedBy = "curso")
     Set<CursoEgresso> cursos_egressos;
-
 }
