@@ -24,10 +24,12 @@ public class ContatoEgresso {
     private ContatoEgressoPK id;
 
     @ManyToOne
+    @MapsId("egressoId")
     @JoinColumn(name="egresso_id")
     private Egresso egresso;
     
     @ManyToOne
+    @MapsId("contatoId")
     @JoinColumn(name="contato_id")
     private Contato contato;
 }

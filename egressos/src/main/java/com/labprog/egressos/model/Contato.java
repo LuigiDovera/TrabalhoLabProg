@@ -31,7 +31,7 @@ public class Contato {
     private String nome;
 
     @Column(name = "url_logo")
-    private String url_logo;
+    private String urlLogo;
 
     @OneToMany(mappedBy = "contato")
     private List<ContatoEgresso> egressos;
