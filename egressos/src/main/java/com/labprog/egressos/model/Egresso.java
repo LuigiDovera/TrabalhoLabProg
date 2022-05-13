@@ -45,4 +45,7 @@ public class Egresso {
     @Column(name = "url_foto")
     private String url_foto;
 
+    @OneToMany(mappedBy = "egresso")
+    private List<ContatoEgresso> contatos;
+
 }
