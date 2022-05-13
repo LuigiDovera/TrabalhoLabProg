@@ -1,6 +1,7 @@
 package com.labprog.egressos.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +28,6 @@ public class Egresso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(mappedBy = "egresso")
-    private List<ProfEgresso> profsEgressos;
-
     @Column(name = "nome")
     private String nome;
 
@@ -44,5 +42,9 @@ public class Egresso {
 
     @Column(name = "url_foto")
     private String url_foto;
+
+    
+    @OneToMany(mappedBy = "egresso")
+    Set<CursoEgresso> cursos_egressos;
 
 }

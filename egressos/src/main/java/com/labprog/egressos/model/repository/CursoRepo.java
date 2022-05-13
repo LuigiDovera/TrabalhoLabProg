@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface CursoRepo
     extends JpaRepository<Curso, Long> {
 
-        @Query("select c from curso c where c.nome")
+        @Query("select c from Curso c where c.nome = :nomeCurso")
         Curso obterCursoPorNome(
             @Param("nomeCurso") String nomeCurso
         );

@@ -1,10 +1,15 @@
 package com.labprog.egressos.model;
 
+import java.io.Serializable;
+import java.sql.Date;
+
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 
@@ -20,19 +25,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CursoEgresso {
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "egresso_id")
-    private Egresso egresso;
+    @EmbeddedId
+    CursoEgressoPK id;
 
-    @Id
     @ManyToOne
+    @MapsId("curso_id")
     @JoinColumn(name = "curso_id")
-    private Curso curso;
+    Curso curso;
 
-    @Column(name = "data_inicio")
-    private Data data_inicio;
-
-    @Column(name = "data_conclusao")
-    private Data data_conclusao;
+    @ManyToOne
+    @MapsId("egresso_id")
+    @JoinColumn(name = "egresso_id")
+    Egresso egresso;
+    
+    Date data_inicio;
+    Date data_conclusao;
 }    

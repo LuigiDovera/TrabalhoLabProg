@@ -1,5 +1,7 @@
 package com.labprog.egressos.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,5 +36,5 @@ public class Depoimento {
     private String texto;
 
     @Column(name = "data")
-    private Data data;
+    private Date data;
 }
