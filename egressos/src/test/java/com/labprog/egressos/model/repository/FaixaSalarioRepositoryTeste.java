@@ -1,7 +1,8 @@
-package com.labprog.egressos.model;
+package com.labprog.egressos.model.repository;
 
 import java.util.Optional;
 
+import com.labprog.egressos.model.FaixaSalario;
 import com.labprog.egressos.model.repository.FaixaSalarioRepo;
 
 import org.junit.jupiter.api.Assertions;
