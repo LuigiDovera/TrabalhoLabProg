@@ -6,16 +6,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.labprog.egressos.model.Egresso;
-import com.labprog.egressos.model.repository.EgressoRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@Transactional
 public class EgressoRepositoryTest {
     @Autowired
     EgressoRepo repo;
@@ -74,6 +75,36 @@ public class EgressoRepositoryTest {
             Assertions.assertEquals(egressos.get(i).getResumo(), retorno.get(i).getResumo());
             Assertions.assertEquals(egressos.get(i).getUrl_foto(), retorno.get(i).getUrl_foto());
         }
+    }
+
+    @Test
+    public void deveAtualizarEgresso() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .url_foto("teste")
+                .build();
+
+        // ação
+        Egresso salvo = repo.save(egresso);
+        salvo.setNome("nadulut");
+        salvo.setEmail("moc.a@a");
+        salvo.setCpf("4321");
+        salvo.setResumo("lore ipsum lorem");
+        salvo.setUrl_foto("etset");
+        Egresso retorno = repo.save(salvo);
+
+        // verificação
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(salvo.getId(), retorno.getId());
+        Assertions.assertEquals(salvo.getNome(), retorno.getNome());
+        Assertions.assertEquals(salvo.getEmail(), retorno.getEmail());
+        Assertions.assertEquals(salvo.getCpf(), retorno.getCpf());
+        Assertions.assertEquals(salvo.getResumo(), retorno.getResumo());
+        Assertions.assertEquals(salvo.getUrl_foto(), retorno.getUrl_foto());
     }
 
     @Test

@@ -13,9 +13,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@Transactional
 public class ContatoRepositoryTest {
     @Autowired
     ContatoRepo repo;
@@ -62,6 +64,27 @@ public class ContatoRepositoryTest {
             Assertions.assertEquals(contatos.get(i).getNome(), retorno.get(i).getNome());
             Assertions.assertEquals(contatos.get(i).getUrlLogo(), retorno.get(i).getUrlLogo());
         }
+    }
+
+    @Test
+    public void deveAtualizarContato() {
+        // cenário
+        Contato contato = Contato.builder()
+                .nome("Instagram")
+                .urlLogo("@instagram")
+                .build();
+
+        // ação
+        Contato salvo = repo.save(contato);
+        salvo.setNome("Twitter");
+        salvo.setUrlLogo("@twitter");
+        Contato retorno = repo.save(salvo);
+
+        // verificação
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(salvo.getId(), retorno.getId());
+        Assertions.assertEquals(salvo.getNome(), retorno.getNome());
+        Assertions.assertEquals(salvo.getUrlLogo(), retorno.getUrlLogo());
     }
 
     @Test
