@@ -1,6 +1,7 @@
 package com.labprog.egressos.model.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.labprog.egressos.model.Egresso;
 
@@ -13,11 +14,13 @@ public interface EgressoRepo
 
         List<Egresso> findByNome(String nome);
     
-        Egresso findByEmail(String email);
+        Optional<Egresso> findByEmail(String email);
         
         boolean existsByEmail(String email);
 
-        Egresso findByCpf(String cpf);
+        Optional<Egresso> findByCpf(String cpf);
+
+        boolean existsByCpf(String cpf);
 
         @Query("select e from Egresso e where e.nome = :nomeEgresso")
         Egresso obterEgressoPorNome(

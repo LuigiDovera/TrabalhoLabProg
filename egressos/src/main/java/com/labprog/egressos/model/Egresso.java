@@ -26,7 +26,7 @@ public class Egresso {
     @Id
     @Column(name = "id_egresso")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "nome")
     private String nome;
@@ -41,7 +41,7 @@ public class Egresso {
     private String resumo;
 
     @Column(name = "url_foto")
-    private String url_foto;
+    private String urlFoto;
 
     @OneToMany(mappedBy = "egresso")
     private List<ContatoEgresso> contatos;
