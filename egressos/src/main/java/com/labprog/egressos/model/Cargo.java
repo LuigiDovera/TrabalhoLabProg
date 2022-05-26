@@ -26,7 +26,7 @@ public class Cargo {
     @Id
     @Column(name = "id_cargo")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @OneToMany(mappedBy = "cargo")
     private List<ProfEgresso> profsEgressos;
