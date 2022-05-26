@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.labprog.egressos.model.Contato;
-import com.labprog.egressos.model.ContatoEgresso;
-import com.labprog.egressos.model.ContatoEgressoPK;
 import com.labprog.egressos.model.Egresso;
 import com.labprog.egressos.model.repository.ContatoRepo;
 
@@ -21,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@Transactional
 public class EgressoServiceTest {
     @Autowired
     EgressoService _sut;
@@ -30,6 +27,7 @@ public class EgressoServiceTest {
     ContatoRepo contatoRepo;
 
     @Test
+    @Transactional
     public void deveSalvarEgresso() {
         // cenário
         Egresso egresso = Egresso.builder()
@@ -54,6 +52,7 @@ public class EgressoServiceTest {
     }
 
     @Test
+    @Transactional
     public void deveAtualizarEgresso() {
         // cenário
         Egresso egresso = Egresso.builder()
@@ -84,6 +83,7 @@ public class EgressoServiceTest {
     }
 
     @Test
+    @Transactional
     public void deveRemoverEgresso() {
         //cenário
         Egresso egresso = Egresso.builder()
@@ -104,6 +104,7 @@ public class EgressoServiceTest {
     }
 
     @Test
+    @Transactional
     public void deveBuscarEgressos(){
         // cenário
         List<Egresso> egressos = new ArrayList<Egresso>();
@@ -147,7 +148,7 @@ public class EgressoServiceTest {
         }
     }
 
-    /*
+
     @Test
     public void atualizarContatosDeveInserirContatosNovos() {
         // cenário
@@ -163,32 +164,58 @@ public class EgressoServiceTest {
             Contato.builder().nome("contato1").urlLogo("logo1").build(),
             Contato.builder().nome("contato2").urlLogo("logo2").build()
         );
-
-        List<ContatoEgresso> contatosEgresso = new ArrayList<ContatoEgresso>();
         
         // ação
         Egresso salvo = _sut.salvar(egresso);
         List<Contato> contatosSalvos = contatoRepo.saveAll(contatos);
-        for (Contato contato : contatosSalvos) {
-            ContatoEgresso contatoEgresso = new ContatoEgresso(); 
-            contatoEgresso.setContato(contato);
-            contatoEgresso.setEgresso(egresso);
-            ContatoEgressoPK pk = new ContatoEgressoPK(); // por isso que precisa daquela solução
-            pk  = 
-            contatoEgresso.setId();
-            contatosEgresso.add(contatoEgresso);
-        }
-        Egresso retorno = _sut.atualizarContatos(salvo, contatosEgresso);
+        Egresso retorno = _sut.atualizarContatos(salvo, contatos);
+
+        _sut.remover(retorno);
+        contatoRepo.deleteAll(contatos);
 
         // verificação
         Assertions.assertNotNull(retorno);
         Assertions.assertEquals(retorno.getContatos().size(), contatosSalvos.size());
         for (int i=0; i < contatosSalvos.size(); i++) {
-            Assertions.assertEquals(contatosSalvos.get(i).getId(), retorno.getContatos().get(i).getContato().getId());
-            Assertions.assertEquals(contatosSalvos.get(i).getNome(), retorno.getContatos().get(i).getContato().getNome());
-            Assertions.assertEquals(contatosSalvos.get(i).getUrlLogo(), retorno.getContatos().get(i).getContato().getUrlLogo());
+            Assertions.assertEquals(contatosSalvos.get(i).getId(), retorno.getContatos().get(i).getId());
+            Assertions.assertEquals(contatosSalvos.get(i).getNome(), retorno.getContatos().get(i).getNome());
+            Assertions.assertEquals(contatosSalvos.get(i).getUrlLogo(), retorno.getContatos().get(i).getUrlLogo());
         }
 
-    }*/
+    }
+
+    @Test
+    public void atualizarContatosDeveRemoverContato() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+        
+        List<Contato> contatos = Arrays.asList(
+            Contato.builder().nome("contato1").urlLogo("logo1").build(),
+            Contato.builder().nome("contato2").urlLogo("logo2").build()
+        );
+         
+        // ação
+        Egresso salvo = _sut.salvar(egresso);
+        List<Contato> contatosSalvos = contatoRepo.saveAll(contatos);
+        salvo = _sut.atualizarContatos(egresso, Arrays.asList(contatos.get(0)));
+        List<Contato> retorno = salvo.getContatos();
+
+        _sut.remover(salvo);
+        contatoRepo.deleteAll(contatosSalvos);
+
+        // verificação
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(retorno.size(), 1);
+        Assertions.assertEquals(retorno.get(0).getId(), contatosSalvos.get(0).getId());
+        Assertions.assertEquals(retorno.get(0).getNome(), contatosSalvos.get(0).getNome());
+        Assertions.assertEquals(retorno.get(0).getUrlLogo(), contatosSalvos.get(0).getUrlLogo());
+
+    }
 
 }

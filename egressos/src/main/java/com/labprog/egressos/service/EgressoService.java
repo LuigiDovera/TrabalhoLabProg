@@ -3,7 +3,7 @@ package com.labprog.egressos.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.labprog.egressos.model.ContatoEgresso;
+import com.labprog.egressos.model.Contato;
 import com.labprog.egressos.model.CursoEgresso;
 import com.labprog.egressos.model.Egresso;
 import com.labprog.egressos.model.repository.EgressoRepo;
@@ -59,7 +59,7 @@ public class EgressoService {
     */
 
     @Transactional
-    public Egresso atualizarContatos(Egresso egresso, List<ContatoEgresso> contatos) {
+    public Egresso atualizarContatos(Egresso egresso, List<Contato> contatos) {
         verificarEgresso(egresso);
         verificarId(egresso);
         egresso.setContatos(contatos);
