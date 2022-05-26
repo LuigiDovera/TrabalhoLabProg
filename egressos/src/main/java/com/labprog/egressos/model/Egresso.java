@@ -3,6 +3,7 @@ package com.labprog.egressos.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,10 +44,10 @@ public class Egresso {
     @Column(name = "url_foto")
     private String urlFoto;
 
-    @OneToMany(mappedBy = "egresso")
+    @OneToMany(mappedBy = "egresso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContatoEgresso> contatos;
     
     @OneToMany(mappedBy = "egresso")
-    Set<CursoEgresso> cursos_egressos;
+    List<CursoEgresso> cursos_egressos;
 
 }

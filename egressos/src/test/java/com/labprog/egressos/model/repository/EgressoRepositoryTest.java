@@ -120,7 +120,7 @@ public class EgressoRepositoryTest {
                 .build();
         
         //ação
-        Egresso salvo = repo.save(egresso);  //salva
+        Egresso salvo = repo.save(egresso);
         Long id = salvo.getId();
         repo.deleteById(id);
         Optional<Egresso> temp = repo.findById(id);
@@ -178,7 +178,6 @@ public class EgressoRepositoryTest {
         for (Egresso egresso : egressos) {
             retorno.addAll(repo.findByNome(egresso.getNome()));
         }
-        repo.deleteAll(salvos);
 
         // verificação
         Assertions.assertNotNull(retorno);

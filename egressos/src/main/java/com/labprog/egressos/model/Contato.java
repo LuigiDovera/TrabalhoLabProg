@@ -2,6 +2,7 @@ package com.labprog.egressos.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,6 @@ public class Contato {
     @Column(name = "url_logo")
     private String urlLogo;
 
-    @OneToMany(mappedBy = "contato")
+    @OneToMany(mappedBy = "contato",  cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContatoEgresso> egressos;
 }

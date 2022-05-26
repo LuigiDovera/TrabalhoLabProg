@@ -34,7 +34,6 @@ public class ContatoService {
 
     @Transactional
     public void remover(Contato contato) {
-        //verificarContato(contato);
         verificarId(contato);
         repo.delete(contato);
     }

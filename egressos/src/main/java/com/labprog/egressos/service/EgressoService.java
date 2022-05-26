@@ -3,6 +3,8 @@ package com.labprog.egressos.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.labprog.egressos.model.ContatoEgresso;
+import com.labprog.egressos.model.CursoEgresso;
 import com.labprog.egressos.model.Egresso;
 import com.labprog.egressos.model.repository.EgressoRepo;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
@@ -35,7 +37,6 @@ public class EgressoService {
 
     @Transactional
     public void remover(Egresso egresso) {
-        //verificarEgresso(egresso);
         verificarId(egresso);
         repo.delete(egresso);
     }
@@ -50,9 +51,27 @@ public class EgressoService {
         return repo.findAll(example);
     }
 
+    /*
     public Optional<Egresso> buscarPorEmail(Egresso egresso) {
         verificarEmail(egresso);
         return repo.findByEmail(egresso.getEmail());
+    }
+    */
+
+    @Transactional
+    public Egresso atualizarContatos(Egresso egresso, List<ContatoEgresso> contatos) {
+        verificarEgresso(egresso);
+        verificarId(egresso);
+        egresso.setContatos(contatos);
+        return repo.save(egresso);
+    }
+
+    @Transactional
+    public Egresso atualizarCursos(Egresso egresso, List<CursoEgresso> cursos) {
+        verificarEgresso(egresso);
+        verificarId(egresso);
+        egresso.setCursos_egressos(cursos);
+        return repo.save(egresso);
     }
 
     private void verificarEgresso(Egresso egresso) {
@@ -72,16 +91,12 @@ public class EgressoService {
         }
     }
 
+    /*
     private void verificarEmail(Egresso egresso) {
         if ((egresso == null) || (egresso.getEmail() == null)) {
             throw new ServiceRuntimeException("Email de egresso inválido");
         }
     }
-
-    private void verificarCpf(Egresso egresso) {
-        if ((egresso == null) || (egresso.getCpf() == null)) {
-            throw new ServiceRuntimeException("CPF de egresso inválido");
-        }
-    }
+    */
 
 }
