@@ -148,7 +148,6 @@ public class EgressoServiceTest {
         }
     }
 
-
     @Test
     public void atualizarContatosDeveInserirContatosNovos() {
         // cenário
@@ -171,7 +170,7 @@ public class EgressoServiceTest {
         Egresso retorno = _sut.atualizarContatos(salvo, contatos);
 
         _sut.remover(retorno);
-        contatoRepo.deleteAll(contatos);
+        contatoRepo.deleteAll(contatosSalvos);
 
         // verificação
         Assertions.assertNotNull(retorno);
@@ -215,7 +214,112 @@ public class EgressoServiceTest {
         Assertions.assertEquals(retorno.get(0).getId(), contatosSalvos.get(0).getId());
         Assertions.assertEquals(retorno.get(0).getNome(), contatosSalvos.get(0).getNome());
         Assertions.assertEquals(retorno.get(0).getUrlLogo(), contatosSalvos.get(0).getUrlLogo());
+    }
+
+    @Test
+    public void deveBuscarContatosEgresso() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+        
+        List<Contato> contatos = Arrays.asList(
+            Contato.builder().nome("contato1").urlLogo("logo1").build(),
+            Contato.builder().nome("contato2").urlLogo("logo2").build()
+        );
+        
+        // ação
+        Egresso salvo = _sut.salvar(egresso);
+        List<Contato> contatosSalvos = contatoRepo.saveAll(contatos);
+        salvo = _sut.atualizarContatos(salvo, contatos);
+        List<Contato> retorno = _sut.buscarContatosEgresso(salvo);
+
+        _sut.remover(salvo);
+        contatoRepo.deleteAll(contatosSalvos);
+
+        // verificação
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(retorno.size(), contatosSalvos.size());
+        for (int i=0; i < contatosSalvos.size(); i++) {
+            Assertions.assertEquals(contatosSalvos.get(i).getId(), retorno.get(i).getId());
+            Assertions.assertEquals(contatosSalvos.get(i).getNome(), retorno.get(i).getNome());
+            Assertions.assertEquals(contatosSalvos.get(i).getUrlLogo(), retorno.get(i).getUrlLogo());
+        }
+    }
+
+    /*
+    @Test
+    public void atualizarCursosDeveInserirCursosNovos() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+        
+        List<Contato> contatos = Arrays.asList(
+            Contato.builder().nome("contato1").urlLogo("logo1").build(),
+            Contato.builder().nome("contato2").urlLogo("logo2").build()
+        );
+        
+        // ação
+        Egresso salvo = _sut.salvar(egresso);
+        List<Contato> contatosSalvos = contatoRepo.saveAll(contatos);
+        Egresso retorno = _sut.atualizarContatos(salvo, contatos);
+
+        _sut.remover(retorno);
+        contatoRepo.deleteAll(contatos);
+
+        // verificação
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(retorno.getContatos().size(), contatosSalvos.size());
+        for (int i=0; i < contatosSalvos.size(); i++) {
+            Assertions.assertEquals(contatosSalvos.get(i).getId(), retorno.getContatos().get(i).getId());
+            Assertions.assertEquals(contatosSalvos.get(i).getNome(), retorno.getContatos().get(i).getNome());
+            Assertions.assertEquals(contatosSalvos.get(i).getUrlLogo(), retorno.getContatos().get(i).getUrlLogo());
+        }
 
     }
+
+    @Test
+    public void atualizarCursosDeveRemoverCurso() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+        
+        List<Contato> contatos = Arrays.asList(
+            Contato.builder().nome("contato1").urlLogo("logo1").build(),
+            Contato.builder().nome("contato2").urlLogo("logo2").build()
+        );
+         
+        // ação
+        Egresso salvo = _sut.salvar(egresso);
+        List<Contato> contatosSalvos = contatoRepo.saveAll(contatos);
+        salvo = _sut.atualizarContatos(egresso, Arrays.asList(contatos.get(0)));
+        List<Contato> retorno = salvo.getContatos();
+
+        _sut.remover(salvo);
+        contatoRepo.deleteAll(contatosSalvos);
+
+        // verificação
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(retorno.size(), 1);
+        Assertions.assertEquals(retorno.get(0).getId(), contatosSalvos.get(0).getId());
+        Assertions.assertEquals(retorno.get(0).getNome(), contatosSalvos.get(0).getNome());
+        Assertions.assertEquals(retorno.get(0).getUrlLogo(), contatosSalvos.get(0).getUrlLogo());
+
+    }
+    */
 
 }

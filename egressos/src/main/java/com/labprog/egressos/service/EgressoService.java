@@ -29,6 +29,14 @@ public class EgressoService {
     }
 
     @Transactional
+    public List<Egresso> salvar(List<Egresso> egressos) {
+        for (Egresso egresso : egressos) {
+            verificarEgresso(egresso);
+        }
+        return repo.saveAll(egressos);
+    }
+
+    @Transactional
     public Egresso atualizar(Egresso egresso) {
         verificarEgresso(egresso);
         verificarId(egresso);
@@ -36,9 +44,26 @@ public class EgressoService {
     }
 
     @Transactional
+    public List<Egresso> atualizar(List<Egresso> egressos) {
+        for (Egresso egresso : egressos) {
+            verificarEgresso(egresso);
+            verificarId(egresso);
+        }
+        return repo.saveAll(egressos);
+    }
+
+    @Transactional
     public void remover(Egresso egresso) {
         verificarId(egresso);
         repo.delete(egresso);
+    }
+
+    @Transactional
+    public void remover(List<Egresso> egressos) {
+        for (Egresso egresso : egressos) {
+            verificarId(egresso);
+        }
+        repo.deleteAll(egressos);
     }
 
     public List<Egresso> buscar(Egresso filtro) {
@@ -64,6 +89,11 @@ public class EgressoService {
         verificarId(egresso);
         egresso.setContatos(contatos);
         return repo.save(egresso);
+    }
+
+    public List<Contato> buscarContatosEgresso(Egresso egresso) {
+        verificarId(egresso);
+        return egresso.getContatos();
     }
 
     @Transactional

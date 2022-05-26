@@ -23,10 +23,5 @@ public interface EgressoRepo
 
         boolean existsByCpf(String cpf);
 
-        //@Query("select new com.labprog.egressos.model.Contato(c) " + 
-        //        "from Contato c join c.egressos ce "+
-        //        "where ce.egresso = :egresso ")
-        //List<Contato> obterContatosEgresso(@Param("egresso") Egresso egresso);
-
 }
 
