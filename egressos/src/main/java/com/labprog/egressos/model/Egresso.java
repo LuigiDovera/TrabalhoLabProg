@@ -49,4 +49,7 @@ public class Egresso {
     @OneToMany(mappedBy = "egresso")
     Set<CursoEgresso> cursos_egressos;
 
+    @OneToMany(mappedBy = "egresso")
+    private List<Depoimento> depoimentos;
+
 }
