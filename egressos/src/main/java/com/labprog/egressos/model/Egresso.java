@@ -58,4 +58,7 @@ public class Egresso {
     @OneToMany(mappedBy = "egresso")
     List<CursoEgresso> cursos_egressos;
 
+    @OneToMany(mappedBy = "egresso", cascade = CascadeType.PERSIST)
+    List<ProfEgresso> profissoes;
+
 }

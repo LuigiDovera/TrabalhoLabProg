@@ -1,5 +1,6 @@
 package com.labprog.egressos.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,7 +8,10 @@ import java.util.Optional;
 
 import com.labprog.egressos.model.Contato;
 import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.ProfEgresso;
 import com.labprog.egressos.model.repository.ContatoRepo;
+import com.labprog.egressos.model.repository.ProfEgressoRepo;
+import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,6 +29,9 @@ public class EgressoServiceTest {
 
     @Autowired
     ContatoRepo contatoRepo;
+
+    //@Autowired
+    //ProfEgressoRepo profissaoRepo;
 
     @Test
     @Transactional
@@ -49,6 +56,77 @@ public class EgressoServiceTest {
         Assertions.assertEquals(egresso.getCpf(), retorno.getCpf());
         Assertions.assertEquals(egresso.getResumo(), retorno.getResumo());
         Assertions.assertEquals(egresso.getUrlFoto(), retorno.getUrlFoto());
+    }
+
+    @Test
+    @Transactional
+    public void deveGerarErroAoTentarSalvarNulo() {
+        // cenário
+        Egresso egresso = null;
+
+        // ação e verificação
+        Throwable retorno = Assertions.assertThrows(
+            ServiceRuntimeException.class, 
+            () -> _sut.salvar(egresso));
+        Assertions.assertEquals(retorno.getMessage(), 
+        "O egresso está nulo");
+    }
+
+    @Test
+    @Transactional
+    public void deveGerarErroAoTentarSalvarSemNome() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+
+        // ação e verificação
+        Throwable retorno = Assertions.assertThrows(
+            ServiceRuntimeException.class, 
+            () -> _sut.salvar(egresso));
+        Assertions.assertEquals(retorno.getMessage(), 
+            "Nome do egresso deve ser informado");
+    }
+
+    @Test
+    @Transactional
+    public void deveGerarErroAoTentarSalvarSemEmail() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+
+        // ação e verificação
+        Throwable retorno = Assertions.assertThrows(
+            ServiceRuntimeException.class, 
+            () -> _sut.salvar(egresso));
+        Assertions.assertEquals(retorno.getMessage(), 
+            "Email do egresso deve ser informado");
+    }
+
+    @Test
+    @Transactional
+    public void deveGerarErroAoTentarSalvarSemCpf() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+
+        // ação e verificação
+        Throwable retorno = Assertions.assertThrows(
+            ServiceRuntimeException.class, 
+            () -> _sut.salvar(egresso));
+        Assertions.assertEquals(retorno.getMessage(), 
+            "CPF do egresso deve ser informado");
     }
 
     @Test
@@ -84,6 +162,121 @@ public class EgressoServiceTest {
 
     @Test
     @Transactional
+    public void deveGerarErroAoTentarAtualizarNulo() {
+        // cenário
+        Egresso egresso = null;
+
+        // ação e verificação
+        Throwable retorno = Assertions.assertThrows(
+            ServiceRuntimeException.class, 
+            () -> _sut.atualizar(egresso));
+        Assertions.assertEquals(retorno.getMessage(), 
+        "O egresso está nulo");
+    }
+
+    @Test
+    @Transactional
+    public void deveGerarErroAoTentarAtualizarSemNome() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+
+        Egresso salvo = _sut.salvar(egresso);
+        salvo.setNome(""); 
+        salvo.setEmail("moc.a@a");
+        salvo.setCpf("4321");
+        salvo.setResumo("lore ipsum lorem");
+        salvo.setUrlFoto("etset");
+
+        // ação e verificação
+        Throwable retorno = Assertions.assertThrows(
+            ServiceRuntimeException.class, 
+            () -> _sut.atualizar(salvo));
+        Assertions.assertEquals(retorno.getMessage(), 
+            "Nome do egresso deve ser informado");
+    }
+
+    @Test
+    @Transactional
+    public void deveGerarErroAoTentarAtualizarSemEmail() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+
+        Egresso salvo = _sut.salvar(egresso);
+        salvo.setNome("nadulut");
+        salvo.setEmail("");
+        salvo.setCpf("4321");
+        salvo.setResumo("lore ipsum lorem");
+        salvo.setUrlFoto("etset");
+
+        // ação e verificação
+        Throwable retorno = Assertions.assertThrows(
+            ServiceRuntimeException.class, 
+            () -> _sut.atualizar(salvo));
+        Assertions.assertEquals(retorno.getMessage(), 
+            "Email do egresso deve ser informado");
+    }
+
+    @Test
+    @Transactional
+    public void deveGerarErroAoTentarAtualizarSemCpf() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+
+        Egresso salvo = _sut.salvar(egresso);
+        salvo.setNome("nadulut");
+        salvo.setEmail("moc.a@a");
+        salvo.setCpf("");
+        salvo.setResumo("lore ipsum lorem");
+        salvo.setUrlFoto("etset");
+
+        // ação e verificação
+        Throwable retorno = Assertions.assertThrows(
+            ServiceRuntimeException.class, 
+            () -> _sut.atualizar(salvo));
+        Assertions.assertEquals(retorno.getMessage(), 
+            "CPF do egresso deve ser informado");
+    }
+
+    @Test
+    @Transactional
+    public void deveGerarErroAoAtualizarInexistente() {
+        //cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+        
+        //ação e verificação        
+        Throwable retorno = Assertions.assertThrows(
+            ServiceRuntimeException.class, 
+            () -> _sut.atualizar(egresso));
+        Assertions.assertEquals(retorno.getMessage(), 
+            "ID de egresso inválido");
+    }
+
+    @Test
+    @Transactional
     public void deveRemoverEgresso() {
         //cenário
         Egresso egresso = Egresso.builder()
@@ -101,6 +294,26 @@ public class EgressoServiceTest {
         
         //verificação        
         Assertions.assertTrue(temp.isEmpty());
+    }
+
+    @Test
+    @Transactional
+    public void deveGerarErroAoRemoverInexistente() {
+        //cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+        
+        //ação e verificação        
+        Throwable retorno = Assertions.assertThrows(
+            ServiceRuntimeException.class, 
+            () -> _sut.remover(egresso));
+        Assertions.assertEquals(retorno.getMessage(), 
+            "ID de egresso inválido");
     }
 
     @Test
@@ -146,6 +359,25 @@ public class EgressoServiceTest {
             Assertions.assertEquals(egressos.get(i).getResumo(), retorno.get(i).getResumo());
             Assertions.assertEquals(egressos.get(i).getUrlFoto(), retorno.get(i).getUrlFoto());
         }
+    }
+
+    @Test
+    @Transactional
+    public void deveRetornarVazioAoNaoEncontrarEgressos(){
+        // cenário
+        Egresso egresso = Egresso.builder()
+                            .nome("tuludan")
+                            .email("a@a.com")
+                            .cpf("1234")
+                            .resumo("lorem ipsum lore")
+                            .urlFoto("teste")
+                            .build();
+        
+        // ação
+        List<Egresso> retorno = _sut.buscar(egresso);
+
+        // verificação
+        Assertions.assertTrue(retorno.isEmpty());
     }
 
     @Test
@@ -250,6 +482,120 @@ public class EgressoServiceTest {
             Assertions.assertEquals(contatosSalvos.get(i).getUrlLogo(), retorno.get(i).getUrlLogo());
         }
     }
+
+    /*
+    @Test
+    public void atualizarProfissoesDeveInserirProfissoesNovas() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+        
+        List<ProfEgresso> profissoes = Arrays.asList(
+            ProfEgresso.builder()
+                .dataRegistro(Date.valueOf("2022-01-01"))
+                .descricao("lorem ipsum lore")
+                .empresa("tuludan inc")
+                .build(),
+            ProfEgresso.builder()
+                .dataRegistro(Date.valueOf("2022-02-02"))
+                .descricao("lorem ipsum lore2")
+                .empresa("tuludan inc2")
+                .build()
+        );
+        
+        // ação
+        Egresso salvo = _sut.salvar(egresso);
+        List<ProfEgresso> profissoesSalvas = profissaoRepo.saveAll(profissoes);
+        Egresso retorno = _sut.atualizarProfissoes(salvo, profissoes);
+
+        _sut.remover(retorno);
+        profissaoRepo.deleteAll(profissoesSalvas);
+
+        // verificação
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(retorno.getProfissoes().size(), profissoesSalvas.size());
+        for (int i=0; i < profissoesSalvas.size(); i++) {
+            Assertions.assertEquals(profissoesSalvas.get(i).getId(), retorno.getProfissoes().get(i).getId());
+            Assertions.assertEquals(profissoesSalvas.get(i).getDataRegistro(), retorno.getProfissoes().get(i).getDataRegistro());
+            Assertions.assertEquals(profissoesSalvas.get(i).getDescricao(), retorno.getProfissoes().get(i).getDescricao());
+            Assertions.assertEquals(profissoesSalvas.get(i).getEmpresa(), retorno.getProfissoes().get(i).getEmpresa());
+        }
+
+    }
+
+    @Test
+    public void atualizarProfissoesDeveRemoverProfissao() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+        
+        List<Contato> contatos = Arrays.asList(
+            Contato.builder().nome("contato1").urlLogo("logo1").build(),
+            Contato.builder().nome("contato2").urlLogo("logo2").build()
+        );
+         
+        // ação
+        Egresso salvo = _sut.salvar(egresso);
+        List<Contato> contatosSalvos = contatoRepo.saveAll(contatos);
+        salvo = _sut.atualizarContatos(egresso, Arrays.asList(contatos.get(0)));
+        List<Contato> retorno = salvo.getContatos();
+
+        _sut.remover(salvo);
+        contatoRepo.deleteAll(contatosSalvos);
+
+        // verificação
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(retorno.size(), 1);
+        Assertions.assertEquals(retorno.get(0).getId(), contatosSalvos.get(0).getId());
+        Assertions.assertEquals(retorno.get(0).getNome(), contatosSalvos.get(0).getNome());
+        Assertions.assertEquals(retorno.get(0).getUrlLogo(), contatosSalvos.get(0).getUrlLogo());
+    }
+
+    @Test
+    public void deveBuscarProfissoesEgresso() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+        
+        List<Contato> contatos = Arrays.asList(
+            Contato.builder().nome("contato1").urlLogo("logo1").build(),
+            Contato.builder().nome("contato2").urlLogo("logo2").build()
+        );
+        
+        // ação
+        Egresso salvo = _sut.salvar(egresso);
+        List<Contato> contatosSalvos = contatoRepo.saveAll(contatos);
+        salvo = _sut.atualizarContatos(salvo, contatos);
+        List<Contato> retorno = _sut.buscarContatosEgresso(salvo);
+
+        _sut.remover(salvo);
+        contatoRepo.deleteAll(contatosSalvos);
+
+        // verificação
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(retorno.size(), contatosSalvos.size());
+        for (int i=0; i < contatosSalvos.size(); i++) {
+            Assertions.assertEquals(contatosSalvos.get(i).getId(), retorno.get(i).getId());
+            Assertions.assertEquals(contatosSalvos.get(i).getNome(), retorno.get(i).getNome());
+            Assertions.assertEquals(contatosSalvos.get(i).getUrlLogo(), retorno.get(i).getUrlLogo());
+        }
+    }
+    */
 
     /*
     @Test

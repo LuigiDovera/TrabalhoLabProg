@@ -1,11 +1,11 @@
 package com.labprog.egressos.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.labprog.egressos.model.Contato;
 import com.labprog.egressos.model.CursoEgresso;
 import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.ProfEgresso;
 import com.labprog.egressos.model.repository.EgressoRepo;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
@@ -29,14 +29,6 @@ public class EgressoService {
     }
 
     @Transactional
-    public List<Egresso> salvar(List<Egresso> egressos) {
-        for (Egresso egresso : egressos) {
-            verificarEgresso(egresso);
-        }
-        return repo.saveAll(egressos);
-    }
-
-    @Transactional
     public Egresso atualizar(Egresso egresso) {
         verificarEgresso(egresso);
         verificarId(egresso);
@@ -44,26 +36,9 @@ public class EgressoService {
     }
 
     @Transactional
-    public List<Egresso> atualizar(List<Egresso> egressos) {
-        for (Egresso egresso : egressos) {
-            verificarEgresso(egresso);
-            verificarId(egresso);
-        }
-        return repo.saveAll(egressos);
-    }
-
-    @Transactional
     public void remover(Egresso egresso) {
         verificarId(egresso);
         repo.delete(egresso);
-    }
-
-    @Transactional
-    public void remover(List<Egresso> egressos) {
-        for (Egresso egresso : egressos) {
-            verificarId(egresso);
-        }
-        repo.deleteAll(egressos);
     }
 
     public List<Egresso> buscar(Egresso filtro) {
@@ -75,13 +50,6 @@ public class EgressoService {
 
         return repo.findAll(example);
     }
-
-    /*
-    public Optional<Egresso> buscarPorEmail(Egresso egresso) {
-        verificarEmail(egresso);
-        return repo.findByEmail(egresso.getEmail());
-    }
-    */
 
     @Transactional
     public Egresso atualizarContatos(Egresso egresso, List<Contato> contatos) {
@@ -104,6 +72,14 @@ public class EgressoService {
         return repo.save(egresso);
     }
 
+    @Transactional
+    public Egresso atualizarProfissoes(Egresso egresso, List<ProfEgresso> profissoes) {
+        verificarEgresso(egresso);
+        verificarId(egresso);
+        egresso.setProfissoes(profissoes);
+        return repo.save(egresso);
+    }
+
     private void verificarEgresso(Egresso egresso) {
         if (egresso == null)
             throw new ServiceRuntimeException("O egresso está nulo");                
@@ -116,17 +92,10 @@ public class EgressoService {
     }
 
     private void verificarId(Egresso egresso) {
-        if ((egresso == null) || (!repo.existsById(egresso.getId()))) {
+        if ((egresso == null) || (egresso.getId() == null) ||
+            !(repo.existsById(egresso.getId()))) {
             throw new ServiceRuntimeException("ID de egresso inválido");
         }
     }
-
-    /*
-    private void verificarEmail(Egresso egresso) {
-        if ((egresso == null) || (egresso.getEmail() == null)) {
-            throw new ServiceRuntimeException("Email de egresso inválido");
-        }
-    }
-    */
 
 }
