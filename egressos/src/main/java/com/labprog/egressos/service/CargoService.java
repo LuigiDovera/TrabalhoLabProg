@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.labprog.egressos.model.Cargo;
+import com.labprog.egressos.model.Egresso;
 import com.labprog.egressos.model.ProfEgresso;
 
 import com.labprog.egressos.model.repository.CargoRepo;
 import com.labprog.egressos.model.repository.ProfEgressoRepo;
+import com.labprog.egressos.model.repository.EgressoRepo;
 import com.labprog.egressos.service.exceptions.RegraNegocioRunTime;
 /*
 import com.lab.patrimonio.entidade.Investimento;
@@ -62,8 +64,24 @@ public class CargoService {
         return repository.findAll(example);
     }
 
+
+    
+    
+    public List<ProfEgresso> buscarPorProfEgresso (Cargo car){
+        List<ProfEgresso> profsEgressos = profEgressoRep.findByCargo(car);
+        return profsEgressos;
+    }
+    /*
+        Percebi depois de fazer que não era essa a funcionalidade pedida >:^)
+    */
+
+    public List<Cargo> buscarCargoPorEgresso (Egresso egr){
+        List<Cargo> cargos = repository.acharPorEgresso(egr);
+        return cargos;
+    } 
+
     private void verificarProfEgresso(Cargo car){
-        List<Cargo> res = profEgressoRep.findByCargo(car);
+        List<ProfEgresso> res = profEgressoRep.findByCargo(car);
         if(!res.isEmpty())
             throw new RegraNegocioRunTime("Cargo informado tem relação com Profissão de Egresso");
     }

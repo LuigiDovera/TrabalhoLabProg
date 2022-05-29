@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 public interface ProfEgressoRepo
         extends JpaRepository<ProfEgresso, Long> {
             
-            public List<Cargo> findByCargo(Cargo cargo);
+            public List<ProfEgresso> findByCargo(Cargo cargo);
 
             @Query("select p from ProfEgresso p where p.empresa = :empresaProfEgresso")
             ProfEgresso obterProfEgressoPorEmpresa(
