@@ -55,7 +55,7 @@ public class FaixaSalarioRepositoryTeste {
     @Test
     public void deveObterPorDescricaoFaixaSalario(){
         // cenário
-        String descricao = "2000 - 3000";
+        String descricao = "Teste deveObterPorDescricaoFaixaSalario";
         FaixaSalario faixaSalario = FaixaSalario.builder()
                 .descricao(descricao)
                 .build();
