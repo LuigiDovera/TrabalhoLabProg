@@ -97,21 +97,23 @@ public class CargoServiceTest {
 
         @Test
         void buscaProfEgressoPorCargo() {
+                //cenário
+                String string = "Teste  profEgressoPorCargo";
                 Egresso egresso = Egresso.builder()
-                                .nome("Teste  profEgressoPorCargo")
-                                .email("Teste  profEgressoPorCargo")
-                                .cpf("Teste  profEgressoPorCargo")
-                                .resumo("Teste  profEgressoPorCargo")
-                                .url_foto("Teste  profEgressoPorCargo")
+                                .nome(string)
+                                .email(string)
+                                .cpf(string)
+                                .resumo(string)
+                                .url_foto(string)
                                 .build();
 
                 FaixaSalario faixaSalario = FaixaSalario.builder()
-                                .descricao("Teste  profEgressoPorCargo")
+                                .descricao(string)
                                 .build();
 
                 Cargo cargo = Cargo.builder()
-                                .nome("Teste  profEgressoPorCargo")
-                                .descricao("Teste  profEgressoPorCargo")
+                                .nome(string)
+                                .descricao(string)
                                 .build();
 
                 Date dataRegistro = new Date(System.currentTimeMillis());
@@ -119,8 +121,8 @@ public class CargoServiceTest {
                                 .cargo(cargo)
                                 .faixaSalario(faixaSalario)
                                 .egresso(egresso)
-                                .empresa("Teste  profEgressoPorCargo")
-                                .descricao("Teste  profEgressoPorCargo")
+                                .empresa(string)
+                                .descricao(string)
                                 .dataRegistro(dataRegistro)
                                 .build();
 
@@ -145,6 +147,7 @@ public class CargoServiceTest {
 
         @Test
         void deveBuscarCargoPorEgresso() {
+                //cenário
                 String string = "Teste  cargoPorEgresso";
                 Egresso egresso = Egresso.builder()
                                 .nome(string)
@@ -186,6 +189,49 @@ public class CargoServiceTest {
                 Assertions.assertNotNull(buscado);
                 Assertions.assertEquals(buscado.getNome(), cargo.getNome());
                 Assertions.assertEquals(buscado.getDescricao(), cargo.getDescricao());
+        }
+
+        @Test
+        void deveContarQuantidadeDeEgressosPorCargo(){
+                //cenário
+                String string = "Teste  cargoPorEgresso";
+                Egresso egresso = Egresso.builder()
+                                .nome(string)
+                                .email(string)
+                                .cpf(string)
+                                .resumo(string)
+                                .url_foto(string)
+                                .build();
+
+                FaixaSalario faixaSalario = FaixaSalario.builder()
+                                .descricao(string)
+                                .build();
+
+                Cargo cargo = Cargo.builder()
+                                .nome(string)
+                                .descricao(string)
+                                .build();
+
+                Date dataRegistro = new Date(System.currentTimeMillis());
+                ProfEgresso profEgresso = ProfEgresso.builder()
+                                .cargo(cargo)
+                                .faixaSalario(faixaSalario)
+                                .egresso(egresso)
+                                .empresa(string)
+                                .descricao(string)
+                                .dataRegistro(dataRegistro)
+                                .build();
+
+                // ação
+                egressoRepo.save(egresso);
+                faixaSalarioRepo.save(faixaSalario);
+                repository.save(cargo);
+                profEgressoRepo.save(profEgresso);
+
+                int quantidade = service.quantidadeEgressoPorCargo(cargo);
+
+                //verificação
+                Assertions.assertEquals(1, quantidade);
         }
 
 }

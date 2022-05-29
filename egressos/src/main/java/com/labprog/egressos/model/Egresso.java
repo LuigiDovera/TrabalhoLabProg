@@ -8,8 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.FetchType;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,10 +46,13 @@ public class Egresso {
     @Column(name = "url_foto")
     private String url_foto;
 
+    @OneToMany(mappedBy = "egresso", fetch=FetchType.EAGER)
+    private List<ProfEgresso> profsEgressos;
+
     @OneToMany(mappedBy = "egresso")
     private List<ContatoEgresso> contatos;
     
     @OneToMany(mappedBy = "egresso")
     Set<CursoEgresso> cursos_egressos;
-
+    
 }

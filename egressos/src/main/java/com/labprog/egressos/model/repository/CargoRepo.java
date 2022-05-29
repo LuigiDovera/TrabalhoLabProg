@@ -20,6 +20,14 @@ public interface CargoRepo
             @Param("egresso") Egresso egresso
         );
 
+        @Query("select COUNT(e) from Egresso e "+
+                "join e.profsEgressos pe "+
+                "join pe.cargo c "+
+                "where pe.cargo = :cargo")
+        int quantidadeEgressoPorCargo(
+            @Param("cargo") Cargo cargo
+        );
+
         @Query("select c from Cargo c where c.nome = :nomeCargo")
         Cargo obterCargoPorNome(
             @Param("nomeCargo") String nomeCargo

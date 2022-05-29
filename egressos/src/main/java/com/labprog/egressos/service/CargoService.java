@@ -80,6 +80,11 @@ public class CargoService {
         return cargos;
     } 
 
+    public int quantidadeEgressoPorCargo (Cargo car){
+        int quantidade = repository.quantidadeEgressoPorCargo(car);
+        return quantidade;
+    }
+
     private void verificarProfEgresso(Cargo car){
         List<ProfEgresso> res = profEgressoRep.findByCargo(car);
         if(!res.isEmpty())
