@@ -1,17 +1,17 @@
-package com.labprog.egressos.model.repository;
+package com.labprog.egressos.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.labprog.egressos.model.Cargo;
 import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
-import com.labprog.egressos.model.repository.CargoRepo;
+import com.labprog.egressos.model.repository.DepoimentoRepo;
+import com.labprog.egressos.model.repository.EgressoRepo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,10 +19,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class DepoimentoRepositoryTest {
+public class DepoimentoServiceTest {
+    @Autowired
+    DepoimentoService _sut;
+
     @Autowired
     DepoimentoRepo depoimentoRepo;
 
@@ -30,6 +34,7 @@ public class DepoimentoRepositoryTest {
     EgressoRepo egressoRepo;
 
     @Test
+    @Transactional
     public void deveSalvarDepoimento() {
         // cenário
         Date data = new Date(1);
@@ -50,19 +55,22 @@ public class DepoimentoRepositoryTest {
                 .build();
 
         // ação
-        Depoimento retornoDepoimento = depoimentoRepo.save(depoimento);
+        Depoimento retornoDepoimento = _sut.salvar(depoimento);
 
         // verificação
         Assertions.assertNotNull(retornoDepoimento);
+        Assertions.assertNotNull(retornoDepoimento.getId());
         Assertions.assertEquals(depoimento.getTexto(), retornoDepoimento.getTexto());
         Assertions.assertEquals(depoimento.getData(), retornoDepoimento.getData());
+        Assertions.assertEquals(depoimento.getEgresso(), retornoDepoimento.getEgresso());
 
         // rollback
-        depoimentoRepo.delete(retornoDepoimento);
+        _sut.remover(retornoDepoimento);
         egressoRepo.delete(retornoEgresso);
     }
 
     @Test
+    @Transactional
     public void deveAtualizarDepoimento() {
         // cenário
         Date data = new Date(1);
@@ -83,25 +91,25 @@ public class DepoimentoRepositoryTest {
                 .build();
 
         // ação
-        Depoimento retornoDepoimento = depoimentoRepo.save(depoimento);
+        Depoimento retornoDepoimento = _sut.salvar(depoimento);
         retornoDepoimento.setTexto("teste depoimento");
         retornoDepoimento.setData(new Date(2));
-        Depoimento depoimentoAtualizado = depoimentoRepo.save(retornoDepoimento);
+        Depoimento depoimentoAtualizado = _sut.atualizar(retornoDepoimento);
 
         // verificação
         Assertions.assertNotNull(retornoDepoimento);
         Assertions.assertNotNull(retornoDepoimento.getId());
         Assertions.assertEquals(depoimentoAtualizado.getTexto(), retornoDepoimento.getTexto());
         Assertions.assertEquals(depoimentoAtualizado.getData(), retornoDepoimento.getData());
-        Assertions.assertEquals(depoimentoAtualizado.getEgresso().getNome(), retornoDepoimento.getEgresso().getNome());
+        Assertions.assertEquals(depoimentoAtualizado.getEgresso(), retornoDepoimento.getEgresso());
 
         // rollback
-        depoimentoRepo.delete(depoimentoAtualizado);
+        _sut.remover(depoimentoAtualizado);
         egressoRepo.delete(retornoEgresso);
     }
 
     @Test
-    public void deveRemoverCargo() {
+    public void deveRemoverDepoimento() {
         // cenário
         Date data = new Date(1);
 
@@ -121,8 +129,7 @@ public class DepoimentoRepositoryTest {
                 .build();
 
         // ação
-        Depoimento retornoDepoimento = depoimentoRepo.save(depoimento);
-        depoimentoRepo.delete(retornoDepoimento);
+        Depoimento retornoDepoimento = _sut.salvar(depoimento);
         Optional<Depoimento> retorno = depoimentoRepo.findById(retornoDepoimento.getId());
 
         // verificação
@@ -131,7 +138,7 @@ public class DepoimentoRepositoryTest {
         Assertions.assertEquals(depoimento.getData(), retornoDepoimento.getData());
 
         // rollback
-        depoimentoRepo.delete(retornoDepoimento);
+        _sut.remover(retornoDepoimento);
         egressoRepo.delete(retornoEgresso);
     }
 
@@ -157,11 +164,10 @@ public class DepoimentoRepositoryTest {
         }
 
         // ação
-        List<Depoimento> salvos = depoimentoRepo.saveAll(depoimentos);
+        List<Depoimento> salvos = _sut.salvarDepoimentos(depoimentos);
 
         List<Depoimento> retorno = new ArrayList<Depoimento>();
         retorno.addAll(depoimentoRepo.obterDepoimentosOrdenadosPeloMaisRecente());
-        depoimentoRepo.deleteAll(salvos);
 
         Collections.sort(depoimentos, new Comparator<Depoimento>() {
             public int compare(Depoimento d1, Depoimento d2) {
@@ -177,6 +183,10 @@ public class DepoimentoRepositoryTest {
             Assertions.assertEquals(depoimentos.get(i).getData().toString(),
                     retorno.get(i).getData().toString());
         }
+        
+        // rollback
+        _sut.removerDepoimentos(retorno);
+        egressoRepo.delete(retornoEgresso);
     }
 
     @Test
@@ -208,14 +218,12 @@ public class DepoimentoRepositoryTest {
         }
 
         // ação
-        List<Depoimento> retornoDepoimentos = depoimentoRepo.saveAll(depoimentos);
+        List<Depoimento> retornoDepoimentos = _sut.salvarDepoimentos(depoimentos);
 
         List<Depoimento> retorno = new ArrayList<Depoimento>();
         for (Egresso egresso : egressos) {
             retorno.addAll(depoimentoRepo.obterDepoimentosPorEgresso(egresso));
         }
-        depoimentoRepo.deleteAll(retornoDepoimentos);
-        egressoRepo.deleteAll(retornoEgresso);
 
         // verificação
         Assertions.assertNotNull(retorno);
@@ -225,6 +233,9 @@ public class DepoimentoRepositoryTest {
             Assertions.assertEquals(depoimentos.get(i).getData().toString(),
                     retorno.get(i).getData().toString());
         }
-    }
 
+        // rollback
+        _sut.removerDepoimentos(retornoDepoimentos);
+        egressoRepo.deleteAll(retornoEgresso);
+    }
 }
