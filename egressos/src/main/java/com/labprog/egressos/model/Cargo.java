@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.FetchType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +27,9 @@ public class Cargo {
     @Id
     @Column(name = "id_cargo")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @OneToMany(mappedBy = "cargo")
+    @OneToMany(mappedBy = "cargo", fetch=FetchType.EAGER)
     private List<ProfEgresso> profsEgressos;
 
     @Column(name = "nome")
@@ -37,4 +38,7 @@ public class Cargo {
     @Column(name = "descricao")
     private String descricao;
     
+    public String toString(){
+        return this.id + " " + this.nome + " " + this.descricao;
+    }
 }

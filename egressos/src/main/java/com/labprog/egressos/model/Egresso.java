@@ -10,11 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,6 +51,9 @@ public class Egresso {
     @Column(name = "url_foto")
     private String urlFoto;
 
+    @OneToMany(mappedBy = "egresso", fetch=FetchType.EAGER)
+    private List<ProfEgresso> profsEgressos;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
         name = "contato_egresso", 
@@ -58,10 +64,8 @@ public class Egresso {
     @OneToMany(mappedBy = "egresso")
     List<CursoEgresso> cursos_egressos;
 
-    @OneToMany(mappedBy = "egresso", cascade = CascadeType.PERSIST)
-    List<ProfEgresso> profissoes;
-
     @OneToMany(mappedBy = "egresso")
     private List<Depoimento> depoimentos;
+
 
 }
