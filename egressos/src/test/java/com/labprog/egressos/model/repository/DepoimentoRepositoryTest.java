@@ -39,7 +39,7 @@ public class DepoimentoRepositoryTest {
                 .email("a@a.com")
                 .cpf("1234")
                 .resumo("lorem ipsum lore")
-                .url_foto("teste")
+                .urlFoto("teste")
                 .build();
         Egresso retornoEgresso = egressoRepo.save(egresso);
 
@@ -72,7 +72,7 @@ public class DepoimentoRepositoryTest {
                 .email("a@a.com")
                 .cpf("1234")
                 .resumo("lorem ipsum lore")
-                .url_foto("teste")
+                .urlFoto("teste")
                 .build();
         Egresso retornoEgresso = egressoRepo.save(egresso);
 
@@ -110,7 +110,7 @@ public class DepoimentoRepositoryTest {
                 .email("a@a.com")
                 .cpf("1234")
                 .resumo("lorem ipsum lore")
-                .url_foto("teste")
+                .urlFoto("teste")
                 .build();
         Egresso retornoEgresso = egressoRepo.save(egresso);
 
@@ -143,7 +143,7 @@ public class DepoimentoRepositoryTest {
                 .email("a@a.com")
                 .cpf("1234")
                 .resumo("lorem ipsum lore")
-                .url_foto("teste")
+                .urlFoto("teste")
                 .build();
         Egresso retornoEgresso = egressoRepo.save(egresso);
 
@@ -189,7 +189,7 @@ public class DepoimentoRepositoryTest {
                     .email("a@a.com")
                     .cpf("1234")
                     .resumo("lorem ipsum lore")
-                    .url_foto("teste")
+                    .urlFoto("teste")
                     .build());
         }
 

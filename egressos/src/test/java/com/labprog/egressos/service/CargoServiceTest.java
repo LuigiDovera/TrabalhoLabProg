@@ -107,7 +107,7 @@ public class CargoServiceTest {
                                 .email(string)
                                 .cpf(string)
                                 .resumo(string)
-                                .url_foto(string)
+                                .urlFoto(string)
                                 .build();
 
                 FaixaSalario faixaSalario = FaixaSalario.builder()
@@ -157,7 +157,7 @@ public class CargoServiceTest {
                                 .email(string)
                                 .cpf(string)
                                 .resumo(string)
-                                .url_foto(string)
+                                .urlFoto(string)
                                 .build();
 
                 FaixaSalario faixaSalario = FaixaSalario.builder()
@@ -203,7 +203,7 @@ public class CargoServiceTest {
                                 .email(string)
                                 .cpf(string)
                                 .resumo(string)
-                                .url_foto(string)
+                                .urlFoto(string)
                                 .build();
 
                 FaixaSalario faixaSalario = FaixaSalario.builder()

@@ -55,7 +55,7 @@ public class FaixaSalarioServiceTest {
                             .email(string)
                             .cpf(string)
                             .resumo(string)
-                            .url_foto(string)
+                            .urlFoto(string)
                             .build();
 
             FaixaSalario faixaSalario = FaixaSalario.builder()

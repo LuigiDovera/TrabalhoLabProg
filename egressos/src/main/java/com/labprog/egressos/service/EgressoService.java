@@ -76,7 +76,7 @@ public class EgressoService {
     public Egresso atualizarProfissoes(Egresso egresso, List<ProfEgresso> profissoes) {
         verificarEgresso(egresso);
         verificarId(egresso);
-        egresso.setProfissoes(profissoes);
+        egresso.setProfsEgressos(profissoes);
         return repo.save(egresso);
     }
 

@@ -48,7 +48,7 @@ public class Egresso {
     @Column(name = "resumo")
     private String resumo;
 
-    @Column(name = "url_foto")
+    @Column(name = "urlFoto")
     private String urlFoto;
 
     @OneToMany(mappedBy = "egresso", fetch=FetchType.EAGER)
