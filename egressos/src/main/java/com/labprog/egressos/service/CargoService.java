@@ -1,6 +1,5 @@
 package com.labprog.egressos.service;
 
-import java.lang.reflect.Executable;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,15 +9,8 @@ import com.labprog.egressos.model.ProfEgresso;
 
 import com.labprog.egressos.model.repository.CargoRepo;
 import com.labprog.egressos.model.repository.ProfEgressoRepo;
-import com.labprog.egressos.model.repository.EgressoRepo;
 import com.labprog.egressos.service.exceptions.RegraNegocioRunTime;
-/*
-import com.lab.patrimonio.entidade.Investimento;
-import com.lab.patrimonio.entidade.Posicao;
-import com.lab.patrimonio.entidade.repository.InvestimentoRepo;
-import com.lab.patrimonio.entidade.repository.PosicaoRepo;
 
-*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

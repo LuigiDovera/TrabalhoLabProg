@@ -14,7 +14,7 @@ import com.labprog.egressos.model.repository.CargoRepo;
 import com.labprog.egressos.model.repository.FaixaSalarioRepo;
 import com.labprog.egressos.model.repository.ProfEgressoRepo;
 import com.labprog.egressos.model.repository.EgressoRepo;
-import com.labprog.egressos.service.exceptions.RegraNegocioRunTime;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -73,6 +73,7 @@ public class CargoServiceTest {
                 // ação
                 Cargo salvo = service.salvar(cargo);
                 Long id = salvo.getId();
+                repository.deleteById(id);
 
                 // verificação
                 Optional<Cargo> temp = repository.findById(id);
@@ -92,7 +93,9 @@ public class CargoServiceTest {
                 Cargo buscado = service.buscar(cargo).get(0);
 
                 // verificação
-
+                Assertions.assertNotNull(buscado);
+                Assertions.assertEquals(buscado.getNome(), cargo.getNome());
+                Assertions.assertEquals(buscado.getDescricao(), cargo.getDescricao());
         }
 
         @Test
@@ -231,7 +234,7 @@ public class CargoServiceTest {
                 int quantidade = service.quantidadeEgressoPorCargo(cargo);
 
                 //verificação
-                Assertions.assertEquals(1, quantidade);
+                Assertions.assertEquals(1, quantidade); //A quantidade é 1 pois apenas um cargo está sendo cadastrado no teste
         }
 
 }
