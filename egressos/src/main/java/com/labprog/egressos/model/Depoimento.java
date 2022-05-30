@@ -26,7 +26,7 @@ public class Depoimento {
     @Id
     @Column(name = "id_depoimento")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "egresso_id")
