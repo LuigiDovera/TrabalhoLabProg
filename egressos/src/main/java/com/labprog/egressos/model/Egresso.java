@@ -61,4 +61,7 @@ public class Egresso {
     @OneToMany(mappedBy = "egresso", cascade = CascadeType.PERSIST)
     List<ProfEgresso> profissoes;
 
+    @OneToMany(mappedBy = "egresso")
+    private List<Depoimento> depoimentos;
+
 }
