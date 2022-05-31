@@ -62,7 +62,7 @@ public class Egresso {
     private List<Contato> contatos;
     
     @OneToMany(mappedBy = "egresso")
-    List<CursoEgresso> cursos_egressos;
+    private List<CursoEgresso> cursoEgressos;
 
     @OneToMany(mappedBy = "egresso")
     private List<Depoimento> depoimentos;

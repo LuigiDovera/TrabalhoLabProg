@@ -6,6 +6,7 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,13 +29,13 @@ public class CursoEgresso {
     @EmbeddedId
     CursoEgressoPK id;
 
-    @ManyToOne
-    @MapsId("curso_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("cursoId")
     @JoinColumn(name = "curso_id")
     Curso curso;
 
-    @ManyToOne
-    @MapsId("egresso_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("egressoId")
     @JoinColumn(name = "egresso_id")
     Egresso egresso;
     

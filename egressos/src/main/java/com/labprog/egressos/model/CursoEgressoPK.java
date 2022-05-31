@@ -9,8 +9,8 @@ import javax.persistence.Embeddable;
 public class CursoEgressoPK implements Serializable {
     
     @Column(name = "curso_id")
-    private long curso_id;
+    Long cursoId;
 
     @Column(name = "egresso_id")
-    private long egresso_id;
+    Long egressoId;
 }
