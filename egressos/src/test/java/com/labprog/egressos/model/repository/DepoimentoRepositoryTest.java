@@ -101,7 +101,7 @@ public class DepoimentoRepositoryTest {
     }
 
     @Test
-    public void deveRemoverCargo() {
+    public void deveRemoverDepoimento() {
         // cenário
         Date data = new Date(1);
 
