@@ -68,7 +68,7 @@ public class EgressoService {
     public Egresso atualizarCursos(Egresso egresso, List<CursoEgresso> cursos) {
         verificarEgresso(egresso);
         verificarId(egresso);
-        egresso.setCursos(cursos);
+        egresso.setEgressoCursos(cursos);
         return repo.save(egresso);
     }
 

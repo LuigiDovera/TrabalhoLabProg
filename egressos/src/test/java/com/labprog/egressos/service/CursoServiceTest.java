@@ -121,7 +121,7 @@ public class CursoServiceTest<cursoEgressoService> {
         Assertions.assertEquals(retorno.size(), 1);
         Assertions.assertEquals(retorno.get(0).getNome(),
                 retornoCursoEgresso.get(0).getEgresso().getNome());
-        Assertions.assertEquals(retorno.get(0).getCursos().get(0).getCurso().getNome(),
+        Assertions.assertEquals(retorno.get(0).getEgressoCursos().get(0).getCurso().getNome(),
                 retornoCursoEgresso.get(0).getCurso().getNome());
 
         // rollback
