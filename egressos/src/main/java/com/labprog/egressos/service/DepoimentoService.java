@@ -35,16 +35,6 @@ public class DepoimentoService {
         repo.delete(depoimento);
     }
 
-    public List<Depoimento> salvarDepoimentos(List<Depoimento> depoimentos) {
-        verificarDepoimentos(depoimentos);
-        return repo.saveAll(depoimentos);
-    }
-
-    public void removerDepoimentos(List<Depoimento> depoimentos) {
-        verificarDepoimentos(depoimentos);
-        repo.deleteAll(depoimentos);
-    }
-
     public List<Depoimento> listarDepoimentosOrdenadosPeloMaisRecente() {
         return repo.obterDepoimentosOrdenadosPeloMaisRecente();
     }
@@ -69,18 +59,5 @@ public class DepoimentoService {
             throw new ServiceRuntimeException("Data do depoimento deve ser informada");
         if ((depoimento.getEgresso() == null) || (depoimento.getEgresso().getCpf().toString().equals("")))
             throw new ServiceRuntimeException("Um egresso válido deve ser informado");
-    }
-
-    private void verificarDepoimentos(List<Depoimento> depoimentos) {
-        for (Depoimento depoimento : depoimentos) {
-            if (depoimento == null)
-                throw new ServiceRuntimeException("Um depoimento válido deve ser informado");
-            if ((depoimento.getTexto() == null) || (depoimento.getTexto().equals("")))
-                throw new ServiceRuntimeException("Texto do depoimento deve ser informado");
-            if ((depoimento.getData() == null) || (depoimento.getData().toString().equals("")))
-                throw new ServiceRuntimeException("Data do depoimento deve ser informada");
-            if ((depoimento.getEgresso() == null) || (depoimento.getEgresso().getCpf().toString().equals("")))
-                throw new ServiceRuntimeException("Um egresso válido deve ser informado");
-        }
     }
 }
