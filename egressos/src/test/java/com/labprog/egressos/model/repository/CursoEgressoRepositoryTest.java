@@ -78,10 +78,12 @@ public class CursoEgressoRepositoryTest {
                 Assertions.assertEquals(cursoEgresso1.getData_conclusao().toString(),
                                 retornoCursoEgresso.getData_conclusao().toString());
 
-                // rollback
-                cursoEgressoRepo.delete(cursoEgresso1);
-                cursoRepo.delete(curso);
-                egressoRepo.delete(egresso);
+                /*
+                 * rollback
+                 * cursoEgressoRepo.delete(cursoEgresso1);
+                 * cursoRepo.delete(curso);
+                 * egressoRepo.delete(egresso);
+                 */
 
         }
 
@@ -192,5 +194,4 @@ public class CursoEgressoRepositoryTest {
                 cursoRepo.delete(curso);
                 egressoRepo.delete(egresso);
         }
-
 }

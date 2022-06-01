@@ -1,4 +1,4 @@
-package com.labprog.egressos.model.repository;
+package com.labprog.egressos.service;
 
 import java.util.ArrayList;
 import java.sql.Date;
@@ -8,6 +8,7 @@ import com.labprog.egressos.model.Curso;
 import com.labprog.egressos.model.CursoEgresso;
 import com.labprog.egressos.model.CursoEgressoPK;
 import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.repository.EgressoRepo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,15 +19,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class CursoRepositoryTest {
+public class CursoServiceTest<cursoEgressoService> {
     @Autowired
-    CursoRepo cursoRepo;
+    CursoService _sut;
 
     @Autowired
-    EgressoRepo egressoRepo;
+    EgressoService egressoService;
 
     @Autowired
-    CursoEgressoRepo cursoEgressoRepo;
+    CursoEgressoService cursoEgressoService;
 
     @Test
     public void deveSalvarCurso() {
@@ -37,7 +38,7 @@ public class CursoRepositoryTest {
                 .build();
 
         // ação
-        Curso retorno = cursoRepo.save(curso);
+        Curso retorno = _sut.salvar(curso);
 
         // verificação
         Assertions.assertNotNull(retorno);
@@ -45,7 +46,7 @@ public class CursoRepositoryTest {
         Assertions.assertEquals(curso.getNivel(), retorno.getNivel());
 
         // rollback
-        cursoRepo.delete(retorno);
+        _sut.remover(retorno);
     }
 
     @Test
@@ -63,7 +64,11 @@ public class CursoRepositoryTest {
                             .build());
         }
 
-        List<Curso> retornoCurso = cursoRepo.saveAll(cursos);
+        List<Curso> retornoCurso = new ArrayList<Curso>();
+
+        for (Curso curso : cursos) {
+            retornoCurso.add(_sut.salvar(curso));
+        }
 
         List<Egresso> egressos = new ArrayList<Egresso>();
         for (int i = 0; i < 3; i++) {
@@ -76,7 +81,11 @@ public class CursoRepositoryTest {
                     .build());
         }
 
-        List<Egresso> retornoEgresso = egressoRepo.saveAll(egressos);
+        List<Egresso> retornoEgresso = new ArrayList<Egresso>();
+
+        for (Egresso egresso : retornoEgresso) {
+            retornoEgresso.add(egressoService.salvar(egresso));
+        }
 
         List<CursoEgressoPK> cursoEgressosPK = new ArrayList<CursoEgressoPK>();
         for (int i = 0; i < 3; i++) {
@@ -97,21 +106,35 @@ public class CursoRepositoryTest {
                     .build());
         }
 
-        List<CursoEgresso> retornoCursoEgresso = cursoEgressoRepo.saveAll(cursoEgressos);
+        List<CursoEgresso> retornoCursoEgresso = new ArrayList<CursoEgresso>();
+
+        for (CursoEgresso cursoEgresso : cursoEgressos) {
+            retornoCursoEgresso.add(cursoEgressoService.salvar(cursoEgresso));
+        }
 
         // ação
         List<Egresso> retorno = new ArrayList<Egresso>();
-        retorno.addAll(cursoRepo.obterEgressosPorCurso(cursos.get(0).getId()));
+        retorno.addAll(_sut.listarEgressosPorCurso(cursos.get(0)));
 
         // verificação
         Assertions.assertNotNull(retorno);
         Assertions.assertEquals(retorno.size(), 1);
-        Assertions.assertEquals(retorno.get(0).getEgressoCursos().get(0).getCurso().getNome(),
+        Assertions.assertEquals(retorno.get(0).getNome(),
+                retornoCursoEgresso.get(0).getEgresso().getNome());
+        Assertions.assertEquals(retorno.get(0).getCursos().get(0).getCurso().getNome(),
                 retornoCursoEgresso.get(0).getCurso().getNome());
 
-        /* rollback
-        cursoEgressoRepo.deleteAll(retornoCursoEgresso);
-        cursoRepo.deleteAll(retornoCurso);
-        egressoRepo.deleteAll(retornoEgresso);*/
+        // rollback
+        for (CursoEgresso cursoEgresso : retornoCursoEgresso) {
+            cursoEgressoService.remover(cursoEgresso);
+        }
+
+        for (Curso curso : retornoCurso) {
+            _sut.remover(curso);
+        }
+
+        for (Egresso egresso : retornoEgresso) {
+            egressoService.remover(egresso);
+        }
     }
 }

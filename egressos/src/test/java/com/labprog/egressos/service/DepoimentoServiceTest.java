@@ -164,7 +164,12 @@ public class DepoimentoServiceTest {
         }
 
         // ação
-        List<Depoimento> salvos = _sut.salvarDepoimentos(depoimentos);
+        List<Depoimento> salvos = new ArrayList<Depoimento>();
+
+        for (Depoimento depoimento : depoimentos) {
+           salvos.add(_sut.salvar(depoimento));
+        }
+        
 
         List<Depoimento> retorno = new ArrayList<Depoimento>();
         retorno.addAll(depoimentoRepo.obterDepoimentosOrdenadosPeloMaisRecente());
@@ -185,7 +190,10 @@ public class DepoimentoServiceTest {
         }
         
         // rollback
-        _sut.removerDepoimentos(retorno);
+        for (Depoimento depoimento : depoimentos) {
+            _sut.remover(depoimento);
+        }
+
         egressoRepo.delete(retornoEgresso);
     }
 
@@ -218,7 +226,11 @@ public class DepoimentoServiceTest {
         }
 
         // ação
-        List<Depoimento> retornoDepoimentos = _sut.salvarDepoimentos(depoimentos);
+        List<Depoimento> retornoDepoimentos = new ArrayList<Depoimento>();
+
+        for (Depoimento depoimento : depoimentos) {
+            retornoDepoimentos.add(_sut.salvar(depoimento));
+        }
 
         List<Depoimento> retorno = new ArrayList<Depoimento>();
         for (Egresso egresso : egressos) {
@@ -235,7 +247,9 @@ public class DepoimentoServiceTest {
         }
 
         // rollback
-        _sut.removerDepoimentos(retornoDepoimentos);
+        for (Depoimento depoimento : retornoDepoimentos) {
+            _sut.remover(depoimento);
+        }
         egressoRepo.deleteAll(retornoEgresso);
     }
 }
