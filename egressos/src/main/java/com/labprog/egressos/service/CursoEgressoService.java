@@ -39,7 +39,7 @@ public class CursoEgressoService {
     }
 
     private void verificarId(CursoEgresso cursoEgresso) {
-        if ((cursoEgresso == null) || (cursoEgresso.getId() == null)) {
+        if ((cursoEgresso == null) || (cursoEgresso.getId() == null) || (!repo.existsById(cursoEgresso.getId()))) {
             throw new ServiceRuntimeException("ID de curso egresso inválido");
         }
     }

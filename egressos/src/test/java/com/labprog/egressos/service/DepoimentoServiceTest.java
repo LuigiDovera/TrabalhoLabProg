@@ -10,8 +10,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
-import com.labprog.egressos.model.repository.DepoimentoRepo;
-import com.labprog.egressos.model.repository.EgressoRepo;
+import com.labprog.egressos.service.DepoimentoService;
+import com.labprog.egressos.service.EgressoService;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,10 +28,7 @@ public class DepoimentoServiceTest {
     DepoimentoService _sut;
 
     @Autowired
-    DepoimentoRepo depoimentoRepo;
-
-    @Autowired
-    EgressoRepo egressoRepo;
+    EgressoService egressoService;
 
     @Test
     @Transactional
@@ -46,7 +43,7 @@ public class DepoimentoServiceTest {
                 .resumo("lorem ipsum lore")
                 .urlFoto("teste")
                 .build();
-        Egresso retornoEgresso = egressoRepo.save(egresso);
+        Egresso retornoEgresso = egressoService.salvar(egresso);
 
         Depoimento depoimento = Depoimento.builder()
                 .egresso(retornoEgresso)
@@ -66,7 +63,7 @@ public class DepoimentoServiceTest {
 
         // rollback
         _sut.remover(retornoDepoimento);
-        egressoRepo.delete(retornoEgresso);
+        egressoService.remover(retornoEgresso);
     }
 
     @Test
@@ -82,7 +79,7 @@ public class DepoimentoServiceTest {
                 .resumo("lorem ipsum lore")
                 .urlFoto("teste")
                 .build();
-        Egresso retornoEgresso = egressoRepo.save(egresso);
+        Egresso retornoEgresso = egressoService.salvar(egresso);
 
         Depoimento depoimento = Depoimento.builder()
                 .egresso(retornoEgresso)
@@ -105,7 +102,7 @@ public class DepoimentoServiceTest {
 
         // rollback
         _sut.remover(depoimentoAtualizado);
-        egressoRepo.delete(retornoEgresso);
+        egressoService.remover(retornoEgresso);
     }
 
     @Test
@@ -120,26 +117,21 @@ public class DepoimentoServiceTest {
                 .resumo("lorem ipsum lore")
                 .urlFoto("teste")
                 .build();
-        Egresso retornoEgresso = egressoRepo.save(egresso);
+        Egresso retornoEgresso = egressoService.salvar(egresso);
 
         Depoimento depoimento = Depoimento.builder()
                 .egresso(retornoEgresso)
                 .texto("Depoimento teste")
                 .data(data)
                 .build();
+        Depoimento retornoDepoimento = _sut.salvar(depoimento);
 
         // ação
-        Depoimento retornoDepoimento = _sut.salvar(depoimento);
-        Optional<Depoimento> retorno = depoimentoRepo.findById(retornoDepoimento.getId());
+        _sut.remover(retornoDepoimento);
+        List<Depoimento> temp = _sut.listar(retornoDepoimento);
 
         // verificação
-        Assertions.assertNotNull(retornoDepoimento);
-        Assertions.assertEquals(depoimento.getTexto(), retornoDepoimento.getTexto());
-        Assertions.assertEquals(depoimento.getData(), retornoDepoimento.getData());
-
-        // rollback
-        _sut.remover(retornoDepoimento);
-        egressoRepo.delete(retornoEgresso);
+        Assertions.assertTrue(temp.isEmpty());
     }
 
     @Test
@@ -152,7 +144,7 @@ public class DepoimentoServiceTest {
                 .resumo("lorem ipsum lore")
                 .urlFoto("teste")
                 .build();
-        Egresso retornoEgresso = egressoRepo.save(egresso);
+        Egresso retornoEgresso = egressoService.salvar(egresso);
 
         List<Depoimento> depoimentos = new ArrayList<Depoimento>();
         for (int i = 0; i < 3; i++) {
@@ -167,12 +159,11 @@ public class DepoimentoServiceTest {
         List<Depoimento> salvos = new ArrayList<Depoimento>();
 
         for (Depoimento depoimento : depoimentos) {
-           salvos.add(_sut.salvar(depoimento));
+            salvos.add(_sut.salvar(depoimento));
         }
-        
 
         List<Depoimento> retorno = new ArrayList<Depoimento>();
-        retorno.addAll(depoimentoRepo.obterDepoimentosOrdenadosPeloMaisRecente());
+        retorno.addAll(_sut.listarDepoimentosOrdenadosPeloMaisRecente());
 
         Collections.sort(depoimentos, new Comparator<Depoimento>() {
             public int compare(Depoimento d1, Depoimento d2) {
@@ -188,13 +179,13 @@ public class DepoimentoServiceTest {
             Assertions.assertEquals(depoimentos.get(i).getData().toString(),
                     retorno.get(i).getData().toString());
         }
-        
+
         // rollback
         for (Depoimento depoimento : depoimentos) {
             _sut.remover(depoimento);
         }
 
-        egressoRepo.delete(retornoEgresso);
+        egressoService.remover(retornoEgresso);
     }
 
     @Test
@@ -211,7 +202,10 @@ public class DepoimentoServiceTest {
                     .build());
         }
 
-        List<Egresso> retornoEgresso = egressoRepo.saveAll(egressos);
+        List<Egresso> retornoEgresso = new ArrayList<Egresso>();
+        for (Egresso egresso : egressos) {
+            retornoEgresso.add(egressoService.salvar(egresso));
+        }
 
         List<Depoimento> depoimentos = new ArrayList<Depoimento>();
         for (int i = 0; i < 2; i++) {
@@ -234,7 +228,7 @@ public class DepoimentoServiceTest {
 
         List<Depoimento> retorno = new ArrayList<Depoimento>();
         for (Egresso egresso : egressos) {
-            retorno.addAll(depoimentoRepo.obterDepoimentosPorEgresso(egresso));
+            retorno.addAll(_sut.obterDepoimentosPorEgresso(egresso));
         }
 
         // verificação
@@ -250,6 +244,8 @@ public class DepoimentoServiceTest {
         for (Depoimento depoimento : retornoDepoimentos) {
             _sut.remover(depoimento);
         }
-        egressoRepo.deleteAll(retornoEgresso);
+        for (Egresso egresso : retornoEgresso) {
+            egressoService.remover(egresso);
+        }
     }
 }

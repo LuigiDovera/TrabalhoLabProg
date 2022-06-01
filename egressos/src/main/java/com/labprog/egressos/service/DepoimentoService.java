@@ -1,6 +1,7 @@
 package com.labprog.egressos.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
@@ -8,6 +9,9 @@ import com.labprog.egressos.model.repository.DepoimentoRepo;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,17 +39,32 @@ public class DepoimentoService {
         repo.delete(depoimento);
     }
 
+    @Transactional
+    public Optional<Depoimento> buscar(Depoimento depoimento) {
+        verificarId(depoimento);
+        return repo.findById(depoimento.getId());
+    }
+
+    public List<Depoimento> listar(Depoimento filtro) {
+        Example<Depoimento> example =
+                Example.of(filtro, ExampleMatcher.matching()
+                        .withIgnoreCase()
+                        .withStringMatcher(StringMatcher.CONTAINING)
+                );
+
+        return repo.findAll(example);
+    }
+
     public List<Depoimento> listarDepoimentosOrdenadosPeloMaisRecente() {
         return repo.obterDepoimentosOrdenadosPeloMaisRecente();
     }
 
     public List<Depoimento> obterDepoimentosPorEgresso(Egresso egresso) {
-        // verificar egresso
         return repo.obterDepoimentosPorEgresso(egresso);
     }
 
     private void verificarId(Depoimento depoimento) {
-        if ((depoimento == null) || (depoimento.getId() == null)) {
+        if ((depoimento == null) || (depoimento.getId() == null) || (!repo.existsById(depoimento.getId()))) {
             throw new ServiceRuntimeException("ID de depoimento inválido");
         }
     }

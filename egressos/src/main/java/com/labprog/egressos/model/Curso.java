@@ -20,7 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="curso")
+@Table(name = "curso")
 @Data
 @Builder
 @NoArgsConstructor
@@ -37,7 +37,6 @@ public class Curso {
     @Column(name = "nivel")
     private String nivel;
 
-    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch= FetchType.EAGER)
-    @Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-    List<CursoEgresso> cursoEgressos;
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
+    List<CursoEgresso> egressos;
 }

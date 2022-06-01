@@ -61,8 +61,7 @@ public class Egresso {
         inverseJoinColumns = @JoinColumn(name = "contato_id"))
     private List<Contato> contatos;
     
-    @OneToMany(mappedBy = "egresso", cascade = CascadeType.ALL, fetch= FetchType.EAGER)
-    @Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "egresso", cascade = CascadeType.ALL)
     List<CursoEgresso> egressoCursos;
 
     @OneToMany(mappedBy = "egresso", fetch = FetchType.LAZY)

@@ -1,6 +1,7 @@
 package com.labprog.egressos.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +11,9 @@ import com.labprog.egressos.model.repository.CursoRepo;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,14 +40,35 @@ public class CursoService {
         repo.delete(curso);
     }
 
+    @Transactional
+    public Optional<Curso> buscar(Curso curso){
+        verificarId(curso);
+        return repo.findById(curso.getId());
+    }
+
+    public List<Curso> listar(Curso filtro) {
+        Example<Curso> example =
+                Example.of(filtro, ExampleMatcher.matching()
+                        .withIgnoreCase()
+                        .withStringMatcher(StringMatcher.CONTAINING)
+                );
+
+        return repo.findAll(example);
+    }
+
     public List<Egresso> listarEgressosPorCurso(Curso curso) {
-        verificarCurso(curso);
+        verificarId(curso);
         return repo.obterEgressosPorCurso(curso.getId());
     }
 
-    private void verificarId(Curso Curso) {
-        if ((Curso == null) || (Curso.getId() == null)) {
-            throw new ServiceRuntimeException("ID de Curso inválido");
+    public int listarQuantidadeDeEgressosPorCurso(Curso curso){
+        verificarId(curso);
+        return repo.obterQuantidadeDeEgressosPorCurso(curso.getId());
+    }
+
+    private void verificarId(Curso curso) {
+        if ((curso == null) || (curso.getId() == null) || (!repo.existsById(curso.getId()))) {
+            throw new ServiceRuntimeException("ID de curso inválido");
         }
     }
 

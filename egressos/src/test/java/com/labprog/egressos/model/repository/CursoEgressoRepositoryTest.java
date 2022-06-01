@@ -22,176 +22,180 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class CursoEgressoRepositoryTest {
-        @Autowired
-        CursoRepo cursoRepo;
+    @Autowired
+    CursoRepo cursoRepo;
 
-        @Autowired
-        EgressoRepo egressoRepo;
+    @Autowired
+    EgressoRepo egressoRepo;
 
-        @Autowired
-        CursoEgressoRepo cursoEgressoRepo;
+    @Autowired
+    CursoEgressoRepo cursoEgressoRepo;
 
-        @Test
-        // @Transactional
-        public void deveSalvarCursoDeEgresso() {
-                // cenário
-                Date data = new Date(1);
+    @Test
+    // @Transactional
+    public void deveSalvarCursoDeEgresso() {
+        // cenário
+        Date data = new Date(1);
 
-                Curso curso = Curso.builder()
-                                .nome("curso teste")
-                                .nivel("nivel teste")
-                                .build();
+        Curso curso = Curso.builder()
+                .nome("curso teste")
+                .nivel("nivel teste")
+                .build();
 
-                Curso retornoCurso = cursoRepo.save(curso);
+        Curso retornoCurso = cursoRepo.save(curso);
 
-                Egresso egresso = Egresso.builder()
-                                .nome("tuludan")
-                                .email("a@a.com")
-                                .cpf("1234")
-                                .resumo("lorem ipsum lore")
-                                .urlFoto("teste")
-                                .build();
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
 
-                Egresso retornoEgresso = egressoRepo.save(egresso);
+        Egresso retornoEgresso = egressoRepo.save(egresso);
 
-                CursoEgressoPK idCursoEgresso = new CursoEgressoPK(
-                                retornoEgresso.getId(),
-                                retornoCurso.getId());
+        CursoEgressoPK idCursoEgresso = new CursoEgressoPK(
+                retornoEgresso.getId(),
+                retornoCurso.getId());
 
-                CursoEgresso cursoEgresso1 = CursoEgresso.builder()
-                                .id(idCursoEgresso)
-                                .curso(retornoCurso)
-                                .egresso(retornoEgresso)
-                                .data_inicio(data)
-                                .data_conclusao(data)
-                                .build();
+        CursoEgresso cursoEgresso1 = CursoEgresso.builder()
+                .id(idCursoEgresso)
+                .curso(retornoCurso)
+                .egresso(retornoEgresso)
+                .data_inicio(data)
+                .data_conclusao(data)
+                .build();
 
-                // ação
-                CursoEgresso retornoCursoEgresso = cursoEgressoRepo.save(cursoEgresso1);
+        // ação
+        CursoEgresso retornoCursoEgresso = cursoEgressoRepo.save(cursoEgresso1);
 
-                // verificação
-                Assertions.assertNotNull(retornoCursoEgresso);
-                Assertions.assertEquals(cursoEgresso1.getCurso().getNome(), retornoCursoEgresso.getCurso().getNome());
-                Assertions.assertEquals(cursoEgresso1.getEgresso().getCpf(), retornoCursoEgresso.getEgresso().getCpf());
-                Assertions.assertEquals(cursoEgresso1.getData_inicio().toString(),
-                                retornoCursoEgresso.getData_inicio().toString());
-                Assertions.assertEquals(cursoEgresso1.getData_conclusao().toString(),
-                                retornoCursoEgresso.getData_conclusao().toString());
+        // verificação
+        Assertions.assertNotNull(retornoCursoEgresso);
+        Assertions.assertEquals(cursoEgresso1.getCurso().getNome(), retornoCursoEgresso.getCurso().getNome());
+        Assertions.assertEquals(cursoEgresso1.getEgresso().getCpf(), retornoCursoEgresso.getEgresso().getCpf());
+        Assertions.assertEquals(cursoEgresso1.getData_inicio().toString(),
+                retornoCursoEgresso.getData_inicio().toString());
+        Assertions.assertEquals(cursoEgresso1.getData_conclusao().toString(),
+                retornoCursoEgresso.getData_conclusao().toString());
 
-                /*
-                 * rollback
-                 * cursoEgressoRepo.delete(cursoEgresso1);
-                 * cursoRepo.delete(curso);
-                 * egressoRepo.delete(egresso);
-                 */
+        // rollback
+        cursoEgressoRepo.delete(cursoEgresso1);
+        cursoRepo.delete(curso);
+        egressoRepo.delete(egresso);
 
-        }
+    }
 
-        @Test
-        // @Transactional
-        public void deveAtualizarCursoEgresso() {
+    @Test
+    // @Transactional
+    public void deveAtualizarCursoEgresso() {
+        // cenário
+        Date data = new Date(1);
 
-                // cenário
-                Date data = new Date(1);
+        Curso curso = Curso.builder()
+                .nome("curso teste")
+                .nivel("nivel teste")
+                .build();
 
-                Curso curso = Curso.builder()
-                                .nome("curso teste")
-                                .nivel("nivel teste")
-                                .build();
+        Curso retornoCurso = cursoRepo.save(curso);
 
-                Curso retornoCurso = cursoRepo.save(curso);
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
 
-                Egresso egresso = Egresso.builder()
-                                .nome("tuludan")
-                                .email("a@a.com")
-                                .cpf("1234")
-                                .resumo("lorem ipsum lore")
-                                .urlFoto("teste")
-                                .build();
+        Egresso retornoEgresso = egressoRepo.save(egresso);
 
-                Egresso retornoEgresso = egressoRepo.save(egresso);
+        CursoEgressoPK idCursoEgresso = new CursoEgressoPK(
+                retornoEgresso.getId(),
+                retornoCurso.getId());
 
-                CursoEgressoPK idCursoEgresso = new CursoEgressoPK(
-                                retornoEgresso.getId(),
-                                retornoCurso.getId());
+        CursoEgresso cursoEgresso1 = CursoEgresso.builder()
+                .id(idCursoEgresso)
+                .curso(retornoCurso)
+                .egresso(retornoEgresso)
+                .data_inicio(data)
+                .data_conclusao(data)
+                .build();
 
-                CursoEgresso cursoEgresso1 = CursoEgresso.builder()
-                                .id(idCursoEgresso)
-                                .curso(retornoCurso)
-                                .egresso(retornoEgresso)
-                                .data_inicio(data)
-                                .data_conclusao(data)
-                                .build();
+        // ação
+        CursoEgresso retornoCursoEgresso = cursoEgressoRepo.save(cursoEgresso1);
+        retornoCursoEgresso.setData_inicio(new Date(0));
+        retornoCursoEgresso.setData_conclusao(new Date(0));
+        CursoEgresso cursoEgressoAtualizado = cursoEgressoRepo.save(retornoCursoEgresso);
 
-                // ação
-                CursoEgresso retornoCursoEgresso = cursoEgressoRepo.save(cursoEgresso1);
-                retornoCursoEgresso.setData_inicio(new Date(0));
-                retornoCursoEgresso.setData_conclusao(new Date(0));
-                CursoEgresso cursoEgressoAtualizado = cursoEgressoRepo.save(retornoCursoEgresso);
+        //// verificação
+        Assertions.assertNotNull(retornoCursoEgresso);
+        Assertions.assertNotNull(retornoCursoEgresso.getId());
+        Assertions.assertEquals(cursoEgresso1.getCurso().getNome(), retornoCursoEgresso.getCurso().getNome());
+        Assertions.assertEquals(cursoEgresso1.getEgresso().getCpf(), retornoCursoEgresso.getEgresso().getCpf());
+        Assertions.assertEquals(cursoEgresso1.getData_inicio().toString(),
+                retornoCursoEgresso.getData_inicio().toString());
+        Assertions.assertEquals(cursoEgresso1.getData_conclusao().toString(),
+                retornoCursoEgresso.getData_conclusao().toString());
 
-                //// verificação
-                Assertions.assertNotNull(retornoCursoEgresso);
-                Assertions.assertNotNull(retornoCursoEgresso.getId());
-                Assertions.assertEquals(cursoEgresso1.getCurso().getNome(), retornoCursoEgresso.getCurso().getNome());
-                Assertions.assertEquals(cursoEgresso1.getEgresso().getCpf(), retornoCursoEgresso.getEgresso().getCpf());
-                Assertions.assertEquals(cursoEgresso1.getData_inicio().toString(),
-                                retornoCursoEgresso.getData_inicio().toString());
-                Assertions.assertEquals(cursoEgresso1.getData_conclusao().toString(),
-                                retornoCursoEgresso.getData_conclusao().toString());
+        // rollback
+        cursoEgressoRepo.delete(cursoEgressoAtualizado);
+        cursoRepo.delete(curso);
+        egressoRepo.delete(egresso);
+    }
 
-                // rollback
-                cursoEgressoRepo.delete(cursoEgressoAtualizado);
-                cursoRepo.delete(curso);
-                egressoRepo.delete(egresso);
-        }
+    @Test
+    // @Transactional
+    public void deveRemoverCursoEgresso() {
+        // cenário
+        Date data = new Date(1);
 
-        @Test
-        // @Transactional
-        public void deveRemoverCursoEgresso() {
+        Curso curso = Curso.builder()
+                .nome("curso teste")
+                .nivel("nivel teste")
+                .build();
 
-                // cenário
-                Date data = new Date(1);
+        Curso retornoCurso = cursoRepo.save(curso);
 
-                Curso curso = Curso.builder()
-                                .nome("curso teste")
-                                .nivel("nivel teste")
-                                .build();
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
 
-                Curso retornoCurso = cursoRepo.save(curso);
+        Egresso retornoEgresso = egressoRepo.save(egresso);
 
-                Egresso egresso = Egresso.builder()
-                                .nome("tuludan")
-                                .email("a@a.com")
-                                .cpf("1234")
-                                .resumo("lorem ipsum lore")
-                                .urlFoto("teste")
-                                .build();
+        CursoEgressoPK idCursoEgresso = CursoEgressoPK.builder()
+                .curso_id(retornoCurso.getId())
+                .egresso_id(retornoEgresso.getId())
+                .build();
 
-                Egresso retornoEgresso = egressoRepo.save(egresso);
+        CursoEgresso cursoEgresso1 = CursoEgresso.builder()
+                .id(idCursoEgresso)
+                .curso(retornoCurso)
+                .egresso(retornoEgresso)
+                .data_inicio(data)
+                .data_conclusao(data)
+                .build();
 
-                CursoEgressoPK idCursoEgresso = new CursoEgressoPK(
-                                retornoEgresso.getId(),
-                                retornoCurso.getId());
+        CursoEgresso retornoCursoEgresso = cursoEgressoRepo.save(cursoEgresso1);
 
-                CursoEgresso cursoEgresso1 = CursoEgresso.builder()
-                                .id(idCursoEgresso)
-                                .curso(retornoCurso)
-                                .egresso(retornoEgresso)
-                                .data_inicio(data)
-                                .data_conclusao(data)
-                                .build();
+        Assertions.assertNotNull(retornoCursoEgresso);
+        Assertions.assertEquals(cursoEgresso1.getCurso().getId(), retornoCursoEgresso.getCurso().getId());
+        Assertions.assertEquals(cursoEgresso1.getEgresso().getId(), retornoCursoEgresso.getEgresso().getId());
+        Assertions.assertEquals(cursoEgresso1.getData_inicio(), retornoCursoEgresso.getData_inicio());
+        Assertions.assertEquals(cursoEgresso1.getData_conclusao(), retornoCursoEgresso.getData_conclusao());
 
-                // ação
-                CursoEgresso retornoCursoEgresso = cursoEgressoRepo.save(cursoEgresso1);
-                cursoEgressoRepo.deleteById(retornoCursoEgresso.getId());
+        // ação
+        cursoEgressoRepo.delete(retornoCursoEgresso);
 
-                // verificação
-                Optional<CursoEgresso> temp = cursoEgressoRepo.findById(retornoCursoEgresso.getId());
-                Assertions.assertFalse(temp.isPresent());
+        // verificação
+        Optional<CursoEgresso> temp = cursoEgressoRepo.findById(retornoCursoEgresso.getId());
+        Assertions.assertTrue(temp.isEmpty());
 
-                // rollback
-                cursoEgressoRepo.delete(retornoCursoEgresso);
-                cursoRepo.delete(curso);
-                egressoRepo.delete(egresso);
-        }
+        // rollback
+        cursoEgressoRepo.delete(retornoCursoEgresso);
+        cursoRepo.delete(curso);
+        egressoRepo.delete(egresso);
+    }
 }
