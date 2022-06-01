@@ -1,8 +1,6 @@
 package com.labprog.egressos.model;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,12 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.JoinColumn;
 
 
@@ -62,10 +61,12 @@ public class Egresso {
         inverseJoinColumns = @JoinColumn(name = "contato_id"))
     private List<Contato> contatos;
     
-    @OneToMany(mappedBy = "egresso")
-    List<CursoEgresso> cursos;
+    @OneToMany(mappedBy = "egresso", cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+    @Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
+    List<CursoEgresso> egressoCursos;
 
-    @OneToMany(mappedBy = "egresso")
+    @OneToMany(mappedBy = "egresso", fetch = FetchType.LAZY)
+    @Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
     private List<Depoimento> depoimentos;
 
 
