@@ -2,6 +2,7 @@ package com.labprog.egressos.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -62,7 +63,7 @@ public class Egresso {
     private List<Contato> contatos;
     
     @OneToMany(mappedBy = "egresso")
-    private List<CursoEgresso> cursoEgressos;
+    Set<CursoEgresso> cursoEgresso;
 
     @OneToMany(mappedBy = "egresso")
     private List<Depoimento> depoimentos;
