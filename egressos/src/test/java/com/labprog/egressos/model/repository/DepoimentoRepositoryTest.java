@@ -177,6 +177,9 @@ public class DepoimentoRepositoryTest {
             Assertions.assertEquals(depoimentos.get(i).getData().toString(),
                     retorno.get(i).getData().toString());
         }
+
+        // rollback
+        egressoRepo.delete(retornoEgresso);
     }
 
     @Test

@@ -41,7 +41,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveSalvarEgresso")
                 .urlFoto("teste")
                 .build();
 
@@ -79,7 +79,7 @@ public class EgressoServiceTest {
         Egresso egresso = Egresso.builder()
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveGerarErroAoTentarSalvarSemNome")
                 .urlFoto("teste")
                 .build();
 
@@ -98,7 +98,7 @@ public class EgressoServiceTest {
         Egresso egresso = Egresso.builder()
                 .nome("tuludan")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveGerarErroAoTentarSalvarSemEmail")
                 .urlFoto("teste")
                 .build();
 
@@ -117,7 +117,7 @@ public class EgressoServiceTest {
         Egresso egresso = Egresso.builder()
                 .nome("tuludan")
                 .email("a@a.com")
-                .resumo("lorem ipsum lore")
+                .resumo("deveGerarErroAoTentarSalvarSemCpf")
                 .urlFoto("teste")
                 .build();
 
@@ -137,7 +137,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveAtualizarEgresso")
                 .urlFoto("teste")
                 .build();
 
@@ -146,7 +146,7 @@ public class EgressoServiceTest {
         salvo.setNome("nadulut");
         salvo.setEmail("moc.a@a");
         salvo.setCpf("4321");
-        salvo.setResumo("lore ipsum lorem");
+        salvo.setResumo("deveAtualizarEgresso");
         salvo.setUrlFoto("etset");
         Egresso retorno = _sut.atualizar(salvo);
 
@@ -182,7 +182,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveGerarErroAoTentarAtualizarSemNome")
                 .urlFoto("teste")
                 .build();
 
@@ -190,7 +190,7 @@ public class EgressoServiceTest {
         salvo.setNome(""); 
         salvo.setEmail("moc.a@a");
         salvo.setCpf("4321");
-        salvo.setResumo("lore ipsum lorem");
+        salvo.setResumo("deveGerarErroAoTentarAtualizarSemNome");
         salvo.setUrlFoto("etset");
 
         // ação e verificação
@@ -209,7 +209,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveGerarErroAoTentarAtualizarSemEmail")
                 .urlFoto("teste")
                 .build();
 
@@ -217,7 +217,7 @@ public class EgressoServiceTest {
         salvo.setNome("nadulut");
         salvo.setEmail("");
         salvo.setCpf("4321");
-        salvo.setResumo("lore ipsum lorem");
+        salvo.setResumo("deveGerarErroAoTentarAtualizarSemEmail");
         salvo.setUrlFoto("etset");
 
         // ação e verificação
@@ -236,7 +236,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveGerarErroAoTentarAtualizarSemCpf")
                 .urlFoto("teste")
                 .build();
 
@@ -244,7 +244,7 @@ public class EgressoServiceTest {
         salvo.setNome("nadulut");
         salvo.setEmail("moc.a@a");
         salvo.setCpf("");
-        salvo.setResumo("lore ipsum lorem");
+        salvo.setResumo("deveGerarErroAoTentarAtualizarSemCpf");
         salvo.setUrlFoto("etset");
 
         // ação e verificação
@@ -263,7 +263,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveGerarErroAoAtualizarInexistente")
                 .urlFoto("teste")
                 .build();
         
@@ -283,7 +283,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveRemoverEgresso")
                 .urlFoto("teste")
                 .build();
         
@@ -304,7 +304,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveGerarErroAoRemoverInexistente")
                 .urlFoto("teste")
                 .build();
         
@@ -327,7 +327,7 @@ public class EgressoServiceTest {
                         .nome("tuludan" + (i+1))
                         .email("a@a.com" + (i+1))
                         .cpf("1234" + (i+1))
-                        .resumo("lorem ipsum lore" + (i+1))
+                        .resumo("deveBuscarEgressos" + (i+1))
                         .urlFoto("teste" + (i+1))
                         .build()
             );
@@ -369,7 +369,7 @@ public class EgressoServiceTest {
                             .nome("tuludan")
                             .email("a@a.com")
                             .cpf("1234")
-                            .resumo("lorem ipsum lore")
+                            .resumo("deveRetornarVazioAoNaoEncontrarEgressos")
                             .urlFoto("teste")
                             .build();
         
@@ -387,7 +387,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("atualizarContatosDeveInserirContatosNovos")
                 .urlFoto("teste")
                 .build();
         
@@ -422,7 +422,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("atualizarContatosDeveRemoverContato")
                 .urlFoto("teste")
                 .build();
         
@@ -455,7 +455,7 @@ public class EgressoServiceTest {
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
-                .resumo("lorem ipsum lore")
+                .resumo("deveBuscarContatosEgresso")
                 .urlFoto("teste")
                 .build();
         

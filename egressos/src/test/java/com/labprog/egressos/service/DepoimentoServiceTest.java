@@ -106,6 +106,7 @@ public class DepoimentoServiceTest {
     }
 
     @Test
+    @Transactional
     public void deveRemoverDepoimento() {
         // cenário
         Date data = new Date(1);
