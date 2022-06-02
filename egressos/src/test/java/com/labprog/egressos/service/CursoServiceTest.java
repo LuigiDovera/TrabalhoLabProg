@@ -1,4 +1,4 @@
-package com.labprog.egressos.model.repository;
+package com.labprog.egressos.service;
 
 import java.util.ArrayList;
 import java.sql.Date;
@@ -11,6 +11,7 @@ import com.labprog.egressos.model.Curso;
 import com.labprog.egressos.model.CursoEgresso;
 import com.labprog.egressos.model.CursoEgressoPK;
 import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.repository.EgressoRepo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,15 +22,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class CursoRepositoryTest {
+public class CursoServiceTest<cursoEgressoService> {
     @Autowired
-    CursoRepo cursoRepo;
+    CursoService _sut;
 
     @Autowired
-    EgressoRepo egressoRepo;
+    EgressoService egressoService;
 
     @Autowired
-    CursoEgressoRepo cursoEgressoRepo;
+    CursoEgressoService cursoEgressoService;
 
     @Test
     @Transactional
@@ -41,7 +42,7 @@ public class CursoRepositoryTest {
                 .build();
 
         // ação
-        Curso retorno = cursoRepo.save(curso);
+        Curso retorno = _sut.salvar(curso);
 
         // verificação
         Assertions.assertNotNull(retorno);
@@ -49,7 +50,7 @@ public class CursoRepositoryTest {
         Assertions.assertEquals(curso.getNivel(), retorno.getNivel());
 
         // rollback
-        cursoRepo.delete(retorno);
+        _sut.remover(retorno);
     }
 
     @Test
@@ -61,13 +62,13 @@ public class CursoRepositoryTest {
                 .nivel("nivel teste")
                 .build();
 
-        Curso retorno = cursoRepo.save(curso);
+        Curso retorno = _sut.salvar(curso);
 
         // ação
         retorno.setNome("teste curso");
         retorno.setNivel("teste nivel");
 
-        Curso salvo = cursoRepo.save(retorno);
+        Curso salvo = _sut.salvar(retorno);
 
         // verificação
         Assertions.assertNotNull(salvo);
@@ -75,7 +76,7 @@ public class CursoRepositoryTest {
         Assertions.assertEquals(retorno.getNivel(), salvo.getNivel());
 
         // rollback
-        cursoRepo.delete(retorno);
+        _sut.remover(retorno);
     }
 
     @Test
@@ -87,17 +88,14 @@ public class CursoRepositoryTest {
                 .nivel("nivel teste")
                 .build();
 
-        Curso retorno = cursoRepo.save(curso);
+        Curso retorno = _sut.salvar(curso);
 
         // ação
-        cursoRepo.deleteById(retorno.getId());
+        _sut.remover(retorno);
+        List<Curso> temp = _sut.listar(retorno);
 
         // verificação
-        Optional<Curso> temp = cursoRepo.findById(retorno.getId());
         Assertions.assertTrue(temp.isEmpty());
-
-        // rollback
-        cursoRepo.delete(retorno);
     }
 
     @Test
@@ -115,7 +113,11 @@ public class CursoRepositoryTest {
                             .build());
         }
 
-        List<Curso> retornoCurso = cursoRepo.saveAll(cursos);
+        List<Curso> retornoCurso = new ArrayList<Curso>();
+
+        for (Curso curso : cursos) {
+            retornoCurso.add(_sut.salvar(curso));
+        }
 
         List<Egresso> egressos = new ArrayList<Egresso>();
         for (int i = 0; i < 3; i++) {
@@ -128,7 +130,11 @@ public class CursoRepositoryTest {
                     .build());
         }
 
-        List<Egresso> retornoEgresso = egressoRepo.saveAll(egressos);
+        List<Egresso> retornoEgresso = new ArrayList<Egresso>();
+
+        for (Egresso egresso : egressos) {
+            retornoEgresso.add(egressoService.salvar(egresso));
+        }
 
         List<CursoEgressoPK> cursoEgressosPK = new ArrayList<CursoEgressoPK>();
         for (int i = 0; i < 3; i++) {
@@ -149,10 +155,14 @@ public class CursoRepositoryTest {
                     .build());
         }
 
-        List<CursoEgresso> retornoCursoEgresso = cursoEgressoRepo.saveAll(cursoEgressos);
+        List<CursoEgresso> retornoCursoEgresso = new ArrayList<CursoEgresso>();
+
+        for (CursoEgresso cursoEgresso : cursoEgressos) {
+            retornoCursoEgresso.add(cursoEgressoService.salvar(cursoEgresso));
+        }
 
         // ação
-        List<Egresso> retorno = cursoRepo.obterEgressosPorCurso(cursos.get(0).getId());
+        List<Egresso> retorno = _sut.listarEgressosPorCurso(cursos.get(0));
 
         // verificação
         Assertions.assertNotNull(retorno);
@@ -164,9 +174,17 @@ public class CursoRepositoryTest {
         }
 
         // rollback
-        cursoEgressoRepo.deleteAll(retornoCursoEgresso);
-        cursoRepo.deleteAll(retornoCurso);
-        egressoRepo.deleteAll(retornoEgresso);
+        for (CursoEgresso cursoEgresso : retornoCursoEgresso) {
+            cursoEgressoService.remover(cursoEgresso);
+        }
+
+        for (Curso curso : retornoCurso) {
+            _sut.remover(curso);
+        }
+
+        for (Egresso egresso : retornoEgresso) {
+            egressoService.remover(egresso);
+        }
     }
 
     @Test
@@ -184,7 +202,11 @@ public class CursoRepositoryTest {
                             .build());
         }
 
-        List<Curso> retornoCurso = cursoRepo.saveAll(cursos);
+        List<Curso> retornoCurso = new ArrayList<Curso>();
+
+        for (Curso curso : cursos) {
+            retornoCurso.add(_sut.salvar(curso));
+        }
 
         List<Egresso> egressos = new ArrayList<Egresso>();
         for (int i = 0; i < 3; i++) {
@@ -197,7 +219,11 @@ public class CursoRepositoryTest {
                     .build());
         }
 
-        List<Egresso> retornoEgresso = egressoRepo.saveAll(egressos);
+        List<Egresso> retornoEgresso = new ArrayList<Egresso>();
+
+        for (Egresso egresso : egressos) {
+            retornoEgresso.add(egressoService.salvar(egresso));
+        }
 
         List<CursoEgressoPK> cursoEgressosPK = new ArrayList<CursoEgressoPK>();
         for (int i = 0; i < 3; i++) {
@@ -218,12 +244,16 @@ public class CursoRepositoryTest {
                     .build());
         }
 
-        List<CursoEgresso> retornoCursoEgresso = cursoEgressoRepo.saveAll(cursoEgressos);
+        List<CursoEgresso> retornoCursoEgresso = new ArrayList<CursoEgresso>();
+
+        for (CursoEgresso cursoEgresso : cursoEgressos) {
+            retornoCursoEgresso.add(cursoEgressoService.salvar(cursoEgresso));
+        }
 
         // ação
-        int quantidadeEgressosCursoId1 = cursoRepo.obterQuantidadeDeEgressosPorCurso(cursos.get(0).getId());
-        int quantidadeEgressosCursoId2 = cursoRepo.obterQuantidadeDeEgressosPorCurso(cursos.get(1).getId());
-        int quantidadeEgressosCursoId3 = cursoRepo.obterQuantidadeDeEgressosPorCurso(cursos.get(2).getId());
+        int quantidadeEgressosCursoId1 = _sut.listarQuantidadeDeEgressosPorCurso(cursos.get(0));
+        int quantidadeEgressosCursoId2 = _sut.listarQuantidadeDeEgressosPorCurso(cursos.get(1));
+        int quantidadeEgressosCursoId3 = _sut.listarQuantidadeDeEgressosPorCurso(cursos.get(2));
 
         // verificação
         Assertions.assertNotNull(quantidadeEgressosCursoId1);
@@ -236,8 +266,16 @@ public class CursoRepositoryTest {
         Assertions.assertEquals(quantidadeEgressosCursoId3, 1);
 
         // rollback
-        cursoEgressoRepo.deleteAll(retornoCursoEgresso);
-        cursoRepo.deleteAll(retornoCurso);
-        egressoRepo.deleteAll(retornoEgresso);
+        for (CursoEgresso cursoEgresso : retornoCursoEgresso) {
+            cursoEgressoService.remover(cursoEgresso);
+        }
+
+        for (Curso curso : retornoCurso) {
+            _sut.remover(curso);
+        }
+
+        for (Egresso egresso : retornoEgresso) {
+            egressoService.remover(egresso);
+        }
     }
 }

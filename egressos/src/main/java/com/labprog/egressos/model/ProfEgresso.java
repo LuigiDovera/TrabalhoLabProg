@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.CascadeType;
 
 
 import lombok.AllArgsConstructor;
@@ -33,7 +34,7 @@ public class ProfEgresso {
     @JoinColumn(name = "egresso_id")
     private Egresso egresso;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "cargo_id")
     private Cargo cargo;
 
@@ -50,5 +51,8 @@ public class ProfEgresso {
     @Column(name = "data_registro")
     private Date dataRegistro;
 
+    public String toString(){
+        return this.id + " " + this.empresa + " " + this.descricao;
+    }
 
 }    

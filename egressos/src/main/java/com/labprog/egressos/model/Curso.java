@@ -1,14 +1,18 @@
 package com.labprog.egressos.model;
 
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="curso")
+@Table(name = "curso")
 @Data
 @Builder
 @NoArgsConstructor
@@ -25,7 +29,7 @@ public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_curso")
-    private long id;
+    private Long id;
 
     @Column(name = "nome")
     private String nome;
@@ -33,6 +37,6 @@ public class Curso {
     @Column(name = "nivel")
     private String nivel;
 
-    @OneToMany(mappedBy = "curso")
-    Set<CursoEgresso> cursos_egressos;
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
+    List<CursoEgresso> egressos;
 }
