@@ -1,19 +1,18 @@
 import React from 'react';
 import './App.css';
-//import Home from './views/home';
-import "primereact/resources/themes/vela-blue/theme.css";
+import "primereact/resources/themes/vela-green/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
-import MenubarDemo from './components/MainMenubar';
+import { MainMenubar } from './components/MainMenubar';
+import Rotas from './components/Rotas';
 
 function App() {
-  return (
-    <div className="App">
-        <MenubarDemo />
-    </div>
-    //<Home>
-    //</Home>
-  );
+    return (
+        <div className="App">
+            <MainMenubar />
+            <Rotas />
+        </div>
+    );
 }
 
 export default App;
