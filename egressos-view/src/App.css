@@ -1,38 +1,51 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.main-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.secao-home-div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.cards-egressos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    gap: 5%;
 }
 
-.App-link {
-  color: #61dafb;
+.card-egresso {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 60%;
+    width: 20%;
+    max-height: fit-content;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.botoes-contato-card-egresso {
+    display: flex;
+    align-items: left;
+    flex-direction: row;
+    height: 20%;
+    width: 100%;
+    gap: 5%;
+}
+
+.imagem-card-egresso {
+    height: 100%;
+    width: 100%;
 }
