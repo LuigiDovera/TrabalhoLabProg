@@ -1,0 +1,74 @@
+.card-egresso {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 40%;
+    max-height: fit-content;
+}
+
+.botoes-contato-card-egresso {
+    display: flex;
+    align-items: left;
+    flex-direction: row;
+    height: 20%;
+    width: 100%;
+    gap: 5%;
+}
+
+.imagem-card-egresso {
+    height: 100%;
+    width: 100%;
+}
+
+.carossel-egressos-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.carrossel-egressos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.datascroller-depoimentos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.card-depoimento {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    border: 1px solid;
+    margin: 2%;
+    border-radius: 5px;
+}
+
+.citacao-depoimento {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    gap: 5%;
+}
+
+.texto-depoimento {
+
+}
+
+.nome-depoimento {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-left: 10%;
+}

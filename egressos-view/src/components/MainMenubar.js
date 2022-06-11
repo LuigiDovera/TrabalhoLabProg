@@ -60,5 +60,3 @@ export class MainMenubar extends Component {
         );
     }
 }
-
-export default MainMenubar;

@@ -1,6 +1,7 @@
 import React from 'react'
-import CardFoto from '../components/CardFoto'
-import '../App.css'
+import { CarrosselEgressos } from '../components/CarrosselEgressos'
+import { DataScrollerDepoimentos } from '../components/DataScrollerDepoimentos'
+import './Home.css'
 
 class Home extends React.Component {
     render() {
@@ -8,11 +9,11 @@ class Home extends React.Component {
             <div className='main-div'>
                 <div className='secao-home-div'>
                     <h1>Nossos Egressos</h1>
-                    <div className='cards-egressos'>
-                        <CardFoto />
-                        <CardFoto />
-                        <CardFoto />
-                    </div>
+                        <CarrosselEgressos/>
+                </div>
+                <div className='secao-home-div'>
+                    <h1>Depoimentos</h1>
+                        <DataScrollerDepoimentos/>
                 </div>
             </div>
         )
