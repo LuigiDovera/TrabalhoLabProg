@@ -1,7 +1,5 @@
 package com.labprog.egressos.model.dto;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,12 +7,8 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class EgressoDTO {
+public class ContatoDTO {
     private Long id;
     private String nome;
-    private String email;
-    private String cpf;
-    private String resumo;
-    private String urlFoto;
-    private List<ContatoDTO> contatos;
+    private String urlLogo;
 }
