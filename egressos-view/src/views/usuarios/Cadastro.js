@@ -57,7 +57,7 @@ class Cadastro extends React.Component {
                                 onChange={(e) => this.setState({ senha: e.target.value })} />
                             <label htmlFor="inputsenha">Senha</label>
                         </span>
-                        <Button label="Cadastrar" icon="pi pi-user" className="w-full" />
+                        <Button label="Cadastrar" icon="pi pi-user" className="w-50" />
                     </div>
                 </div>
             </div>
