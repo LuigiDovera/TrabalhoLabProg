@@ -1,0 +1,19 @@
+.mainDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.formDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.formItemSpan {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 26px;
+}

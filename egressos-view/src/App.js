@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import "primeflex/primeflex.css";
 import { MainMenubar } from './components/MainMenubar';
 import Rotas from './components/Rotas';
 

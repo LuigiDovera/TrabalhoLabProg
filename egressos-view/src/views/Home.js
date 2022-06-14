@@ -1,7 +1,7 @@
 import React from 'react'
 import { CarrosselEgressos } from '../components/CarrosselEgressos'
 import { DataScrollerDepoimentos } from '../components/DataScrollerDepoimentos'
-import './Home.css'
+import styles from './Home.module.css'
 
 class Home extends React.Component {
     render() {
