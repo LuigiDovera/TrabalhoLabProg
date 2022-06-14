@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Carousel } from 'primereact/carousel';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import { Container, Row, Col } from 'react-bootstrap';
 import foto_placeholder from '../images/foto_placeholder.png';
 import './Components.css';
 
@@ -45,26 +46,24 @@ export class CarrosselEgressos extends Component {
             <img className='imagem-card-egresso' alt="Card" src={foto_placeholder} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} />
         );
         const footer = (
-            <div className='botoes-contato-card-egresso'>
-                <Button icon="pi pi-envelope" />
-                <Button icon="pi pi-linkedin" />
-            </div>
+            <Row>
+                <div>
+                    <Button className="botao-informacao mx-1 my-1" icon="pi pi-envelope" />
+                    <Button className="botao-informacao mx-1 my-1" icon="pi pi-linkedin" />
+                    <Button className="botao-informacao mx-1 my-1" icon="pi pi-instagram" />
+                </div>
+            </Row>
         );
 
         return (
-            <div className='card-egresso'>
-                <Card title="Nome Egresso" style={{ width: '100%', height: '100%' }} subTitle="Cargo" footer={footer} header={header}>
-                </Card>
-            </div>
+            <Card className='card-egresso mx-4' title="Nome Egresso" subTitle="Cargo" footer={footer} header={header}></Card>
         )
     }
 
     render() {
         return (
-            <div className="carossel-egressos-div">
-                <Carousel value={this.state.egressos} numVisible={3} numScroll={1} responsiveOptions={this.responsiveOptions} className="carrossel-egressos"
-                    circular={true} autoplayInterval={3000} itemTemplate={this.cardTemplate} />
-            </div>
+            <Carousel value={this.state.egressos} numVisible={3} numScroll={1} responsiveOptions={this.responsiveOptions}
+                    className="carrossel-egressos mt-3 mb-3"   circular={true} autoplayInterval={300000} itemTemplate={this.cardTemplate} />    
         );
     }
 }

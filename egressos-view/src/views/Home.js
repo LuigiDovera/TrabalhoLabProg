@@ -8,11 +8,11 @@ class Home extends React.Component {
         return (
             <div className='main-div'>
                 <div className='secao-home-div'>
-                    <h1>Nossos Egressos</h1>
+                    <h1 className='titulo mt-3'>Nossos Egressos</h1>
                         <CarrosselEgressos/>
                 </div>
                 <div className='secao-home-div'>
-                    <h1>Depoimentos</h1>
+                    <h1 className='titulo mt-3'>Depoimentos</h1>
                         <DataScrollerDepoimentos/>
                 </div>
             </div>

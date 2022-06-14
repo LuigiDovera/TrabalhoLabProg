@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import "primereact/resources/themes/vela-green/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { MainMenubar } from './components/MainMenubar';

@@ -1,74 +1,60 @@
-.card-egresso {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    width: 40%;
-    max-height: fit-content;
+@import "../custom.css";
+
+.carrossel-egressos {
 }
 
-.botoes-contato-card-egresso {
+.card-egresso-container{
     display: flex;
-    align-items: left;
-    flex-direction: row;
-    height: 20%;
-    width: 100%;
-    gap: 5%;
+    align-items: center;
+}
+
+.card-egresso {
+    background-color: var(--branco);
+    color: var(--preto);
+    border-radius: 1em;
+    font-size: 1.2em;
+    font-weight: 500;
 }
 
 .imagem-card-egresso {
     height: 100%;
     width: 100%;
+    object-fit: cover;
 }
 
-.carossel-egressos-div {
-    display: flex;
-    flex-direction: row;
-}
-
-.carrossel-egressos {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.datascroller-depoimentos {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+.botao-informacao {
+    background-color: var(--branco);
+    color: var(--azul-escuro);
+    border: none;
+    width: auto;
+    height: auto;
 }
 
 .card-depoimento {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    border: 1px solid;
-    margin: 2%;
-    border-radius: 5px;
+    background-color: var(--branco);
+    color: var(--preto);
+    border-radius: 1em;
 }
 
 .citacao-depoimento {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    gap: 5%;
+  display: flex;
+  align-items: center;
 }
 
 .texto-depoimento {
-
+    text-align: justify;
+    font-size: 0.9em;
+    font-weight: 500;
 }
 
 .nome-depoimento {
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-left: 10%;
+    text-align: left;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.date-depoimento {
+    text-align: left;
+    font-size: 0.7em;
+    font-weight: 500;
 }

@@ -1,0 +1,11 @@
+:root {
+    --azul-escuro: #004C52;
+    --azul: #00AE9D;
+    --verde: #ABE33F;
+    --turquesa: rgba(53, 255, 219, 0.8);
+    --cinza: #CDCACA;
+    --branco-cinza: #F3F3F3;
+    --cinza-escuro: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), #D9D9D9;
+    --preto: #000000;
+    --branco: #FFFFFF;
+}
