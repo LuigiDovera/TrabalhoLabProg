@@ -1,0 +1,112 @@
+@import "../custom.css";
+
+.carrossel-egressos {
+}
+
+.card{
+    align-self: center;
+    border: 0px !important;
+}
+
+.card-egresso-container{
+    display: flex;
+    align-items: center;
+}
+
+.card-egresso {
+    background-color: var(--branco);
+    color: var(--preto);
+    border-radius: 1em;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.p-card .p-card-subtitle{
+    color: var(--preto);
+}
+
+.imagem-card-egresso {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.botao-informacao {
+    background-color: var(--branco);
+    color: var(--azul-escuro);
+    border: none;
+    width: auto;
+    height: auto;
+}
+
+.card-depoimento {
+    background-color: var(--branco);
+    color: var(--preto);
+    border-radius: 1em;
+}
+
+.citacao-depoimento {
+  display: flex;
+  align-items: center;
+}
+
+.texto-depoimento {
+    text-align: justify;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.nome-depoimento {
+    text-align: left;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.date-depoimento {
+    text-align: left;
+    font-size: 0.7em;
+    font-weight: 500;
+}
+
+/* Menu */
+
+.p-menubar {
+}
+
+
+.p-menubar-root-list {
+}
+
+.p-menu-list {
+}
+
+.p-menuitem {
+    padding: 10px 20px 10px 20px;
+}
+
+.p-menuitem .p-menuitem {
+    border: 1px solid;
+    border-color: var(--azul-escuro);
+    background-color: var(--branco);
+}
+
+.p-menuitem-text {
+    color: var(--azul-escuro);
+    font-weight: 700;
+}
+
+.p-menuitem-icon {
+    color: var(--azul-escuro);
+}
+
+.p-submenu-icon {
+    color: var(--azul-escuro);
+}
+
+.p-datascroller .p-datascroller-content {
+    background-color: transparent;
+}
+
+.p-datascroller .p-datascroller-footer {
+    background-color: transparent;
+}

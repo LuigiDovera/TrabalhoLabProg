@@ -1,0 +1,23 @@
+
+.cardForm {
+    background-color: var(--branco);
+    color: var(--preto);
+    border-radius: 1em;
+    
+}
+
+.formDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.formItemSpan {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 26px;
+}
+
+.labelSenha {
+    color: var(--branco);
+}
