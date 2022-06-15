@@ -1,0 +1,74 @@
+.p-inputgroup>.p-component,
+.p-inputgroup>.p-inputwrapper>.p-inputtext,
+.p-inputgroup>.p-float-label>.p-component {
+    border-radius: 0;
+    margin: 0;
+}
+
+.p-inputgroup>.p-component+.p-inputgroup-addon,
+.p-inputgroup>.p-inputwrapper>.p-inputtext+.p-inputgroup-addon,
+.p-inputgroup>.p-float-label>.p-component+.p-inputgroup-addon {
+    border-left: 0 none;
+}
+
+.p-inputgroup>.p-component:focus,
+.p-inputgroup>.p-inputwrapper>.p-inputtext:focus,
+.p-inputgroup>.p-float-label>.p-component:focus {
+    z-index: 1;
+}
+
+.p-inputgroup>.p-component:focus~label,
+.p-inputgroup>.p-inputwrapper>.p-inputtext:focus~label,
+.p-inputgroup>.p-float-label>.p-component:focus~label {
+    z-index: 1;
+}
+
+.p-inputgroup .p-float-label:first-child input {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.p-inputgroup .p-float-label:last-child input {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.p-float-label>label {
+    left: 0.5rem;
+    color: black;
+    transition-duration: 0.2s;
+}
+
+.p-float-label>label.p-error {
+    color: #ef9a9a;
+}
+
+.p-rating .p-rating-icon.pi-star-fill {
+    color: #81C784;
+}
+
+.p-password.p-invalid.p-component > .p-inputtext {
+  border-color: #ef9a9a;
+}
+
+.p-password-panel {
+  padding: 1rem;
+  background: var(--azul-escuro);
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid #304562;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+}
+.p-password-panel .p-password-meter {
+  margin-bottom: 0.5rem;
+  background: var(--azul);
+}
+.p-password-panel .p-password-meter .p-password-strength.weak {
+  background: #F48FB1;
+}
+.p-password-panel .p-password-meter .p-password-strength.medium {
+  background: #FFE082;
+}
+.p-password-panel .p-password-meter .p-password-strength.strong {
+  background: #C5E1A5;
+}
