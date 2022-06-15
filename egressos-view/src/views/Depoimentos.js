@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
-import { Button } from 'primereact/button'
+import Botao from '../components/Botao';
 import { DataScrollerDepoimentos } from '../components/DataScrollerDepoimentos'
 import styles from './Home.module.css'
 
@@ -12,8 +12,8 @@ class Depoimento extends React.Component {
                     <h1 className='titulo mt-3'>Depoimentos</h1>
                     <Row className='text-end'>
                         <Col>
-                            <Button className='text-end mx-2'>Mais Recentes</Button>
-                            <Button className='text-end mx-2'>Mais Antigos</Button>
+                            <Botao className="mx-2" title="Mais Recentes" icon="pi pi-user" />
+                            <Botao className="mx-2" title="Mais Antigos" icon="pi pi-user" />
                         </Col>
                     </Row>
                     <DataScrollerDepoimentos />

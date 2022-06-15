@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Cadastro.module.css'
 //import "primereact/resources/themes/vela-green/theme.css";
-import "./Cadastro.css"
+import "./Cadastro.css";
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputTextarea } from 'primereact/inputtextarea';

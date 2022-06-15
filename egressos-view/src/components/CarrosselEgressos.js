@@ -46,7 +46,7 @@ export class CarrosselEgressos extends Component {
 
         const header = (
 
-            <Link to="../Home" className="botao-informacao card-egresso" style={{ textDecoration: 'none' }}>
+            <Link to="../Egresso" className="botao-informacao card-egresso" style={{ textDecoration: 'none' }}>
                 <img className='imagem-card-egresso' alt="Card" src={foto_placeholder} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} />
             </Link>
         );

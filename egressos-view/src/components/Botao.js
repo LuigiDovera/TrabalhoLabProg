@@ -8,6 +8,7 @@ export default class Botao extends Component {
 
         var titulo = this.props.title;
         var icone = this.props.icon;
+        var className = this.props.className;
         this.state = { 
             title: titulo,
             icon: icone
@@ -17,7 +18,7 @@ export default class Botao extends Component {
     render(){
         return(
             <Button 
-                className={styles.botao}
+                className={`${styles.botao} ${this.props.className}`}
                 onPress = {this.props.onPress}
                 icon = {this.state.icon}
                 >
