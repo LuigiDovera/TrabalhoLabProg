@@ -5,7 +5,6 @@ import Depoimentos from '../views/Depoimentos'
 import Informacoes from '../views/Informacoes'
 import Cadastro from '../views/usuarios/Cadastro'
 import Login from '../views/usuarios/Login'
-import Egresso from '../views/Egresso'
 
 function Rotas() {
     return (
@@ -16,7 +15,6 @@ function Rotas() {
                 <Route path="/Informacoes" element={<Informacoes />} />
                 <Route path="/Cadastro" element={<Cadastro />} />
                 <Route path="/Login" element={<Login />} />
-                <Route path="/Egresso" element={<Egresso />} />
                 <Route path="/" element={<Home />} />
             </Routes>
         </HashRouter>

@@ -4,7 +4,7 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Row } from 'react-bootstrap';
 import foto_placeholder from '../images/foto_placeholder.png';
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";    
 import './Components.css';
 
 export class CarrosselEgressos extends Component {
@@ -46,7 +46,7 @@ export class CarrosselEgressos extends Component {
 
         const header = (
 
-            <Link to="../Egresso" className="botao-informacao card-egresso" style={{ textDecoration: 'none' }}>
+            <Link to="../Home" className="botao-informacao card-egresso" style={{ textDecoration: 'none' }}>
                 <img className='imagem-card-egresso' alt="Card" src={foto_placeholder} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} />
             </Link>
         );
