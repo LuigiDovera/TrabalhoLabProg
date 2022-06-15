@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Carousel } from 'primereact/carousel';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import foto_placeholder from '../images/foto_placeholder.png';
+import { Link } from "react-router-dom";
 import './Components.css';
 
 export class CarrosselEgressos extends Component {
@@ -42,8 +43,12 @@ export class CarrosselEgressos extends Component {
 
 
     cardTemplate(cardEgresso) {
+
         const header = (
-            <img className='imagem-card-egresso' alt="Card" src={foto_placeholder} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} />
+
+            <Link to="../Egresso" className="botao-informacao card-egresso" style={{ textDecoration: 'none' }}>
+                <img className='imagem-card-egresso' alt="Card" src={foto_placeholder} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} />
+            </Link>
         );
         const footer = (
             <Row>
@@ -56,14 +61,15 @@ export class CarrosselEgressos extends Component {
         );
 
         return (
-            <Card className='card-egresso mx-4' title="Nome Egresso" subTitle="Cargo" footer={footer} header={header}></Card>
+            <Card className='card-egresso mx-4' title="Nome Egresso" subTitle="Cargo" footer={footer} header={header} ></Card>
         )
     }
 
     render() {
+
         return (
             <Carousel value={this.state.egressos} numVisible={3} numScroll={1} responsiveOptions={this.responsiveOptions}
-                    className="carrossel-egressos mt-3 mb-3"   circular={true} autoplayInterval={300000} itemTemplate={this.cardTemplate} />    
+                className="carrossel-egressos mt-3 mb-3" circular={true} autoplayInterval={300000} itemTemplate={this.cardTemplate} />
         );
     }
 }

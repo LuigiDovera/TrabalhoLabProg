@@ -58,3 +58,38 @@
     font-size: 0.7em;
     font-weight: 500;
 }
+
+/* Menu */
+
+.p-menubar {
+}
+
+
+.p-menubar-root-list {
+}
+
+.p-menu-list {
+}
+
+.p-menuitem {
+    padding: 10px 20px 10px 20px;
+}
+
+.p-menuitem .p-menuitem {
+    background-color: var(--branco);
+    border: 1px solid;
+    border-color: var(--azul-escuro);
+}
+
+.p-menuitem-text {
+    color: var(--azul-escuro);
+    font-weight: 700;
+}
+
+.p-menuitem-icon {
+    color: var(--azul-escuro);
+}
+
+.p-submenu-icon {
+    color: var(--azul-escuro);
+}

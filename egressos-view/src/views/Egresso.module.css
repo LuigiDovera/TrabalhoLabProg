@@ -1,0 +1,11 @@
+
+.imagem-egresso {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.text-egresso {
+    font-size: 1.2em;
+    font-weight: 500;
+}

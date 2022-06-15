@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Menubar } from 'primereact/menubar';
+import {Container} from 'react-bootstrap'
+
+import './Components.css';
 
 export class MainMenubar extends Component {
     navigateToPage = (path) => {
@@ -52,11 +55,11 @@ export class MainMenubar extends Component {
         const start = <h3>Portal de Egressos</h3>;
 
         return (
-            <div>
+            <Container>
                 <div className="card">
-                    <Menubar model={this.items} start={start} />
+                    <Menubar model={this.items} start={start}/>
                 </div>
-            </div>
+            </Container>
         );
     }
 }
