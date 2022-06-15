@@ -1,6 +1,6 @@
 package com.labprog.egressos.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.labprog.egressos.service.ContatoService;
 import com.labprog.egressos.service.EgressoService;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
-import com.labprog.egressos.model.Contato;
 import com.labprog.egressos.model.Egresso;
-import com.labprog.egressos.model.dto.ContatoDTO;
 import com.labprog.egressos.model.dto.EgressoDTO;
 
 @SuppressWarnings("rawtypes")
@@ -63,6 +60,16 @@ public class EgressoController {
         try {
             Egresso salvo = service.atualizar(egresso);
             return ResponseEntity.status(HttpStatus.OK).body(salvo);
+        } catch (ServiceRuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/buscar")
+    public ResponseEntity buscar() {
+        try {
+            List<Egresso> egressos = service.buscar();
+            return ResponseEntity.status(HttpStatus.OK).body(egressos);
         } catch (ServiceRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

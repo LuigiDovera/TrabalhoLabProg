@@ -3,15 +3,12 @@ package com.labprog.egressos.model.repository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
-import com.labprog.egressos.model.Cargo;
 import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
-import com.labprog.egressos.model.repository.CargoRepo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,7 +29,7 @@ public class DepoimentoRepositoryTest {
     @Test
     public void deveSalvarDepoimento() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         Egresso egresso = Egresso.builder()
                 .nome("tuludan")
@@ -65,7 +62,7 @@ public class DepoimentoRepositoryTest {
     @Test
     public void deveAtualizarDepoimento() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         Egresso egresso = Egresso.builder()
                 .nome("tuludan")
@@ -85,7 +82,7 @@ public class DepoimentoRepositoryTest {
         // ação
         Depoimento retornoDepoimento = depoimentoRepo.save(depoimento);
         retornoDepoimento.setTexto("teste depoimento");
-        retornoDepoimento.setData(new Date(2));
+        retornoDepoimento.setData(LocalDate.now());
         Depoimento depoimentoAtualizado = depoimentoRepo.save(retornoDepoimento);
 
         // verificação
@@ -103,7 +100,7 @@ public class DepoimentoRepositoryTest {
     @Test
     public void deveRemoverDepoimento() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         Egresso egresso = Egresso.builder()
                 .nome("tuludan")
@@ -152,7 +149,7 @@ public class DepoimentoRepositoryTest {
             depoimentos.add(
                     Depoimento.builder().egresso(retornoEgresso)
                             .texto("Depoimento teste")
-                            .data(new Date(ThreadLocalRandom.current().nextInt() * 1000L))
+                            .data(LocalDate.now())
                             .build());
         }
 
@@ -161,7 +158,10 @@ public class DepoimentoRepositoryTest {
 
         List<Depoimento> retorno = new ArrayList<Depoimento>();
         retorno.addAll(depoimentoRepo.obterDepoimentosOrdenadosPeloMaisRecente());
+        
+        // rollback
         depoimentoRepo.deleteAll(salvos);
+        egressoRepo.delete(retornoEgresso);
 
         Collections.sort(depoimentos, new Comparator<Depoimento>() {
             public int compare(Depoimento d1, Depoimento d2) {
@@ -177,14 +177,11 @@ public class DepoimentoRepositoryTest {
             Assertions.assertEquals(depoimentos.get(i).getData().toString(),
                     retorno.get(i).getData().toString());
         }
-
-        // rollback
-        egressoRepo.delete(retornoEgresso);
     }
 
     @Test
     public void deveListarDepoimentosPorEgresso() {
-        //
+        // Cenário
         List<Egresso> egressos = new ArrayList<Egresso>();
         for (int i = 0; i < 2; i++) {
             egressos.add(Egresso.builder()
@@ -204,8 +201,7 @@ public class DepoimentoRepositoryTest {
                 depoimentos.add(
                         Depoimento.builder().egresso(retornoEgresso.get(i))
                                 .texto("Depoimento teste" + j)
-                                .data(new Date(ThreadLocalRandom.current().nextInt()
-                                        * 1000L))
+                                .data(LocalDate.now())
                                 .build());
             }
         }
@@ -217,6 +213,8 @@ public class DepoimentoRepositoryTest {
         for (Egresso egresso : egressos) {
             retorno.addAll(depoimentoRepo.obterDepoimentosPorEgresso(egresso));
         }
+
+        // rollback
         depoimentoRepo.deleteAll(retornoDepoimentos);
         egressoRepo.deleteAll(retornoEgresso);
 

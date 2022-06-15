@@ -51,6 +51,10 @@ public class EgressoService {
         return repo.findAll(example);
     }
 
+    public List<Egresso> buscar() {
+        return repo.findAll();
+    }
+
     @Transactional
     public Egresso atualizarContatos(Egresso egresso, List<Contato> contatos) {
         verificarEgresso(egresso);
