@@ -1,4 +1,4 @@
-.mainDiv {
+.cardDiv {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,12 +11,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 60%;
+    width: 100vh;
     max-height: fit-content;
     padding: 10px;
     margin-bottom: 26px;
-    background-color: #1f2d40;
-    color: var(--branco);
+    background-color: var(--branco);
+    color: black;
     border-radius: 10px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }

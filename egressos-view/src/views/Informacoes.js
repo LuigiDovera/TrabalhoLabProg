@@ -75,7 +75,7 @@ class Informacoes extends React.Component {
             plugins: {
                 legend: {
                     labels: {
-                        color: '#fff',
+                        color: '#000',
                         font: {
                             size:16
                         }
@@ -95,18 +95,18 @@ class Informacoes extends React.Component {
             scales: {
                 x: {
                     ticks: {
-                        color: '#fff'
+                        color: '#000'
                     },
                     grid: {
-                        color: '#fff'
+                        color: '#000'
                     }
                 },
                 y: {
                     ticks: {
-                        color: '#fff'
+                        color: '#000'
                     },
                     grid: {
-                        color: '#fff'
+                        color: '#000'
                     }
                 }
             }
@@ -118,7 +118,7 @@ class Informacoes extends React.Component {
         // quantitativo de egressos por curso - rosca
         // quantitativo de egressos por faixa salarial - barras
         return (
-            <div className={styles.mainDiv}>
+            <div className={styles.cardDiv}>
                 <div className={styles.cardGrafico}>
                     <div className="text-900 text-3xl font-medium mb-3">Egressos por cargo</div>
                     <Chart type="pie" data={this.egressosPorCargo} 
