@@ -1,0 +1,18 @@
+.botao{
+    height: 62;
+    align-self: center;
+    border-radius: 28px;
+
+    background-color: var(--azul);
+    border-color: var(--azul);
+    
+}
+
+.botao:hover{
+    background-color: var(--azul-escuro);
+    border-color: var(--azul-escuro);
+}
+
+.titulo{
+    color: var(--branco);
+}
