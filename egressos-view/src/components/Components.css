@@ -87,6 +87,7 @@
 .p-menuitem .p-menuitem {
     border: 1px solid;
     border-color: var(--azul-escuro);
+    background-color: var(--branco);
 }
 
 .p-menuitem-text {

@@ -1,10 +1,12 @@
-import React from 'react'
-import styles from './Cadastro.module.css'
+import React from 'react';
+import styles from './Cadastro.module.css';
+//import "primereact/resources/themes/vela-green/theme.css";
+import "./Cadastro.css";
 import { InputText } from 'primereact/inputtext';
-import { Checkbox } from 'primereact/checkbox';
-import { Col, Row } from 'react-bootstrap';
 import { Password } from 'primereact/password';
-import { Button } from 'primereact/button';
+import { Checkbox } from 'primereact/checkbox';
+import Botao from '../../components/Botao';
+import {Row, Col} from 'react-bootstrap';
 
 class Login extends React.Component {
     constructor(props) {
@@ -17,11 +19,10 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div className={styles.mainDiv}>
-                <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
-                    <div className="text-center mb-5">
-                        <div className="text-900 text-3xl font-medium mb-3">Login</div>
-                    </div>
+            <div className={`p-4 shadow-2 w-full lg:w-6 ${styles.cardForm}`}>
+                <div className="text-center mb-5">
+                    <div className="text-900 text-3xl font-medium mb-3">Login</div>
+                </div>
 
                     <div className={styles.formDiv}>
                         <span className={`${styles.formItemSpan} p-float-label`}>
@@ -46,12 +47,8 @@ class Login extends React.Component {
                             </Col>
                         </Row>
                     </div>
-
-                    <div className="text-center mt-3 mb-3">
-                        <Button label="Entrar" icon="pi pi-user" className="w-50" />
-                    </div>
+                    <Botao title="Cadastrar" icon="pi pi-user"/>
                 </div>
-            </div >
         )
     }
 }
