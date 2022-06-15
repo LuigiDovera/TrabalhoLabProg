@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import styles from './App.module.css'
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
@@ -8,9 +8,12 @@ import Rotas from './components/Rotas';
 
 function App() {
     return (
-        <div className="App">
+
+        <div className={styles.App}>
             <MainMenubar />
-            <Rotas />
+            <div className={styles.mainDiv}>
+                <Rotas />
+            </div>
         </div>
     );
 }
