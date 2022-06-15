@@ -1,9 +1,9 @@
-.mainDiv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
+
+.cardForm {
+    background-color: var(--branco);
+    color: var(--preto);
+    border-radius: 1em;
+    
 }
 
 .formDiv {

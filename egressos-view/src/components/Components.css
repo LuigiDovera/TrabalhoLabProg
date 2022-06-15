@@ -3,6 +3,11 @@
 .carrossel-egressos {
 }
 
+.card{
+    align-self: center;
+    border: 0px !important;
+}
+
 .card-egresso-container{
     display: flex;
     align-items: center;
