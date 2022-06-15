@@ -50,12 +50,13 @@ export class CarrosselEgressos extends Component {
                 <img className='imagem-card-egresso' alt="Card" src={foto_placeholder} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} />
             </Link>
         );
+        
         const footer = (
             <Row>
                 <div>
-                    <Button className="botao-informacao mx-1 my-1" icon="pi pi-envelope" />
-                    <Button className="botao-informacao mx-1 my-1" icon="pi pi-linkedin" />
-                    <Button className="botao-informacao mx-1 my-1" icon="pi pi-instagram" />
+                    <Button className="botao-informacao mx-1" icon="pi pi-envelope" />
+                    <Button className="botao-informacao mx-1" icon="pi pi-linkedin" />
+                    <Button className="botao-informacao mx-1" icon="pi pi-instagram" />
                 </div>
             </Row>
         );

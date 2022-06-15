@@ -1,0 +1,36 @@
+
+.mainDiv {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+}
+
+.cardEgresso {
+
+}
+
+.cardEgresso {
+    
+}
+
+
+.imagemEgresso {
+    background-color: var(--branco);
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.nomeEgresso {
+    font-size: 1.4em;
+    font-weight: 500;
+}
+
+.cargoEgresso {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.empresaEgresso {
+    font-size: 1.2em;
+    font-weight: 500;
+}

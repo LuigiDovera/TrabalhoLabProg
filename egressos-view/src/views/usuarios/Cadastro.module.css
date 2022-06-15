@@ -17,3 +17,7 @@
     text-align: left;
     margin-bottom: 26px;
 }
+
+.labelSenha {
+    color: var(--branco);
+}

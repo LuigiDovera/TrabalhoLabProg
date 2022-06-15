@@ -41,7 +41,7 @@ export class DataScrollerDepoimentos extends Component {
                 </Row>
 
                 <Row>
-                    <Col className="col-sm-10">
+                    <Col className="col-sm-9">
                         <Row>
                             <p className="nome-depoimento my-0">Nome Egresso</p>
                         </Row>
@@ -49,7 +49,7 @@ export class DataScrollerDepoimentos extends Component {
                             <p className="date-depoimento my-0">Dezembro, 2020</p>
                         </Row>
                     </Col>
-                    <Col className="col-sm-2">
+                    <Col className="col-sm-3">
                         <Row>
                             <div className='botoes-contato-card-egresso'>
                                 <Button className="botao-informacao mx-1 my-1" icon="pi pi-envelope" />
@@ -67,7 +67,7 @@ export class DataScrollerDepoimentos extends Component {
         const footer = <Button type="text" icon="pi pi-plus" label="Mostrar mais" onClick={() => this.ds.load()} />;
 
         return (
-            <div className="datascroller-depoimentos mt-3 mb-3">
+            <div className="datascroller-depoimentos">
                 <DataScroller ref={(el) => this.ds = el} value={this.state.depoimentos} itemTemplate={this.depoimentoTemplate} rows={3}
                     loader footer={footer} emptyMessage="Sem depoimentos" />
             </div>

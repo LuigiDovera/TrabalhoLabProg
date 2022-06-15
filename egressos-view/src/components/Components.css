@@ -16,6 +16,10 @@
     font-weight: 500;
 }
 
+.p-card .p-card-subtitle{
+    color: var(--preto);
+}
+
 .imagem-card-egresso {
     height: 100%;
     width: 100%;
@@ -76,7 +80,6 @@
 }
 
 .p-menuitem .p-menuitem {
-    background-color: var(--branco);
     border: 1px solid;
     border-color: var(--azul-escuro);
 }
@@ -92,4 +95,12 @@
 
 .p-submenu-icon {
     color: var(--azul-escuro);
+}
+
+.p-datascroller .p-datascroller-content {
+    background-color: transparent;
+}
+
+.p-datascroller .p-datascroller-footer {
+    background-color: transparent;
 }
