@@ -1,9 +1,10 @@
-import React from 'react'
-import styles from './Cadastro.module.css'
+import React from 'react';
+import styles from './Cadastro.module.css';
+//import "primereact/resources/themes/vela-green/theme.css";
+import "./Cadastro.css";
 import { InputText } from 'primereact/inputtext';
-import { Checkbox } from 'primereact/checkbox';
-import { Col, Row } from 'react-bootstrap';
 import { Password } from 'primereact/password';
+
 import { Button } from 'primereact/button';
 import Botao from '../../components/Botao';
 
@@ -43,6 +44,7 @@ class Login extends React.Component {
                     <Botao title="Entrar" icon="pi pi-user" className="w-50" />
                 </div>
             </div>
+
 
         )
     }

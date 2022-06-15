@@ -7,12 +7,14 @@
     border-color: var(--azul);
     
 }
-
 .botao:hover{
-    background-color: var(--azul-escuro);
-    border-color: var(--azul-escuro);
+    background-color: var(--branco);
+    border-color: var(--branco);
 }
 
 .titulo{
     color: var(--branco);
+}
+.titulo:hover{
+    color: var(--azul)
 }
