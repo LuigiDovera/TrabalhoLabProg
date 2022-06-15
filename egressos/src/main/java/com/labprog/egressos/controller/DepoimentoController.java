@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.labprog.egressos.model.Depoimento;
+import com.labprog.egressos.model.Egresso;
 import com.labprog.egressos.model.dto.DepoimentoDTO;
 import com.labprog.egressos.service.DepoimentoService;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
@@ -57,7 +59,7 @@ public class DepoimentoController {
         }
     }
 
-    @PutMapping("/buscar")
+    @GetMapping("/buscar")
     public ResponseEntity buscar() {
         try {
             List<Depoimento> egressos = service.buscar();
@@ -67,7 +69,7 @@ public class DepoimentoController {
         }
     }
 
-    @PostMapping("/remover/{id}")
+    @DeleteMapping("/remover/{id}")
     public ResponseEntity remover(@PathVariable Long id) {
         Depoimento depoimento = Depoimento.builder()
                 .id(id)
@@ -88,6 +90,29 @@ public class DepoimentoController {
         try {
             Depoimento depoimento = service.buscar(filtro).get(0);
             return ResponseEntity.status(HttpStatus.OK).body(depoimento);
+        } catch (ServiceRuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/buscar_ordenado")
+    public ResponseEntity buscarOrdenado() {
+        try {
+            List<Depoimento> depoimentos = service.listarDepoimentosOrdenadosPeloMaisRecente();
+            return ResponseEntity.status(HttpStatus.OK).body(depoimentos);
+        } catch (ServiceRuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/buscar_por_egresso/{id}")
+    public ResponseEntity buscarPorEgresso(@PathVariable Long id) {
+        Egresso egresso = Egresso.builder()
+                .id(id)
+                .build();
+        try {
+            List<Depoimento> depoimentos = service.obterDepoimentosPorEgresso(egresso);
+            return ResponseEntity.status(HttpStatus.OK).body(depoimentos);
         } catch (ServiceRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -1,6 +1,6 @@
 package com.labprog.egressos.service;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,7 +119,7 @@ public class CargoServiceTest {
                                 .descricao(string)
                                 .build();
 
-                Date dataRegistro = new Date(System.currentTimeMillis());
+                LocalDate dataRegistro = LocalDate.now();
                 ProfEgresso profEgresso = ProfEgresso.builder()
                                 .cargo(cargo)
                                 .faixaSalario(faixaSalario)
@@ -169,7 +169,7 @@ public class CargoServiceTest {
                                 .descricao(string)
                                 .build();
 
-                Date dataRegistro = new Date(System.currentTimeMillis());
+                LocalDate dataRegistro = LocalDate.now();
                 ProfEgresso profEgresso = ProfEgresso.builder()
                                 .cargo(cargo)
                                 .faixaSalario(faixaSalario)
@@ -215,7 +215,7 @@ public class CargoServiceTest {
                                 .descricao(string)
                                 .build();
 
-                Date dataRegistro = new Date(System.currentTimeMillis());
+                LocalDate dataRegistro = LocalDate.now();
                 ProfEgresso profEgresso = ProfEgresso.builder()
                                 .cargo(cargo)
                                 .faixaSalario(faixaSalario)

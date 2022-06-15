@@ -1,6 +1,6 @@
 package com.labprog.egressos.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -33,9 +33,9 @@ public class CursoEgresso{
     Egresso egresso;
 
     @Column(name="data_inicio")
-    Date data_inicio;
+    LocalDate data_inicio;
     
     @Column(name="data_conclusao")
-    Date data_conclusao;
+    LocalDate data_conclusao;
 
 }

@@ -43,20 +43,18 @@ public class DepoimentoService {
 
     @Transactional
     public List<Depoimento> buscar(Depoimento filtro) {
-        Example<Depoimento> example =
-                Example.of(filtro, ExampleMatcher.matching()
-                        .withIgnoreCase()
-                        .withStringMatcher(StringMatcher.CONTAINING)
-                );
+        Example<Depoimento> example = Example.of(filtro, ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(StringMatcher.CONTAINING));
 
         return repo.findAll(example);
     }
 
-    //@Transactional
-    //public Optional<Depoimento> buscar(Depoimento depoimento) {
-    //    verificarId(depoimento);
-    //    return repo.findById(depoimento.getId());
-    //}
+    // @Transactional
+    // public Optional<Depoimento> buscar(Depoimento depoimento) {
+    // verificarId(depoimento);
+    // return repo.findById(depoimento.getId());
+    // }
 
     @Transactional
     public List<Depoimento> buscar() {
@@ -64,11 +62,9 @@ public class DepoimentoService {
     }
 
     public List<Depoimento> listar(Depoimento filtro) {
-        Example<Depoimento> example =
-                Example.of(filtro, ExampleMatcher.matching()
-                        .withIgnoreCase()
-                        .withStringMatcher(StringMatcher.CONTAINING)
-                );
+        Example<Depoimento> example = Example.of(filtro, ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(StringMatcher.CONTAINING));
 
         return repo.findAll(example);
     }
