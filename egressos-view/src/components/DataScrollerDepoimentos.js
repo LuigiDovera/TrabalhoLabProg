@@ -5,6 +5,7 @@ import { Button } from 'primereact/button';
 import { Container, Row, Col } from 'react-bootstrap';
 import './Components.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Botao from './Botao';
 
 
 export class DataScrollerDepoimentos extends Component {
@@ -64,7 +65,7 @@ export class DataScrollerDepoimentos extends Component {
     }
 
     render() {
-        const footer = <Button type="text" icon="pi pi-plus" label="Mostrar mais" onClick={() => this.ds.load()} />;
+        const footer = <Botao type="text" icon="pi pi-plus" title="Mostrar mais" onClick={() => this.ds.load()} />;
 
         return (
             <div className="datascroller-depoimentos mt-3 mb-3">
