@@ -1,6 +1,6 @@
 package com.labprog.egressos.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,5 +36,5 @@ public class Depoimento {
     private String texto;
 
     @Column(name = "data")
-    private Date data;
+    private LocalDate data;
 }

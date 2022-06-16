@@ -1,7 +1,7 @@
 package com.labprog.egressos.model.repository;
 
 import java.util.ArrayList;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,7 +104,7 @@ public class CursoRepositoryTest {
     @Transactional
     public void deveListarEgressosPorCurso() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         List<Curso> cursos = new ArrayList<Curso>();
         for (int i = 0; i < 3; i++) {
@@ -173,7 +173,7 @@ public class CursoRepositoryTest {
     @Transactional
     public void deveListarQuantidadeDeEgressosPorCurso() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         List<Curso> cursos = new ArrayList<Curso>();
         for (int i = 0; i < 3; i++) {

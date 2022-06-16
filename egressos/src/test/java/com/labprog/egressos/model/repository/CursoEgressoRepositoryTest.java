@@ -1,6 +1,6 @@
 package com.labprog.egressos.model.repository;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +35,7 @@ public class CursoEgressoRepositoryTest {
     // @Transactional
     public void deveSalvarCursoDeEgresso() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         Curso curso = Curso.builder()
                 .nome("curso teste")
@@ -89,7 +89,7 @@ public class CursoEgressoRepositoryTest {
     // @Transactional
     public void deveAtualizarCursoEgresso() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         Curso curso = Curso.builder()
                 .nome("curso teste")
@@ -122,8 +122,8 @@ public class CursoEgressoRepositoryTest {
 
         // ação
         CursoEgresso retornoCursoEgresso = cursoEgressoRepo.save(cursoEgresso1);
-        retornoCursoEgresso.setData_inicio(new Date(0));
-        retornoCursoEgresso.setData_conclusao(new Date(0));
+        retornoCursoEgresso.setData_inicio(LocalDate.now());
+        retornoCursoEgresso.setData_conclusao(LocalDate.now());
         CursoEgresso cursoEgressoAtualizado = cursoEgressoRepo.save(retornoCursoEgresso);
 
         //// verificação
@@ -146,7 +146,7 @@ public class CursoEgressoRepositoryTest {
     // @Transactional
     public void deveRemoverCursoEgresso() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         Curso curso = Curso.builder()
                 .nome("curso teste")

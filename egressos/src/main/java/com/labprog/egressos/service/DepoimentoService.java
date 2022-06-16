@@ -1,5 +1,6 @@
 package com.labprog.egressos.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,7 @@ public class DepoimentoService {
     @Transactional
     public Depoimento salvar(Depoimento depoimento) {
         verificarDepoimento(depoimento);
+        depoimento.setData(LocalDate.now());
         return repo.save(depoimento);
     }
 
@@ -40,17 +42,29 @@ public class DepoimentoService {
     }
 
     @Transactional
-    public Optional<Depoimento> buscar(Depoimento depoimento) {
-        verificarId(depoimento);
-        return repo.findById(depoimento.getId());
+    public List<Depoimento> buscar(Depoimento filtro) {
+        Example<Depoimento> example = Example.of(filtro, ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(StringMatcher.CONTAINING));
+
+        return repo.findAll(example);
+    }
+
+    // @Transactional
+    // public Optional<Depoimento> buscar(Depoimento depoimento) {
+    // verificarId(depoimento);
+    // return repo.findById(depoimento.getId());
+    // }
+
+    @Transactional
+    public List<Depoimento> buscar() {
+        return repo.findAll();
     }
 
     public List<Depoimento> listar(Depoimento filtro) {
-        Example<Depoimento> example =
-                Example.of(filtro, ExampleMatcher.matching()
-                        .withIgnoreCase()
-                        .withStringMatcher(StringMatcher.CONTAINING)
-                );
+        Example<Depoimento> example = Example.of(filtro, ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(StringMatcher.CONTAINING));
 
         return repo.findAll(example);
     }

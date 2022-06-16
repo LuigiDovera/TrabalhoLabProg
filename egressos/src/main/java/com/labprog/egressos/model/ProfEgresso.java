@@ -1,6 +1,6 @@
 package com.labprog.egressos.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,7 +49,7 @@ public class ProfEgresso {
     private String descricao;
 
     @Column(name = "data_registro")
-    private Date dataRegistro;
+    private LocalDate dataRegistro;
 
     public String toString(){
         return this.id + " " + this.empresa + " " + this.descricao;
