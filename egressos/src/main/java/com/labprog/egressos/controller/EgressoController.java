@@ -1,5 +1,6 @@
 package com.labprog.egressos.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.labprog.egressos.service.EgressoService;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
+import com.labprog.egressos.model.Contato;
+import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.dto.ContatoDTO;
+import com.labprog.egressos.model.dto.DepoimentoDTO;
 import com.labprog.egressos.model.dto.EgressoDTO;
 
 @SuppressWarnings("rawtypes")
 @RestController
 @RequestMapping("/api/egressos")
 public class EgressoController {
+
     @Autowired
     private EgressoService service;
-    
-    //@Autowired
-    //private ContatoService contatoService;
 
     @PostMapping("/salvar")
     public ResponseEntity salvar(@RequestBody EgressoDTO dto) {
@@ -66,17 +69,7 @@ public class EgressoController {
         }
     }
 
-    @PutMapping("/buscar")
-    public ResponseEntity buscar() {
-        try {
-            List<Egresso> egressos = service.buscar();
-            return ResponseEntity.status(HttpStatus.OK).body(egressos);
-        } catch (ServiceRuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    /*@PutMapping("/atualizarContatos/{id}")
+    @PutMapping("/atualizar_contatos/{id}")
     public ResponseEntity atualizarContatos(
             @RequestBody EgressoDTO dto,
             @PathVariable Long id) {
@@ -88,34 +81,59 @@ public class EgressoController {
                 .resumo(dto.getResumo())
                 .urlFoto(dto.getUrlFoto())
                 .build();
-        ArrayList<Contato> contatos = new ArrayList<>();
+        List<Contato> contatos = new ArrayList<Contato>();
         for (ContatoDTO contatoDto : dto.getContatos()) {
-            Contato contato = Contato.builder()
+            contatos.add(Contato.builder()
                     .id(contatoDto.getId())
                     .nome(contatoDto.getNome())
                     .urlLogo(contatoDto.getUrlLogo())
-                    .build();
-            contatos.add(contato);
-        }
-        ArrayList<Contato> contatosValidados = new ArrayList<>();
-        try {
-            for (Contato contato : contatos) {
-                if(contato.getId() == null) {
-                    contatosValidados.add(contatoService.salvar(contato));
-                } else {
-                    contatosValidados.add(contatoService.atualizar(contato));
-                }
-            }
-        } catch (ServiceRuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+                    .build());
         }
         try {
-            Egresso salvo = service.atualizarContatos(egresso, contatosValidados);
+            Egresso salvo = service.atualizarContatos(egresso, contatos);
             return ResponseEntity.status(HttpStatus.OK).body(salvo);
         } catch (ServiceRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }*/
+    }
+
+    @PutMapping("/atualizar_depoimentos/{id}")
+    public ResponseEntity atualizarDepoimentos(
+            @RequestBody EgressoDTO dto,
+            @PathVariable Long id) {
+        Egresso egresso = Egresso.builder()
+                .id(id)
+                .nome(dto.getNome())
+                .email(dto.getEmail())
+                .cpf(dto.getCpf())
+                .resumo(dto.getResumo())
+                .urlFoto(dto.getUrlFoto())
+                .build();
+        List<Depoimento> depoimentos = new ArrayList<Depoimento>();
+        for (DepoimentoDTO depoimentoDTO : dto.getDepoimentos()) {
+            depoimentos.add(Depoimento.builder()
+                    .id(depoimentoDTO.getId())
+                    .texto(depoimentoDTO.getTexto())
+                    .data(depoimentoDTO.getData())
+                    .build());
+        }
+        try {
+            Egresso salvo = service.atualizarDepoimentos(egresso, depoimentos);
+            return ResponseEntity.status(HttpStatus.OK).body(salvo);
+        } catch (ServiceRuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity buscar() {
+        try {
+            List<Egresso> egressos = service.buscar();
+            return ResponseEntity.status(HttpStatus.OK).body(egressos);
+        } catch (ServiceRuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @DeleteMapping("/remover/{id}")
     public ResponseEntity remover(@PathVariable Long id) {

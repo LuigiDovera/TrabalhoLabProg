@@ -401,6 +401,7 @@ public class EgressoServiceTest {
         List<Contato> contatosSalvos = contatoRepo.saveAll(contatos);
         Egresso retorno = _sut.atualizarContatos(salvo, contatos);
 
+        // rollback
         _sut.remover(retorno);
         contatoRepo.deleteAll(contatosSalvos);
 

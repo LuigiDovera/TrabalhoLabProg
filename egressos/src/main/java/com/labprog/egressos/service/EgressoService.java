@@ -1,9 +1,11 @@
 package com.labprog.egressos.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.labprog.egressos.model.Contato;
 import com.labprog.egressos.model.CursoEgresso;
+import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
 import com.labprog.egressos.model.ProfEgresso;
 import com.labprog.egressos.model.repository.EgressoRepo;
@@ -18,9 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EgressoService {
-    
+
     @Autowired
     private EgressoRepo repo;
+
+    @Autowired
+    private ContatoService contatoService;
+
+    @Autowired
+    private DepoimentoService depoimentoService;
 
     @Transactional
     public Egresso salvar(Egresso egresso) {
@@ -42,11 +50,9 @@ public class EgressoService {
     }
 
     public List<Egresso> buscar(Egresso filtro) {
-        Example<Egresso> example =
-                Example.of(filtro, ExampleMatcher.matching()
-                        .withIgnoreCase()
-                        .withStringMatcher(StringMatcher.CONTAINING)
-                );
+        Example<Egresso> example = Example.of(filtro, ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(StringMatcher.CONTAINING));
 
         return repo.findAll(example);
     }
@@ -56,10 +62,34 @@ public class EgressoService {
     }
 
     @Transactional
-    public Egresso atualizarContatos(Egresso egresso, List<Contato> contatos) {
+    public Egresso atualizarContatos(Egresso egresso, List<Contato> contatos) throws ServiceRuntimeException {
         verificarEgresso(egresso);
         verificarId(egresso);
-        egresso.setContatos(contatos);
+        ArrayList<Contato> contatosValidados = new ArrayList<>();
+        for (Contato contato : contatos) {
+            if (contato.getId() == null) {
+                contatosValidados.add(contatoService.salvar(contato));
+            } else {
+                contatosValidados.add(contatoService.atualizar(contato));
+            }
+        }
+        egresso.setContatos(contatosValidados);
+        return repo.save(egresso);
+    }
+
+    @Transactional
+    public Egresso atualizarDepoimentos(Egresso egresso, List<Depoimento> depoimentos) throws ServiceRuntimeException {
+        verificarEgresso(egresso);
+        verificarId(egresso);
+        ArrayList<Depoimento> depoimentosValidados = new ArrayList<>();
+        for (Depoimento depoimento : depoimentos) {
+            if (depoimento.getId() == null) {
+                depoimentosValidados.add(depoimentoService.salvar(depoimento));
+            } else {
+                depoimentosValidados.add(depoimentoService.atualizar(depoimento));
+            }
+        }
+        egresso.setDepoimentos(depoimentosValidados);
         return repo.save(egresso);
     }
 
@@ -86,18 +116,18 @@ public class EgressoService {
 
     private void verificarEgresso(Egresso egresso) {
         if (egresso == null)
-            throw new ServiceRuntimeException("O egresso está nulo");                
+            throw new ServiceRuntimeException("O egresso está nulo");
         if ((egresso.getNome() == null) || (egresso.getNome().isEmpty()))
-            throw new ServiceRuntimeException("Nome do egresso deve ser informado");    
+            throw new ServiceRuntimeException("Nome do egresso deve ser informado");
         if ((egresso.getEmail() == null) || (egresso.getEmail().isEmpty()))
-            throw new ServiceRuntimeException("Email do egresso deve ser informado");               
+            throw new ServiceRuntimeException("Email do egresso deve ser informado");
         if ((egresso.getCpf() == null) || (egresso.getCpf().isEmpty()))
             throw new ServiceRuntimeException("CPF do egresso deve ser informado");
     }
 
     private void verificarId(Egresso egresso) {
         if ((egresso == null) || (egresso.getId() == null) ||
-            !(repo.existsById(egresso.getId()))) {
+                !(repo.existsById(egresso.getId()))) {
             throw new ServiceRuntimeException("ID de egresso inválido");
         }
     }

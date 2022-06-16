@@ -1,7 +1,5 @@
 package com.labprog.egressos.controller;
 
-import static org.mockito.Mockito.doNothing;
-
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -153,7 +151,7 @@ public class DepoimentoControllerTest {
     @Test
     public void deveRemoverDepoimento() throws Exception {
         // Cenário
-        doNothing().when(service).remover(Mockito.any(Depoimento.class));
+        Mockito.doNothing().when(service).remover(Mockito.any(Depoimento.class));
 
         // Ação
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete(API + "/remover/1");
