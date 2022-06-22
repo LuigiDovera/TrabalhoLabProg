@@ -20,9 +20,14 @@ import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 import com.labprog.egressos.model.Contato;
 import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.Curso;
+import com.labprog.egressos.model.CursoEgresso;
+import com.labprog.egressos.model.CursoEgressoPK;
 import com.labprog.egressos.model.dto.ContatoDTO;
 import com.labprog.egressos.model.dto.DepoimentoDTO;
 import com.labprog.egressos.model.dto.EgressoDTO;
+import com.labprog.egressos.model.dto.CursoDTO;
+import com.labprog.egressos.model.dto.CursoEgressoDTO;
 
 @SuppressWarnings("rawtypes")
 @RestController
@@ -91,6 +96,37 @@ public class EgressoController {
         }
         try {
             Egresso salvo = service.atualizarContatos(egresso, contatos);
+            return ResponseEntity.status(HttpStatus.OK).body(salvo);
+        } catch (ServiceRuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/atualizar_cursos/{id}")
+    public ResponseEntity atualizarCursos(
+            @RequestBody CursoEgressoDTO dto,
+            @PathVariable Long id) {
+        Egresso egresso = Egresso.builder()
+                .id(id)
+                .nome(dto.getEgresso().getNome())
+                .email(dto.getEgresso().getEmail())
+                .cpf(dto.getEgresso().getCpf())
+                .resumo(dto.getEgresso().getResumo())
+                .urlFoto(dto.getEgresso().getUrlFoto())
+                .build();
+        List<CursoEgresso> cursoEgressos = new ArrayList<CursoEgresso>();
+        for (CursoEgresso cursoEgresso : dto.getEgresso().getEgressoCursos()) {
+            cursoEgressos.add(
+                    CursoEgresso.builder()
+                            .id(cursoEgresso.getId())
+                            .curso(cursoEgresso.getCurso())
+                            .egresso(cursoEgresso.getEgresso())
+                            .data_inicio(cursoEgresso.getData_inicio())
+                            .data_conclusao(cursoEgresso.getData_conclusao())
+                            .build());
+        }
+        try {
+            Egresso salvo = service.atualizarCursos(egresso, cursoEgressos);
             return ResponseEntity.status(HttpStatus.OK).body(salvo);
         } catch (ServiceRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

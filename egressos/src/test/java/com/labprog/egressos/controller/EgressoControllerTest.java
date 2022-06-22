@@ -3,7 +3,9 @@ package com.labprog.egressos.controller;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -24,9 +26,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.labprog.egressos.model.Contato;
+import com.labprog.egressos.model.Curso;
+import com.labprog.egressos.model.CursoEgresso;
+import com.labprog.egressos.model.CursoEgressoPK;
 import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.CursoEgressoPK.CursoEgressoPKBuilder;
 import com.labprog.egressos.model.dto.ContatoDTO;
+import com.labprog.egressos.model.dto.CursoDTO;
+import com.labprog.egressos.model.dto.CursoEgressoDTO;
 import com.labprog.egressos.model.dto.DepoimentoDTO;
 import com.labprog.egressos.model.dto.EgressoDTO;
 import com.labprog.egressos.service.EgressoService;
@@ -222,6 +230,102 @@ public class EgressoControllerTest {
                         .jsonPath("$.contatos[1].nome").value(retornoServ.getContatos().get(1).getNome()))
                 .andExpect(MockMvcResultMatchers
                         .jsonPath("$.contatos[1].urlLogo").value(retornoServ.getContatos().get(1).getUrlLogo()));
+    }
+
+    @Test
+    public void deveAtualizarCursosDoEgresso() throws Exception {
+        // Cenário
+        EgressoDTO dto = EgressoDTO.builder()
+                .nome("Nome")
+                .email("example@e.com")
+                .cpf("123456789")
+                .resumo("Resumo")
+                .urlFoto("urlFoto")
+                .cursos(
+                        Arrays.asList(
+                                CursoDTO.builder()
+                                        .id(1L)
+                                        .nome("Nome Curso")
+                                        .nivel("Nivel Curso")
+                                        .build(),
+                                CursoDTO.builder()
+                                        .id(2L)
+                                        .nome("Nome Curso 2")
+                                        .nivel("Nivel Curso 2")
+                                        .build()))
+                .build();
+                
+        Egresso egresso = Egresso.builder()
+                .id(1l)
+                .nome(dto.getNome())
+                .email(dto.getEmail())
+                .cpf(dto.getCpf())
+                .resumo(dto.getResumo())
+                .urlFoto(dto.getUrlFoto())
+                .build();
+
+        List<Curso> cursos = Arrays.asList(
+                Curso.builder()
+                        .id(1L)
+                        .nome("Nome Curso")
+                        .nivel("Nivel Curso")
+                        .build(),
+                Curso.builder()
+                        .id(2L)
+                        .nome("Nome Curso 2")
+                        .nivel("Nivel Curso 2")
+                        .build());
+        
+        List<CursoEgresso> cursoEgressos = Arrays.asList(
+                CursoEgresso.builder()
+                                .curso(cursos.get(0))
+                                .egresso(egresso)
+                                .data_inicio(LocalDate.now())
+                                .data_conclusao(LocalDate.now())
+                                .build(),
+                CursoEgresso.builder()
+                                .curso(cursos.get(1))
+                                .egresso(egresso)
+                                .data_inicio(LocalDate.now())
+                                .data_conclusao(LocalDate.now())
+                                .build()
+        );
+
+        Mockito.when(service.atualizarCursos(
+                Mockito.any(Egresso.class),
+                Mockito.anyList())).thenReturn(egresso);
+
+        String json = new ObjectMapper().writeValueAsString(dto);
+
+        // Ação
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put(API + "/atualizar_cursos/1")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        // Verificação
+        mvc.perform(request)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.id").value(egresso.getId()))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.nome").value(egresso.getNome()))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.email").value(egresso.getEmail()))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.cpf").value(egresso.getCpf()))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.resumo").value(egresso.getResumo()))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.urlFoto").value(egresso.getUrlFoto()))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.cursos[0].nome").value(egresso.getEgressoCursos().get(0).getCurso().getNome()))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.cursos[0].nivel").value(egresso.getEgressoCursos().get(0).getCurso().getNivel()))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.cursos[1].nome").value(egresso.getEgressoCursos().get(1).getCurso().getNome()))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.cursos[1].nivel").value(egresso.getEgressoCursos().get(1).getCurso().getNivel()));
     }
 
     @Test

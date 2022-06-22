@@ -17,5 +17,6 @@ public class EgressoDTO {
     private String resumo;
     private String urlFoto;
     private List<ContatoDTO> contatos;
+    private List<CursoDTO> cursos;
     private List<DepoimentoDTO> depoimentos;
 }
