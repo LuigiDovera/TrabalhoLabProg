@@ -12,7 +12,7 @@ import com.labprog.egressos.model.ProfEgresso;
 
 import com.labprog.egressos.model.repository.CargoRepo;
 import com.labprog.egressos.model.repository.ProfEgressoRepo;
-import com.labprog.egressos.service.exceptions.RegraNegocioRunTime;
+import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -94,25 +94,25 @@ public class CargoService {
     private void verificarProfEgresso(Cargo car){
         List<ProfEgresso> res = profEgressoRep.findByCargo(car);
         if(!res.isEmpty())
-            throw new RegraNegocioRunTime("Cargo informado tem relação com Profissão de Egresso");
+            throw new ServiceRuntimeException("Cargo informado tem relação com Profissão de Egresso");
     }
 
     private void verificarId(Cargo car) {
         if ((car == null) || (car.getId() == null))
-            throw new RegraNegocioRunTime("Cargo sem id");
+            throw new ServiceRuntimeException("Cargo sem id");
     }
 
     private void verificarCargo(Cargo car){
         if(car == null)
-            throw new RegraNegocioRunTime("Um cargo válido deve ser informado");
+            throw new ServiceRuntimeException("Um cargo válido deve ser informado");
 
         if((car.getNome() == null)
                 || (car.getNome().equals("")))
-            throw new RegraNegocioRunTime("Um cargo precisa ter nome");
+            throw new ServiceRuntimeException("Um cargo precisa ter nome");
 
         if((car.getDescricao() == null)
                 || (car.getDescricao().equals("")))
-            throw new RegraNegocioRunTime("Um cargo precisa ter descricao");
+            throw new ServiceRuntimeException("Um cargo precisa ter descricao");
     }
 
     

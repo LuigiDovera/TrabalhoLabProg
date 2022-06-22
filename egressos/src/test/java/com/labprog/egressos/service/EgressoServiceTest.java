@@ -1,6 +1,6 @@
 package com.labprog.egressos.service;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -401,6 +401,7 @@ public class EgressoServiceTest {
         List<Contato> contatosSalvos = contatoRepo.saveAll(contatos);
         Egresso retorno = _sut.atualizarContatos(salvo, contatos);
 
+        // rollback
         _sut.remover(retorno);
         contatoRepo.deleteAll(contatosSalvos);
 
@@ -497,12 +498,12 @@ public class EgressoServiceTest {
         
         List<ProfEgresso> profissoes = Arrays.asList(
             ProfEgresso.builder()
-                .dataRegistro(Date.valueOf("2022-01-01"))
+                .dataRegistro(LocalDate.valueOf("2022-01-01"))
                 .descricao("lorem ipsum lore")
                 .empresa("tuludan inc")
                 .build(),
             ProfEgresso.builder()
-                .dataRegistro(Date.valueOf("2022-02-02"))
+                .dataRegistro(LocalDate.valueOf("2022-02-02"))
                 .descricao("lorem ipsum lore2")
                 .empresa("tuludan inc2")
                 .build()

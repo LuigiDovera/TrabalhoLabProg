@@ -1,6 +1,6 @@
 package com.labprog.egressos.service;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,7 +34,7 @@ public class DepoimentoServiceTest {
     @Transactional
     public void deveSalvarDepoimento() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         Egresso egresso = Egresso.builder()
                 .nome("tuludan")
@@ -70,7 +70,7 @@ public class DepoimentoServiceTest {
     @Transactional
     public void deveAtualizarDepoimento() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         Egresso egresso = Egresso.builder()
                 .nome("tuludan")
@@ -90,7 +90,7 @@ public class DepoimentoServiceTest {
         // ação
         Depoimento retornoDepoimento = _sut.salvar(depoimento);
         retornoDepoimento.setTexto("teste depoimento");
-        retornoDepoimento.setData(new Date(2));
+        retornoDepoimento.setData(LocalDate.now());
         Depoimento depoimentoAtualizado = _sut.atualizar(retornoDepoimento);
 
         // verificação
@@ -109,7 +109,7 @@ public class DepoimentoServiceTest {
     @Transactional
     public void deveRemoverDepoimento() {
         // cenário
-        Date data = new Date(1);
+        LocalDate data = LocalDate.now();
 
         Egresso egresso = Egresso.builder()
                 .nome("tuludan")
@@ -152,7 +152,7 @@ public class DepoimentoServiceTest {
             depoimentos.add(
                     Depoimento.builder().egresso(retornoEgresso)
                             .texto("Depoimento teste")
-                            .data(new Date(ThreadLocalRandom.current().nextInt() * 1000L))
+                            .data(LocalDate.now().plusDays(i))
                             .build());
         }
 
@@ -172,6 +172,12 @@ public class DepoimentoServiceTest {
             }
         });
 
+        // rollback
+        for (Depoimento depoimento : depoimentos) {
+            _sut.remover(depoimento);
+        }
+        egressoService.remover(retornoEgresso);
+
         // verificação
         Assertions.assertNotNull(retorno);
         Assertions.assertEquals(depoimentos.size(), retorno.size());
@@ -180,18 +186,11 @@ public class DepoimentoServiceTest {
             Assertions.assertEquals(depoimentos.get(i).getData().toString(),
                     retorno.get(i).getData().toString());
         }
-
-        // rollback
-        for (Depoimento depoimento : depoimentos) {
-            _sut.remover(depoimento);
-        }
-
-        egressoService.remover(retornoEgresso);
     }
 
     @Test
     public void deveListarDepoimentosPorEgresso() {
-        //
+        // Cenário
         List<Egresso> egressos = new ArrayList<Egresso>();
         for (int i = 0; i < 2; i++) {
             egressos.add(Egresso.builder()
@@ -214,8 +213,7 @@ public class DepoimentoServiceTest {
                 depoimentos.add(
                         Depoimento.builder().egresso(retornoEgresso.get(i))
                                 .texto("Depoimento teste" + j)
-                                .data(new Date(ThreadLocalRandom.current().nextInt()
-                                        * 1000L))
+                                .data(LocalDate.now())
                                 .build());
             }
         }
@@ -232,6 +230,14 @@ public class DepoimentoServiceTest {
             retorno.addAll(_sut.obterDepoimentosPorEgresso(egresso));
         }
 
+        // rollback
+        for (Depoimento depoimento : retornoDepoimentos) {
+            _sut.remover(depoimento);
+        }
+        for (Egresso egresso : retornoEgresso) {
+            egressoService.remover(egresso);
+        }
+
         // verificação
         Assertions.assertNotNull(retorno);
         Assertions.assertEquals(depoimentos.size(), retorno.size());
@@ -239,14 +245,6 @@ public class DepoimentoServiceTest {
             Assertions.assertEquals(depoimentos.get(i).getTexto(), retorno.get(i).getTexto());
             Assertions.assertEquals(depoimentos.get(i).getData().toString(),
                     retorno.get(i).getData().toString());
-        }
-
-        // rollback
-        for (Depoimento depoimento : retornoDepoimentos) {
-            _sut.remover(depoimento);
-        }
-        for (Egresso egresso : retornoEgresso) {
-            egressoService.remover(egresso);
         }
     }
 }
