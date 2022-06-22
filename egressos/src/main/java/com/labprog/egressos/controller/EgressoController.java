@@ -104,29 +104,29 @@ public class EgressoController {
 
     @PutMapping("/atualizar_cursos/{id}")
     public ResponseEntity atualizarCursos(
-            @RequestBody CursoEgressoDTO dto,
+            @RequestBody EgressoDTO dto,
             @PathVariable Long id) {
         Egresso egresso = Egresso.builder()
                 .id(id)
-                .nome(dto.getEgresso().getNome())
-                .email(dto.getEgresso().getEmail())
-                .cpf(dto.getEgresso().getCpf())
-                .resumo(dto.getEgresso().getResumo())
-                .urlFoto(dto.getEgresso().getUrlFoto())
+                .nome(dto.getNome())
+                .email(dto.getEmail())
+                .cpf(dto.getCpf())
+                .resumo(dto.getResumo())
+                .urlFoto(dto.getUrlFoto())
                 .build();
-        List<CursoEgresso> cursoEgressos = new ArrayList<CursoEgresso>();
-        for (CursoEgresso cursoEgresso : dto.getEgresso().getEgressoCursos()) {
-            cursoEgressos.add(
+        List<CursoEgresso> cursosEgresso = new ArrayList<CursoEgresso>();
+        for (CursoEgressoDTO cursoEgressoDto : dto.getCursoEgressos()) {
+            cursosEgresso.add(
                     CursoEgresso.builder()
-                            .id(cursoEgresso.getId())
-                            .curso(cursoEgresso.getCurso())
-                            .egresso(cursoEgresso.getEgresso())
-                            .data_inicio(cursoEgresso.getData_inicio())
-                            .data_conclusao(cursoEgresso.getData_conclusao())
+                            .id(cursoEgressoDto.getId())
+                            .curso(cursoEgressoDto.getCurso())
+                            .egresso(cursoEgressoDto.getEgresso())
+                            .data_inicio(cursoEgressoDto.getData_inicio())
+                            .data_conclusao(cursoEgressoDto.getData_conclusao())
                             .build());
         }
         try {
-            Egresso salvo = service.atualizarCursos(egresso, cursoEgressos);
+            Egresso salvo = service.atualizarCursos(egresso, cursosEgresso);
             return ResponseEntity.status(HttpStatus.OK).body(salvo);
         } catch (ServiceRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

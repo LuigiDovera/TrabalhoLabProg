@@ -114,8 +114,8 @@ public class CursoController {
                 .id(id)
                 .build();
         try {
-            int egressos = service.listarQuantidadeDeEgressosPorCurso(curso);
-            return ResponseEntity.status(HttpStatus.OK).body(egressos);
+            int quantidade = service.listarQuantidadeDeEgressosPorCurso(curso);
+            return ResponseEntity.status(HttpStatus.OK).body(quantidade);
         } catch (ServiceRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

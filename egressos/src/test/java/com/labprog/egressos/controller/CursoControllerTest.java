@@ -33,7 +33,7 @@ import com.labprog.egressos.service.CursoService;
 @AutoConfigureMockMvc
 public class CursoControllerTest {
 
-    static final String API = "/api/Cursos";
+    static final String API = "/api/cursos";
 
     @Autowired
     MockMvc mvc;
@@ -189,18 +189,6 @@ public class CursoControllerTest {
     @Test
     public void deveListarEgressosPorCurso() throws Exception {
         // Cenário
-        List<Curso> cursos = Arrays.asList(
-                Curso.builder()
-                        .id(2L)
-                        .nome("Curso de teste")
-                        .nivel("Nivel de teste")
-                        .build(),
-                Curso.builder()
-                        .id(1L)
-                        .nome("Curso de teste 2")
-                        .nivel("Nivel de teste")
-                        .build());
-
         List<Egresso> egressos = Arrays.asList(
                 Egresso.builder()
                         .id(1L)
@@ -218,21 +206,6 @@ public class CursoControllerTest {
                         .resumo("Resumo2")
                         .urlFoto("urlFoto2")
                         .build());
-
-        List<CursoEgresso> cursoEgressos = Arrays.asList(
-                CursoEgresso.builder()
-                                .curso(cursos.get(0))
-                                .egresso(egressos.get(0))
-                                .data_inicio(LocalDate.now())
-                                .data_conclusao(LocalDate.now())
-                                .build(),
-                CursoEgresso.builder()
-                                .curso(cursos.get(1))
-                                .egresso(egressos.get(1))
-                                .data_inicio(LocalDate.now())
-                                .data_conclusao(LocalDate.now())
-                                .build()
-        );
 
         Mockito.when(service.listarEgressosPorCurso(Mockito.any(Curso.class))).thenReturn(egressos);
 
@@ -255,13 +228,13 @@ public class CursoControllerTest {
                                 .jsonPath("$[0].email").value(egressos.get(0).getEmail()))
                 .andExpect(
                         MockMvcResultMatchers
-                                .jsonPath("$[0].cpf").value(egressos.get(0).getEmail()))
+                                .jsonPath("$[0].cpf").value(egressos.get(0).getCpf()))
                 .andExpect(
                         MockMvcResultMatchers
                                 .jsonPath("$[0].resumo").value(egressos.get(0).getResumo()))
                 .andExpect(
                         MockMvcResultMatchers
-                                .jsonPath("$[0].urlfoto").value(egressos.get(0).getUrlFoto()));
+                                .jsonPath("$[0].urlFoto").value(egressos.get(0).getUrlFoto()));
     }
 
     @Test
@@ -286,42 +259,6 @@ public class CursoControllerTest {
                                         .nivel("Nivel Curso 2")
                                         .build()))
                 .build();
-                
-        Egresso egresso = Egresso.builder()
-                .id(1l)
-                .nome(dto.getNome())
-                .email(dto.getEmail())
-                .cpf(dto.getCpf())
-                .resumo(dto.getResumo())
-                .urlFoto(dto.getUrlFoto())
-                .build();
-
-        List<Curso> cursos = Arrays.asList(
-                Curso.builder()
-                        .id(1L)
-                        .nome("Nome Curso")
-                        .nivel("Nivel Curso")
-                        .build(),
-                Curso.builder()
-                        .id(2L)
-                        .nome("Nome Curso 2")
-                        .nivel("Nivel Curso 2")
-                        .build());
-        
-        List<CursoEgresso> cursoEgressos = Arrays.asList(
-                CursoEgresso.builder()
-                                .curso(cursos.get(0))
-                                .egresso(egresso)
-                                .data_inicio(LocalDate.now())
-                                .data_conclusao(LocalDate.now())
-                                .build(),
-                CursoEgresso.builder()
-                                .curso(cursos.get(1))
-                                .egresso(egresso)
-                                .data_inicio(LocalDate.now())
-                                .data_conclusao(LocalDate.now())
-                                .build()
-        );
         
         int quantidade_egressos_curso = 1;
 
@@ -337,7 +274,7 @@ public class CursoControllerTest {
                         MockMvcResultMatchers.status().isOk())
                 .andExpect(
                         MockMvcResultMatchers
-                                .jsonPath("$[0]").value(quantidade_egressos_curso));
+                                .jsonPath("$").value(quantidade_egressos_curso));
                 
     }
 }
