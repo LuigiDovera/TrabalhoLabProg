@@ -16,4 +16,8 @@ public class FaixaSalarioService {
         int quantidade = repository.quantidadeEgressoPorFaixaSalario(fs);
         return quantidade;
     }
+
+    public FaixaSalario obterFaixaSalarioPorDescricao(String descricao){
+        return repository.obterFaixaSalarioPorDescricao(descricao);
+    }
 }
