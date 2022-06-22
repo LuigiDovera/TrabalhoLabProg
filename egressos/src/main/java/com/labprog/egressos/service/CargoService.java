@@ -3,6 +3,9 @@ package com.labprog.egressos.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.TransactionScoped;
+import javax.transaction.Transactional;
+
 import com.labprog.egressos.model.Cargo;
 import com.labprog.egressos.model.Egresso;
 import com.labprog.egressos.model.ProfEgresso;
@@ -46,7 +49,18 @@ public class CargoService {
         remover(car.get());
     }
 
-    public List<Cargo> buscar (Cargo filtro){
+    @Transactional
+    public Optional<Cargo> buscar(Cargo car){
+        verificarId(car);
+        return repository.findById(car.getId());
+    }
+
+    @Transactional
+    public List<Cargo> buscar(){
+        return repository.findAll();
+    }
+
+    public List<Cargo> listar (Cargo filtro){
         Example<Cargo> example = 
                 Example.of(filtro, ExampleMatcher.matching()
                         .withIgnoreCase()

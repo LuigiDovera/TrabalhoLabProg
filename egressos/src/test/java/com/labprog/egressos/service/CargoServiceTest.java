@@ -90,7 +90,7 @@ public class CargoServiceTest {
 
                 // ação
                 service.salvar(cargo);
-                Cargo buscado = service.buscar(cargo).get(0);
+                Cargo buscado = service.buscar(cargo).get();
 
                 // verificação
                 Assertions.assertNotNull(buscado);
