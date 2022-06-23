@@ -53,6 +53,10 @@ public class CursoService {
         return repo.findAll();
     }
 
+    public Optional<Curso> buscarPorId(Long id) {
+        return repo.findById(id);
+    }
+
     public List<Curso> listar(Curso filtro) {
         Example<Curso> example =
                 Example.of(filtro, ExampleMatcher.matching()

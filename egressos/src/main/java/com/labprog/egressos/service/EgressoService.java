@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.labprog.egressos.model.Contato;
+import com.labprog.egressos.model.Curso;
 import com.labprog.egressos.model.CursoEgresso;
+import com.labprog.egressos.model.CursoEgressoPK;
 import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
 import com.labprog.egressos.model.ProfEgresso;
@@ -29,6 +31,12 @@ public class EgressoService {
 
     @Autowired
     private DepoimentoService depoimentoService;
+
+    @Autowired
+    private CursoEgressoService cursoEgressoService;
+
+    @Autowired
+    private CursoService cursoService;
 
     @Transactional
     public Egresso salvar(Egresso egresso) {
@@ -102,7 +110,23 @@ public class EgressoService {
     public Egresso atualizarCursos(Egresso egresso, List<CursoEgresso> cursos) {
         verificarEgresso(egresso);
         verificarId(egresso);
-        egresso.setEgressoCursos(cursos);
+        ArrayList<CursoEgresso> cursosValidados = new ArrayList<>();
+        for (CursoEgresso curso : cursos) {
+            if (cursoService.buscarPorId(curso.getCurso().getId()).isEmpty()) {
+                throw new ServiceRuntimeException("Curso não encontrado");
+            }
+            CursoEgressoPK pk = CursoEgressoPK.builder()
+                    .egresso_id(egresso.getId())
+                    .curso_id(curso.getCurso().getId())
+                    .build();
+            curso.setId(pk);
+            if (cursoEgressoService.buscarPorId(curso.getId()).isEmpty()) {
+                cursosValidados.add(cursoEgressoService.salvar(curso));
+            } else {
+                cursosValidados.add(cursoEgressoService.atualizar(curso));
+            }
+        }
+        egresso.setEgressoCursos(cursosValidados);
         return repo.save(egresso);
     }
 

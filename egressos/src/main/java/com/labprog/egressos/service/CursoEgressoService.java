@@ -1,14 +1,12 @@
 package com.labprog.egressos.service;
 
-import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import com.labprog.egressos.model.Curso;
 import com.labprog.egressos.model.CursoEgresso;
-import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.CursoEgressoPK;
 import com.labprog.egressos.model.repository.CursoEgressoRepo;
-import com.labprog.egressos.model.repository.CursoRepo;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +34,11 @@ public class CursoEgressoService {
     public void remover(CursoEgresso cursoEgresso) {
         verificarId(cursoEgresso);
         repo.delete(cursoEgresso);
+    }
+
+    @Transactional
+    public Optional<CursoEgresso> buscarPorId(CursoEgressoPK id) {
+        return repo.findById(id);
     }
 
     private void verificarId(CursoEgresso cursoEgresso) {

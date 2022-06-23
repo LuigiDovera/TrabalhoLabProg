@@ -198,4 +198,57 @@ public class CursoEgressoRepositoryTest {
         cursoRepo.delete(curso);
         egressoRepo.delete(egresso);
     }
+
+    @Test
+    public void deveEncontrarCursoEgressoPorId() {
+        // cenário
+        LocalDate data = LocalDate.now();
+
+        Curso curso = Curso.builder()
+                .nome("curso teste")
+                .nivel("nivel teste")
+                .build();
+
+        Curso retornoCurso = cursoRepo.save(curso);
+
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("example@e.com")
+                .cpf("1234")
+                .resumo("lorem ipsum lore")
+                .urlFoto("teste")
+                .build();
+
+        Egresso retornoEgresso = egressoRepo.save(egresso);
+
+        CursoEgressoPK idCursoEgresso = CursoEgressoPK.builder()
+                .curso_id(retornoCurso.getId())
+                .egresso_id(retornoEgresso.getId())
+                .build();
+
+        CursoEgresso cursoEgresso = CursoEgresso.builder()
+                .id(idCursoEgresso)
+                .curso(retornoCurso)
+                .egresso(retornoEgresso)
+                .data_inicio(data)
+                .data_conclusao(data)
+                .build();
+
+        CursoEgresso retornoCursoEgresso = cursoEgressoRepo.save(cursoEgresso);
+
+        // ação
+        Optional<CursoEgresso> retornoCursoEgressoEncontrado = cursoEgressoRepo.findById(retornoCursoEgresso.getId());
+
+        // rollback
+        cursoEgressoRepo.delete(retornoCursoEgresso);
+        cursoRepo.delete(retornoCurso);
+        egressoRepo.delete(retornoEgresso);
+
+        // verificação
+        Assertions.assertNotNull(retornoCursoEgressoEncontrado);
+        Assertions.assertEquals(retornoCursoEgresso.getCurso().getId(), retornoCursoEgressoEncontrado.get().getCurso().getId());
+        Assertions.assertEquals(retornoCursoEgresso.getEgresso().getId(), retornoCursoEgressoEncontrado.get().getEgresso().getId());
+        Assertions.assertEquals(retornoCursoEgresso.getData_inicio(), retornoCursoEgressoEncontrado.get().getData_inicio());
+        Assertions.assertEquals(retornoCursoEgresso.getData_conclusao(), retornoCursoEgressoEncontrado.get().getData_conclusao());
+    }
 }
