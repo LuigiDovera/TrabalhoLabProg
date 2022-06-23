@@ -41,9 +41,20 @@ public class CursoService {
     }
 
     @Transactional
-    public Optional<Curso> buscar(Curso curso){
-        verificarId(curso);
-        return repo.findById(curso.getId());
+    public List<Curso> buscar(Curso filtro) {
+        Example<Curso> example = Example.of(filtro, ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(StringMatcher.CONTAINING));
+
+        return repo.findAll(example);
+    }
+
+    public List<Curso> buscar() {
+        return repo.findAll();
+    }
+
+    public Optional<Curso> buscarPorId(Long id) {
+        return repo.findById(id);
     }
 
     public List<Curso> listar(Curso filtro) {
