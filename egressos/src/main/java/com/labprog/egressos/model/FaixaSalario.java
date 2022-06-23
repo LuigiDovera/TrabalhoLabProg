@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.FetchType;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +31,8 @@ public class FaixaSalario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(mappedBy = "faixaSalario", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "faixaSalario", fetch=FetchType.LAZY)
+    @JsonManagedReference
     private List<ProfEgresso> profsEgressos;
 
     @Column(name = "descricao")
