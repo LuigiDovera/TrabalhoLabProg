@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,5 +40,6 @@ public class Curso {
     private String nivel;
 
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
+    @JsonManagedReference
     List<CursoEgresso> egressos;
 }

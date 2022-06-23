@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.JoinColumn;
 
 
@@ -51,7 +53,8 @@ public class Egresso {
     @Column(name = "urlFoto")
     private String urlFoto;
 
-    @OneToMany(mappedBy = "egresso", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "egresso", fetch=FetchType.LAZY)
+    @JsonManagedReference
     private List<ProfEgresso> profsEgressos;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -59,13 +62,16 @@ public class Egresso {
         name = "contato_egresso", 
         joinColumns = @JoinColumn(name = "egresso_id"), 
         inverseJoinColumns = @JoinColumn(name = "contato_id"))
+    @JsonManagedReference
     private List<Contato> contatos;
     
     @OneToMany(mappedBy = "egresso", cascade = CascadeType.ALL)
+    @JsonManagedReference
     List<CursoEgresso> egressoCursos;
 
     @OneToMany(mappedBy = "egresso", fetch = FetchType.LAZY)
     @Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
+    @JsonManagedReference
     private List<Depoimento> depoimentos;
 
 

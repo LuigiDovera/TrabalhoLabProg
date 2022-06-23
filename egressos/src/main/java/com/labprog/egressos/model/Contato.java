@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,5 +42,6 @@ public class Contato {
         mappedBy = "contatos",
         fetch = FetchType.LAZY, 
         cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private List<Egresso> egressos;
 }
