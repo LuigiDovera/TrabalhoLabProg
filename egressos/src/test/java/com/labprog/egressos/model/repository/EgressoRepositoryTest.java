@@ -30,6 +30,7 @@ public class EgressoRepositoryTest {
                 .cpf("1234")
                 .resumo("lorem ipsum lore")
                 .urlFoto("teste")
+                .senha("senhateste")
                 .build();
 
         // ação
@@ -50,18 +51,18 @@ public class EgressoRepositoryTest {
     public void deveSalvarVariosEgressos() {
         // cenário
         List<Egresso> egressos = new ArrayList<Egresso>();
-        for (int i=0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             egressos.add(
-                Egresso.builder()
-                        .nome("tuludan" + (i+1))
-                        .email("a@a.com" + (i+1))
-                        .cpf("1234" + (i+1))
-                        .resumo("lorem ipsum lore" + (i+1))
-                        .urlFoto("teste" + (i+1))
-                        .build()
-            );
+                    Egresso.builder()
+                            .nome("tuludan" + (i + 1))
+                            .email("a@a.com" + (i + 1))
+                            .cpf("1234" + (i + 1))
+                            .resumo("lorem ipsum lore" + (i + 1))
+                            .urlFoto("teste" + (i + 1))
+.senha("teste" + (i + 1))
+                            .build());
         }
-        
+
         // ação
         List<Egresso> retorno = repo.saveAll(egressos);
         repo.deleteAll(retorno);
@@ -69,7 +70,7 @@ public class EgressoRepositoryTest {
         // verificação
         Assertions.assertNotNull(retorno);
         Assertions.assertEquals(egressos.size(), retorno.size());
-        for (int i=0; i < egressos.size(); i++) {
+        for (int i = 0; i < egressos.size(); i++) {
             Assertions.assertEquals(egressos.get(i).getNome(), retorno.get(i).getNome());
             Assertions.assertEquals(egressos.get(i).getEmail(), retorno.get(i).getEmail());
             Assertions.assertEquals(egressos.get(i).getCpf(), retorno.get(i).getCpf());
@@ -87,6 +88,7 @@ public class EgressoRepositoryTest {
                 .cpf("1234")
                 .resumo("lorem ipsum lore")
                 .urlFoto("teste")
+                .senha("senhateste")
                 .build();
 
         // ação
@@ -96,6 +98,7 @@ public class EgressoRepositoryTest {
         salvo.setCpf("4321");
         salvo.setResumo("lore ipsum lorem");
         salvo.setUrlFoto("etset");
+        salvo.setSenha("testesenha");
         Egresso retorno = repo.save(salvo);
 
         // verificação
@@ -110,22 +113,23 @@ public class EgressoRepositoryTest {
 
     @Test
     public void deveRemoverEgresso() {
-        //cenário
+        // cenário
         Egresso egresso = Egresso.builder()
                 .nome("tuludan")
                 .email("a@a.com")
                 .cpf("1234")
                 .resumo("lorem ipsum lore")
                 .urlFoto("teste")
+                .senha("senhateste")
                 .build();
-        
-        //ação
+
+        // ação
         Egresso salvo = repo.save(egresso);
         Long id = salvo.getId();
         repo.deleteById(id);
         Optional<Egresso> temp = repo.findById(id);
-        
-        //verificação        
+
+        // verificação
         Assertions.assertFalse(temp.isPresent());
     }
 
@@ -133,45 +137,45 @@ public class EgressoRepositoryTest {
     public void deveRemoverVariosEgressos() {
         // cenário
         List<Egresso> egressos = new ArrayList<Egresso>();
-        for (int i=0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             egressos.add(
-                Egresso.builder()
-                        .nome("tuludan" + (i+1))
-                        .email("a@a.com" + (i+1))
-                        .cpf("1234" + (i+1))
-                        .resumo("lorem ipsum lore" + (i+1))
-                        .urlFoto("teste" + (i+1))
-                        .build()
-            );
+                    Egresso.builder()
+                            .nome("tuludan" + (i + 1))
+                            .email("a@a.com" + (i + 1))
+                            .cpf("1234" + (i + 1))
+                            .resumo("lorem ipsum lore" + (i + 1))
+                            .urlFoto("teste" + (i + 1))
+.senha("teste" + (i + 1))
+                            .build());
         }
-        
+
         // ação
         List<Egresso> salvos = repo.saveAll(egressos);
         repo.deleteAll(salvos);
         List<Egresso> retorno = repo.findAllById(egressos.stream()
-                                                .map(c -> c.getId())
-                                                .collect(Collectors.toList()));
+                .map(c -> c.getId())
+                .collect(Collectors.toList()));
 
         // verificação
         Assertions.assertTrue(retorno.isEmpty());
     }
 
     @Test
-    public void deveObterEgressosPorNome(){
+    public void deveObterEgressosPorNome() {
         // cenário
         List<Egresso> egressos = new ArrayList<Egresso>();
-        for (int i=0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             egressos.add(
-                Egresso.builder()
-                        .nome("tuludan" + (i+1))
-                        .email("a@a.com" + (i+1))
-                        .cpf("1234" + (i+1))
-                        .resumo("lorem ipsum lore" + (i+1))
-                        .urlFoto("teste" + (i+1))
-                        .build()
-            );
+                    Egresso.builder()
+                            .nome("tuludan" + (i + 1))
+                            .email("a@a.com" + (i + 1))
+                            .cpf("1234" + (i + 1))
+                            .resumo("lorem ipsum lore" + (i + 1))
+                            .urlFoto("teste" + (i + 1))
+.senha("teste" + (i + 1))
+                            .build());
         }
-        
+
         // ação
         List<Egresso> salvos = repo.saveAll(egressos);
         List<Egresso> retorno = new ArrayList<Egresso>();
@@ -181,8 +185,8 @@ public class EgressoRepositoryTest {
 
         // verificação
         Assertions.assertNotNull(retorno);
-        Assertions.assertEquals(egressos.size(), retorno.size()); 
-        for (int i=0; i < egressos.size(); i++) {
+        Assertions.assertEquals(egressos.size(), retorno.size());
+        for (int i = 0; i < egressos.size(); i++) {
             Assertions.assertEquals(egressos.get(i).getNome(), retorno.get(i).getNome());
             Assertions.assertEquals(egressos.get(i).getEmail(), retorno.get(i).getEmail());
             Assertions.assertEquals(egressos.get(i).getCpf(), retorno.get(i).getCpf());
@@ -200,6 +204,7 @@ public class EgressoRepositoryTest {
                 .cpf("1234")
                 .resumo("lorem ipsum lore")
                 .urlFoto("teste")
+                .senha("senhateste")
                 .build();
 
         // ação
@@ -225,6 +230,7 @@ public class EgressoRepositoryTest {
                 .cpf("1234")
                 .resumo("lorem ipsum lore")
                 .urlFoto("teste")
+                .senha("senhateste")
                 .build();
 
         // ação

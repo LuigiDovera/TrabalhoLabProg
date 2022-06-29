@@ -53,6 +53,9 @@ public class Egresso {
     @Column(name = "urlFoto")
     private String urlFoto;
 
+    @Column(name = "senha")
+    private String senha;
+
     @OneToMany(mappedBy = "egresso", fetch=FetchType.LAZY)
     @JsonManagedReference
     private List<ProfEgresso> profsEgressos;
