@@ -16,6 +16,7 @@ public class EgressoDTO {
     private String cpf;
     private String resumo;
     private String urlFoto;
+    private String senha;
     private List<ContatoDTO> contatos;
     private List<CursoDTO> cursos;
     private List<CursoEgressoDTO> cursoEgressos;

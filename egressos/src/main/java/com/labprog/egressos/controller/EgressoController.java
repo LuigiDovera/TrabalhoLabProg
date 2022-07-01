@@ -15,19 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.labprog.egressos.service.EgressoService;
-import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 import com.labprog.egressos.model.Contato;
+import com.labprog.egressos.model.CursoEgresso;
 import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
-import com.labprog.egressos.model.Curso;
-import com.labprog.egressos.model.CursoEgresso;
-import com.labprog.egressos.model.CursoEgressoPK;
 import com.labprog.egressos.model.dto.ContatoDTO;
+import com.labprog.egressos.model.dto.CursoEgressoDTO;
 import com.labprog.egressos.model.dto.DepoimentoDTO;
 import com.labprog.egressos.model.dto.EgressoDTO;
-import com.labprog.egressos.model.dto.CursoDTO;
-import com.labprog.egressos.model.dto.CursoEgressoDTO;
+import com.labprog.egressos.service.EgressoService;
+import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
 @SuppressWarnings("rawtypes")
 @RestController
@@ -45,6 +42,7 @@ public class EgressoController {
                 .cpf(dto.getCpf())
                 .resumo(dto.getResumo())
                 .urlFoto(dto.getUrlFoto())
+                .senha(dto.getSenha())
                 .build();
         try {
             Egresso salvo = service.salvar(egresso);
@@ -65,6 +63,7 @@ public class EgressoController {
                 .cpf(dto.getCpf())
                 .resumo(dto.getResumo())
                 .urlFoto(dto.getUrlFoto())
+                .senha(dto.getSenha())
                 .build();
         try {
             Egresso salvo = service.atualizar(egresso);
@@ -85,6 +84,7 @@ public class EgressoController {
                 .cpf(dto.getCpf())
                 .resumo(dto.getResumo())
                 .urlFoto(dto.getUrlFoto())
+                .senha(dto.getSenha())
                 .build();
         List<Contato> contatos = new ArrayList<Contato>();
         for (ContatoDTO contatoDto : dto.getContatos()) {
@@ -113,6 +113,7 @@ public class EgressoController {
                 .cpf(dto.getCpf())
                 .resumo(dto.getResumo())
                 .urlFoto(dto.getUrlFoto())
+                .senha(dto.getSenha())
                 .build();
         List<CursoEgresso> cursosEgresso = new ArrayList<CursoEgresso>();
         for (CursoEgressoDTO cursoEgressoDto : dto.getCursoEgressos()) {
@@ -144,6 +145,7 @@ public class EgressoController {
                 .cpf(dto.getCpf())
                 .resumo(dto.getResumo())
                 .urlFoto(dto.getUrlFoto())
+                .senha(dto.getSenha())
                 .build();
         List<Depoimento> depoimentos = new ArrayList<Depoimento>();
         for (DepoimentoDTO depoimentoDTO : dto.getDepoimentos()) {

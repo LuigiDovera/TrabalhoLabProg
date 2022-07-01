@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.labprog.egressos.model.Contato;
-import com.labprog.egressos.model.Curso;
 import com.labprog.egressos.model.CursoEgresso;
 import com.labprog.egressos.model.CursoEgressoPK;
 import com.labprog.egressos.model.Depoimento;
@@ -112,8 +111,8 @@ public class EgressoService {
         verificarId(egresso);
         ArrayList<CursoEgresso> cursosValidados = new ArrayList<>();
         for (CursoEgresso curso : cursos) {
-            if (cursoService.buscarPorId(curso.getCurso().getId()).isEmpty()) {
-                throw new ServiceRuntimeException("Curso não encontrado");
+            if (curso.getCurso().getId() == null) {
+                throw new ServiceRuntimeException("Curso inválido");
             }
             CursoEgressoPK pk = CursoEgressoPK.builder()
                     .egresso_id(egresso.getId())
@@ -147,6 +146,8 @@ public class EgressoService {
             throw new ServiceRuntimeException("Email do egresso deve ser informado");
         if ((egresso.getCpf() == null) || (egresso.getCpf().isEmpty()))
             throw new ServiceRuntimeException("CPF do egresso deve ser informado");
+        //if ((egresso.getSenha() == null) || (egresso.getSenha().isEmpty()))
+            //throw new ServiceRuntimeException("Senha do egresso deve ser informada");
     }
 
     private void verificarId(Egresso egresso) {

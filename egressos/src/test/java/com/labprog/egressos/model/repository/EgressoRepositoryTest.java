@@ -59,7 +59,7 @@ public class EgressoRepositoryTest {
                             .cpf("1234" + (i + 1))
                             .resumo("lorem ipsum lore" + (i + 1))
                             .urlFoto("teste" + (i + 1))
-.senha("teste" + (i + 1))
+                            .senha("teste" + (i + 1))
                             .build());
         }
 
@@ -145,7 +145,7 @@ public class EgressoRepositoryTest {
                             .cpf("1234" + (i + 1))
                             .resumo("lorem ipsum lore" + (i + 1))
                             .urlFoto("teste" + (i + 1))
-.senha("teste" + (i + 1))
+                            .senha("teste" + (i + 1))
                             .build());
         }
 
@@ -172,7 +172,7 @@ public class EgressoRepositoryTest {
                             .cpf("1234" + (i + 1))
                             .resumo("lorem ipsum lore" + (i + 1))
                             .urlFoto("teste" + (i + 1))
-.senha("teste" + (i + 1))
+                            .senha("teste" + (i + 1))
                             .build());
         }
 

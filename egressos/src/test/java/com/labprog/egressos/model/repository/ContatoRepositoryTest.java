@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.labprog.egressos.model.Contato;
+import com.labprog.egressos.model.Egresso;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,9 @@ public class ContatoRepositoryTest {
     @Autowired
     ContatoRepo repo;
 
+    @Autowired
+    EgressoRepo egressoRepo;
+
     @Test
     public void deveSalvarContato() {
         // cenário
@@ -29,7 +33,7 @@ public class ContatoRepositoryTest {
                 .nome("Instagram")
                 .urlLogo("@instagram")
                 .build();
-        
+
         // ação
         Contato retorno = repo.save(contato);
         repo.delete(retorno);
@@ -44,15 +48,14 @@ public class ContatoRepositoryTest {
     public void deveSalvarVariosContatos() {
         // cenário
         List<Contato> contatos = new ArrayList<Contato>();
-        for (int i=0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             contatos.add(
-                Contato.builder()
-                    .nome("Instagram" + (i+1))
-                    .urlLogo("@instagram" + (i+1))
-                    .build()
-            );
+                    Contato.builder()
+                            .nome("Instagram" + (i + 1))
+                            .urlLogo("@instagram" + (i + 1))
+                            .build());
         }
-        
+
         // ação
         List<Contato> retorno = repo.saveAll(contatos);
         repo.deleteAll(retorno);
@@ -60,7 +63,7 @@ public class ContatoRepositoryTest {
         // verificação
         Assertions.assertNotNull(retorno);
         Assertions.assertEquals(contatos.size(), retorno.size());
-        for (int i=0; i < contatos.size(); i++) {
+        for (int i = 0; i < contatos.size(); i++) {
             Assertions.assertEquals(contatos.get(i).getNome(), retorno.get(i).getNome());
             Assertions.assertEquals(contatos.get(i).getUrlLogo(), retorno.get(i).getUrlLogo());
         }
@@ -94,7 +97,7 @@ public class ContatoRepositoryTest {
                 .nome("Instagram")
                 .urlLogo("@instagram")
                 .build();
-        
+
         // ação
         Contato salvo = repo.save(contato);
         repo.delete(salvo);
@@ -108,21 +111,20 @@ public class ContatoRepositoryTest {
     public void deveRemoverVariosContatos() {
         // cenário
         List<Contato> contatos = new ArrayList<Contato>();
-        for (int i=0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             contatos.add(
-                Contato.builder()
-                    .nome("Instagram" + (i+1))
-                    .urlLogo("@instagram" + (i+1))
-                    .build()
-            );
+                    Contato.builder()
+                            .nome("Instagram" + (i + 1))
+                            .urlLogo("@instagram" + (i + 1))
+                            .build());
         }
-        
+
         // ação
         List<Contato> salvos = repo.saveAll(contatos);
         repo.deleteAll(salvos);
         List<Contato> retorno = repo.findAllById(contatos.stream()
-                                                .map(c -> c.getId())
-                                                .collect(Collectors.toList()));
+                .map(c -> c.getId())
+                .collect(Collectors.toList()));
 
         // verificação
         Assertions.assertTrue(retorno.isEmpty());
@@ -132,15 +134,14 @@ public class ContatoRepositoryTest {
     public void deveEncontrarContatosPorNome() {
         // cenário
         List<Contato> contatos = new ArrayList<Contato>();
-        for (int i=0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             contatos.add(
-                Contato.builder()
-                    .nome("Instagram" + (i+1))
-                    .urlLogo("@instagram" + (i+1))
-                    .build()
-            );
+                    Contato.builder()
+                            .nome("Instagram" + (i + 1))
+                            .urlLogo("@instagram" + (i + 1))
+                            .build());
         }
-        
+
         // ação
         List<Contato> salvos = repo.saveAll(contatos);
         List<Contato> retorno = new ArrayList<Contato>();
@@ -151,8 +152,43 @@ public class ContatoRepositoryTest {
 
         // verificação
         Assertions.assertNotNull(retorno);
-        Assertions.assertEquals(contatos.size(), retorno.size()); 
-        for (int i=0; i < contatos.size(); i++) {
+        Assertions.assertEquals(contatos.size(), retorno.size());
+        for (int i = 0; i < contatos.size(); i++) {
+            Assertions.assertEquals(contatos.get(i).getNome(), retorno.get(i).getNome());
+            Assertions.assertEquals(contatos.get(i).getUrlLogo(), retorno.get(i).getUrlLogo());
+        }
+    }
+
+    @Test
+    public void deveAcharContatosPorEgresso() {
+        // cenário
+        Egresso egresso = Egresso.builder()
+                .nome("tuludan")
+                .email("a@a.com")
+                .cpf("1234")
+                .resumo("deveBuscarContatosEgresso")
+                .urlFoto("teste")
+                .build();
+        List<Contato> contatos = new ArrayList<Contato>();
+        for (int i = 0; i < 3; i++) {
+            contatos.add(
+                    Contato.builder()
+                            .nome("Instagram" + (i + 1))
+                            .urlLogo("@instagram" + (i + 1))
+                            .build());
+        }
+
+        // ação
+        egresso.setContatos(contatos);
+        Egresso salvo = egressoRepo.save(egresso);
+        List<Contato> retorno = repo.findByEgressos(salvo);
+        egressoRepo.delete(salvo);
+        repo.deleteAll(retorno);
+
+        // verificação
+        Assertions.assertNotNull(retorno);
+        Assertions.assertEquals(contatos.size(), retorno.size());
+        for (int i = 0; i < contatos.size(); i++) {
             Assertions.assertEquals(contatos.get(i).getNome(), retorno.get(i).getNome());
             Assertions.assertEquals(contatos.get(i).getUrlLogo(), retorno.get(i).getUrlLogo());
         }
@@ -162,15 +198,14 @@ public class ContatoRepositoryTest {
     public void deveEncontrarContatosPorUrlLogo() {
         // cenário
         List<Contato> contatos = new ArrayList<Contato>();
-        for (int i=0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             contatos.add(
-                Contato.builder()
-                    .nome("Instagram" + (i+1))
-                    .urlLogo("@instagram" + (i+1))
-                    .build()
-            );
+                    Contato.builder()
+                            .nome("Instagram" + (i + 1))
+                            .urlLogo("@instagram" + (i + 1))
+                            .build());
         }
-        
+
         // ação
         List<Contato> salvos = repo.saveAll(contatos);
         List<Contato> retorno = new ArrayList<Contato>();
@@ -181,11 +216,11 @@ public class ContatoRepositoryTest {
 
         // verificação
         Assertions.assertNotNull(retorno);
-        Assertions.assertEquals(contatos.size(), retorno.size()); 
-        for (int i=0; i < contatos.size(); i++) {
+        Assertions.assertEquals(contatos.size(), retorno.size());
+        for (int i = 0; i < contatos.size(); i++) {
             Assertions.assertEquals(contatos.get(i).getNome(), retorno.get(i).getNome());
             Assertions.assertEquals(contatos.get(i).getUrlLogo(), retorno.get(i).getUrlLogo());
         }
     }
-    
+
 }

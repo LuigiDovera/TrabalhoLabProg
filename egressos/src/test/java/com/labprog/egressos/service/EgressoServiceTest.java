@@ -1,17 +1,8 @@
 package com.labprog.egressos.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
-import com.labprog.egressos.model.Contato;
-import com.labprog.egressos.model.Egresso;
-import com.labprog.egressos.model.ProfEgresso;
-import com.labprog.egressos.model.repository.ContatoRepo;
-import com.labprog.egressos.model.repository.ProfEgressoRepo;
-import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,6 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.labprog.egressos.model.Contato;
+import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.repository.ContatoRepo;
+import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
