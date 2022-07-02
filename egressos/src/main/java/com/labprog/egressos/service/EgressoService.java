@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.labprog.egressos.model.Contato;
+import com.labprog.egressos.model.Curso;
 import com.labprog.egressos.model.CursoEgresso;
 import com.labprog.egressos.model.CursoEgressoPK;
 import com.labprog.egressos.model.Depoimento;
@@ -106,23 +107,24 @@ public class EgressoService {
     }
 
     @Transactional
-    public Egresso atualizarCursos(Egresso egresso, List<CursoEgresso> cursos) {
+    public Egresso atualizarCursos(Egresso egresso, List<Curso> cursos) {
         verificarEgresso(egresso);
         verificarId(egresso);
         ArrayList<CursoEgresso> cursosValidados = new ArrayList<>();
-        for (CursoEgresso curso : cursos) {
-            if (curso.getCurso().getId() == null) {
+        for (Curso curso : cursos) {
+            if (curso.getId() == null) {
                 throw new ServiceRuntimeException("Curso inválido");
             }
             CursoEgressoPK pk = CursoEgressoPK.builder()
                     .egresso_id(egresso.getId())
-                    .curso_id(curso.getCurso().getId())
+                    .curso_id(curso.getId())
                     .build();
-            curso.setId(pk);
-            if (cursoEgressoService.buscarPorId(curso.getId()).isEmpty()) {
-                cursosValidados.add(cursoEgressoService.salvar(curso));
+            CursoEgresso cursoEgresso = new CursoEgresso();
+            cursoEgresso.setId(pk);
+            if (cursoEgressoService.buscarPorId(cursoEgresso.getId()).isEmpty()) {
+                cursosValidados.add(cursoEgressoService.salvar(cursoEgresso));
             } else {
-                cursosValidados.add(cursoEgressoService.atualizar(curso));
+                cursosValidados.add(cursoEgressoService.atualizar(cursoEgresso));
             }
         }
         egresso.setEgressoCursos(cursosValidados);

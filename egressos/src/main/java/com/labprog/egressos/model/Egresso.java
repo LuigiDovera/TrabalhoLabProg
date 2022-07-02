@@ -56,7 +56,6 @@ public class Egresso {
     private String senha;
 
     @OneToMany(mappedBy = "egresso", fetch=FetchType.LAZY)
-    @JsonManagedReference
     private List<ProfEgresso> profsEgressos;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -73,7 +72,6 @@ public class Egresso {
 
     @OneToMany(mappedBy = "egresso", fetch = FetchType.LAZY)
     @Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-    @JsonManagedReference
     private List<Depoimento> depoimentos;
 
 

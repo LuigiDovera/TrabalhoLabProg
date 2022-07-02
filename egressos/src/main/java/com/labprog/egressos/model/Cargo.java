@@ -33,7 +33,6 @@ public class Cargo {
     private Long id;
 
     @OneToMany(mappedBy = "cargo", fetch=FetchType.LAZY)
-    @JsonManagedReference
     private List<ProfEgresso> profsEgressos;
 
     @Column(name = "nome")

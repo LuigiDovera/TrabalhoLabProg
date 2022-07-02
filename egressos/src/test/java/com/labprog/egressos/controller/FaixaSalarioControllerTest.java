@@ -18,8 +18,7 @@ import com.labprog.egressos.model.FaixaSalario;
 import com.labprog.egressos.model.dto.FaixaSalarioDTO;
 import com.labprog.egressos.service.FaixaSalarioService;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = FaixaSalario.class)
+@WebMvcTest(controllers = FaixaSalarioController.class)
 @AutoConfigureMockMvc
 public class FaixaSalarioControllerTest {
     

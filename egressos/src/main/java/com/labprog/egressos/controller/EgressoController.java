@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.labprog.egressos.model.Contato;
+import com.labprog.egressos.model.Curso;
 import com.labprog.egressos.model.CursoEgresso;
 import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
 import com.labprog.egressos.model.dto.ContatoDTO;
-import com.labprog.egressos.model.dto.CursoEgressoDTO;
+import com.labprog.egressos.model.dto.CursoDTO;
 import com.labprog.egressos.model.dto.DepoimentoDTO;
 import com.labprog.egressos.model.dto.EgressoDTO;
 import com.labprog.egressos.service.EgressoService;
@@ -115,19 +116,17 @@ public class EgressoController {
                 .urlFoto(dto.getUrlFoto())
                 .senha(dto.getSenha())
                 .build();
-        List<CursoEgresso> cursosEgresso = new ArrayList<CursoEgresso>();
-        for (CursoEgressoDTO cursoEgressoDto : dto.getCursoEgressos()) {
-            cursosEgresso.add(
-                    CursoEgresso.builder()
-                            .id(cursoEgressoDto.getId())
-                            .curso(cursoEgressoDto.getCurso())
-                            .egresso(cursoEgressoDto.getEgresso())
-                            .data_inicio(cursoEgressoDto.getData_inicio())
-                            .data_conclusao(cursoEgressoDto.getData_conclusao())
+        List<Curso> cursos = new ArrayList<Curso>();
+        for (CursoDTO cursoDto : dto.getCursos()) {
+            cursos.add(
+                    Curso.builder()
+                            .id(cursoDto.getId())
+                            .nome(cursoDto.getNome())
+                            .nivel(cursoDto.getNivel())
                             .build());
         }
         try {
-            Egresso salvo = service.atualizarCursos(egresso, cursosEgresso);
+            Egresso salvo = service.atualizarCursos(egresso, cursos);
             return ResponseEntity.status(HttpStatus.OK).body(salvo);
         } catch (ServiceRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -153,6 +152,7 @@ public class EgressoController {
                     .id(depoimentoDTO.getId())
                     .texto(depoimentoDTO.getTexto())
                     .data(depoimentoDTO.getData())
+                    .egresso(egresso)
                     .build());
         }
         try {

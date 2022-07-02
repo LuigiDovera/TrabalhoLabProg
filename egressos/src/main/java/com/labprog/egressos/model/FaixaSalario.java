@@ -32,7 +32,7 @@ public class FaixaSalario {
     private long id;
 
     @OneToMany(mappedBy = "faixaSalario", fetch=FetchType.LAZY)
-    @JsonManagedReference
+    
     private List<ProfEgresso> profsEgressos;
 
     @Column(name = "descricao")

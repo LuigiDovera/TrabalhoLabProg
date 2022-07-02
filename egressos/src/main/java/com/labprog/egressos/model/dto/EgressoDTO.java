@@ -19,6 +19,5 @@ public class EgressoDTO {
     private String senha;
     private List<ContatoDTO> contatos;
     private List<CursoDTO> cursos;
-    private List<CursoEgressoDTO> cursoEgressos;
     private List<DepoimentoDTO> depoimentos;
 }

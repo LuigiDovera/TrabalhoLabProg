@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
 
@@ -27,13 +28,11 @@ public class CursoEgresso{
     @ManyToOne
     @MapsId("curso_id")
     @JoinColumn(name = "curso_id")
-    @JsonBackReference
     Curso curso;
 
     @ManyToOne
     @MapsId("egresso_id")
     @JoinColumn(name = "egresso_id")
-    @JsonBackReference
     Egresso egresso;
 
     @Column(name="data_inicio")

@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.CascadeType;
 
@@ -35,17 +36,17 @@ public class ProfEgresso {
 
     @ManyToOne
     @JoinColumn(name = "egresso_id")
-    @JsonBackReference
+    @JsonIgnore
     private Egresso egresso;
 
     @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "cargo_id")
-    @JsonBackReference
+    @JsonIgnore
     private Cargo cargo;
 
     @ManyToOne
     @JoinColumn(name = "faixa_salario_id")
-    @JsonBackReference
+    @JsonIgnore
     private FaixaSalario faixaSalario;
 
     @Column(name = "empresa")
