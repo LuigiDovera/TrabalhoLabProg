@@ -7,7 +7,7 @@ class CursoService extends ApiService {
         return this.get('/buscar')
     }
     quantidaDeEgressosPorCurso(id) {
-        return this.get(`/quantidade_egressos_por_curso/${id}`)
+        return this.get(`/listar_quantidade_egressos_por_curso/${id}`)
     }
 }
 export default CursoService

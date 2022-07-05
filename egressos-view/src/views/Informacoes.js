@@ -3,38 +3,19 @@ import { Chart } from 'primereact/chart';
 import styles from './Informacoes.module.css'
 import CargoService from '../services/CargoService';
 import CursoService from '../services/CursoService';
+import FaixaSalarioService from '../services/FaixaSalarioService';
 
 class Informacoes extends React.Component {
     constructor(props) {
         super(props);
         this.cargoService = new CargoService();
         this.cursoService = new CursoService();
+        this.faixaSalarialService = new FaixaSalarioService();
 
         this.state = {
             egressosPorCargo: {},
             egressosPorCurso: {},
-            egressosPorFaixaSalarial: {
-                labels: ['Faixa1', 'Faixa2', 'Faixa3'],
-                datasets: [
-                    {
-                        data: [1, 2, 3],
-                        backgroundColor: [
-                            "#42A5F5",
-                            "#66BB6A",
-                            "#FFA726",
-                            "#FF7043",
-                            "#E53935"
-                        ],
-                        hoverBackgroundColor: [
-                            "#64B5F6",
-                            "#81C784",
-                            "#FFB74D",
-                            "#FF8A65",
-                            "#d15656"
-                        ]
-                    }
-                ]
-            }
+            egressosPorFaixaSalarial: {}
         }
 
         this.graficoOptions = {
@@ -80,6 +61,33 @@ class Informacoes extends React.Component {
 
         this.carregarEgressosPorCargo = this.carregarEgressosPorCargo.bind(this)
         this.carregarEgressosPorCurso = this.carregarEgressosPorCurso.bind(this)
+        this.carregarEgressosPorFaixaSalarial = this.carregarEgressosPorFaixaSalarial.bind(this)
+        this.prepararGrafico = this.prepararGrafico.bind(this)
+    }
+
+    prepararGrafico(data, rotulos) {
+        return {
+            labels: rotulos,
+            datasets: [
+                {
+                    data: data,
+                    backgroundColor: [
+                        "#42A5F5",
+                        "#66BB6A",
+                        "#FFA726",
+                        "#FF7043",
+                        "#E53935"
+                    ],
+                    hoverBackgroundColor: [
+                        "#64B5F6",
+                        "#81C784",
+                        "#FFB74D",
+                        "#FF8A65",
+                        "#d15656"
+                    ]
+                }
+            ]
+        }
     }
 
     carregarEgressosPorCargo() {
@@ -109,24 +117,7 @@ class Informacoes extends React.Component {
                             rotulos = ["Cargo1", "Cargo2", "Cargo3"]
                         }
                         this.setState({
-                            egressosPorCargo: {
-                                labels: rotulos,
-                                datasets: [
-                                    {
-                                        data: data,
-                                        backgroundColor: [
-                                            "#42A5F5",
-                                            "#66BB6A",
-                                            "#FFA726"
-                                        ],
-                                        hoverBackgroundColor: [
-                                            "#64B5F6",
-                                            "#81C784",
-                                            "#FFB74D"
-                                        ]
-                                    }
-                                ]
-                            }
+                            egressosPorCargo: this.prepararGrafico(data, rotulos)
                         })
                     })
             }).catch(error => {
@@ -134,28 +125,7 @@ class Informacoes extends React.Component {
                 let data = [1,2,3]
                 let rotulos = ["Cargo1", "Cargo2", "Cargo3"]
                 this.setState({
-                    egressosPorCargo: {
-                        labels: rotulos,
-                        datasets: [
-                            {
-                                data: data,
-                                backgroundColor: [
-                                    "#42A5F5",
-                                    "#66BB6A",
-                                    "#FFA726",
-                                    "#FF7043",
-                                    "#E53935"
-                                ],
-                                hoverBackgroundColor: [
-                                    "#64B5F6",
-                                    "#81C784",
-                                    "#FFB74D",
-                                    "#FF8A65",
-                                    "#d15656"
-                                ]
-                            }
-                        ]
-                    }
+                    egressosPorCargo: this.prepararGrafico(data, rotulos)
                 })
             })
     }
@@ -187,28 +157,7 @@ class Informacoes extends React.Component {
                             rotulos = ["Curso1", "Curso2", "Curso3"]
                         }
                         this.setState({
-                            egressosPorCurso: {
-                                labels: rotulos,
-                                datasets: [
-                                    {
-                                        data: data,
-                                        backgroundColor: [
-                                            "#42A5F5",
-                                            "#66BB6A",
-                                            "#FFA726",
-                                            "#FF7043",
-                                            "#E53935"
-                                        ],
-                                        hoverBackgroundColor: [
-                                            "#64B5F6",
-                                            "#81C784",
-                                            "#FFB74D",
-                                            "#FF8A65",
-                                            "#d15656"
-                                        ]
-                                    }
-                                ]
-                            }
+                            egressosPorCurso: this.prepararGrafico(data, rotulos)
                         })
                     })
             }).catch(error => {
@@ -216,28 +165,47 @@ class Informacoes extends React.Component {
                 let data = [1,2,3]
                 let rotulos = ["Curso1", "Curso2", "Curso3"]
                 this.setState({
-                    egressosPorCurso: {
-                        labels: rotulos,
-                        datasets: [
-                            {
-                                data: data,
-                                backgroundColor: [
-                                    "#42A5F5",
-                                    "#66BB6A",
-                                    "#FFA726",
-                                    "#FF7043",
-                                    "#E53935"
-                                ],
-                                hoverBackgroundColor: [
-                                    "#64B5F6",
-                                    "#81C784",
-                                    "#FFB74D",
-                                    "#FF8A65",
-                                    "#d15656"
-                                ]
-                            }
-                        ]
-                    }
+                    egressosPorCurso: this.prepararGrafico(data, rotulos)
+                })
+            })
+    }
+
+    carregarEgressosPorFaixaSalarial() {
+        this.faixaSalarialService.obterFaixasSalariais()
+            .then(response => {
+                console.log(response.data)
+                let descricoesFaixas = []
+                let rotulos = []
+                for (let i = 0; i < response.data.length; i++) {
+                    descricoesFaixas.push(response.data[i].descricao)
+                    rotulos.push(response.data[i].descricao)
+                }
+                let requests = []
+                for (let i = 0; i < descricoesFaixas.length; i++) {
+                    let descricao = descricoesFaixas[i]
+                    requests.push(this.faixaSalarialService.quantidaDeEgressosPorFaixaSalarial(descricao))
+                }
+                Promise.all(requests)
+                    .then(response => {
+                        let data = []
+                        for (let i = 0; i < response.length; i++) {
+                            data.push(response[i].data)
+                        }
+                        // Remover
+                        if (data.length === 0) {
+                            data = [1,2,3]
+                            rotulos = ["FaixaSalarial1", "FaixaSalarial2", "FaixaSalarial3"]
+                        }
+                        this.setState({
+                            egressosPorFaixaSalarial: this.prepararGrafico(data, rotulos)
+                        })
+                    })
+            }).catch(error => {
+                console.log(error)
+                let data = [1,2,3]
+                let rotulos = ["FaixaSalarial1", "FaixaSalarial2", "FaixaSalarial3"]
+                this.setState({
+                    egressosPorFaixaSalarial: this.prepararGrafico(data, rotulos)
                 })
             })
     }
@@ -245,6 +213,7 @@ class Informacoes extends React.Component {
     componentDidMount() {
         this.carregarEgressosPorCargo()
         this.carregarEgressosPorCurso()
+        this.carregarEgressosPorFaixaSalarial()
     }
 
     render() {

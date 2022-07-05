@@ -22,6 +22,15 @@ public class FaixaSalarioController {
     @Autowired
     private FaixaSalarioService service;
 
+    @GetMapping("/buscar")
+    public ResponseEntity buscar() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(service.buscar());
+        } catch (ServiceRuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/quantidade_egresso_por_faixa_salario/{descricao}")
     public ResponseEntity quantidadeEgressoPorFaixaSalario(@PathVariable String descricao) {
 
