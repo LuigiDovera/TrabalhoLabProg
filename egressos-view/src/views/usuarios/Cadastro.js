@@ -6,7 +6,6 @@ import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Password } from 'primereact/password';
-import { Button } from 'primereact/button';
 import Botao from '../../components/Botao';
 
 class Cadastro extends React.Component {

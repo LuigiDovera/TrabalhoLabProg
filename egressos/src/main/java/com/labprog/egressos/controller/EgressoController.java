@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.labprog.egressos.model.Contato;
 import com.labprog.egressos.model.Curso;
-import com.labprog.egressos.model.CursoEgresso;
 import com.labprog.egressos.model.Depoimento;
 import com.labprog.egressos.model.Egresso;
 import com.labprog.egressos.model.dto.ContatoDTO;
@@ -27,6 +27,7 @@ import com.labprog.egressos.model.dto.EgressoDTO;
 import com.labprog.egressos.service.EgressoService;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
+@CrossOrigin(maxAge = 3600)
 @SuppressWarnings("rawtypes")
 @RestController
 @RequestMapping("/api/egressos")

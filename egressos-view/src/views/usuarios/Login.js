@@ -5,7 +5,6 @@ import "./Cadastro.css";
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 
-import { Button } from 'primereact/button';
 import Botao from '../../components/Botao';
 
 class Login extends React.Component {
@@ -35,7 +34,8 @@ class Login extends React.Component {
                     <span className={`${styles.formItemSpan} p-float-label`}>
                         <Password id="inputsenha" className="w-full"
                             value={this.state.senha}
-                            onChange={(e) => this.setState({ senha: e.target.value })} />
+                            onChange={(e) => this.setState({ senha: e.target.value })}
+                            feedback={false}/>
                         <label htmlFor="inputsenha">Senha</label>
                     </span>
                 </div>
