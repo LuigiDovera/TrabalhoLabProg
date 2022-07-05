@@ -6,8 +6,8 @@ class CargoService extends ApiService {
     obterCargos() {
         return this.get('/buscar')
     }
-    quantidaDeEgressosPorCargo(cargo) {
-        return this.get(`/quantidade_egressos_por_cargo/${cargo.id}`)
+    quantidaDeEgressosPorCargo(id) {
+        return this.get(`/quantidade_egressos_por_cargo/${id}`)
     }
 }
 export default CargoService
