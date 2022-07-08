@@ -18,7 +18,14 @@ class Cadastro extends React.Component {
             resumo: null,
             senha: null
         };
+
+        this.onlyDigitsHandle = this.onlyDigitsHandle.bind(this);
     }
+
+    onlyDigitsHandle(event) {
+        const result = event.target.value.replace(/\D/g, '');
+        this.setState({ cpf: result });
+    };
 
     render() {
         return (
@@ -35,9 +42,9 @@ class Cadastro extends React.Component {
                         <label htmlFor="inputnome">Nome Completo</label>
                     </span>
                     <span className={`${styles.formItemSpan} p-float-label`}>
-                        <InputNumber id="inputcpf" mode="decimal" useGrouping={false} className="w-50"   
+                        <InputText id="inputcpf" mode="decimal" useGrouping={false} className="w-50"   
                             value={this.state.cpf} 
-                            onChange={(e) => this.setState({ cpf: e.target.value })} />
+                            onChange={(e) => this.onlyDigitsHandle(e)} />
                         <label htmlFor="inputtext">CPF</label>
                     </span>
                     <span className={`${styles.formItemSpan} p-float-label`}>

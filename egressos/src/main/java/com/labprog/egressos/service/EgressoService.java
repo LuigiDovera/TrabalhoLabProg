@@ -1,7 +1,20 @@
 package com.labprog.egressos.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.labprog.egressos.model.Contato;
 import com.labprog.egressos.model.Curso;
@@ -13,15 +26,8 @@ import com.labprog.egressos.model.ProfEgresso;
 import com.labprog.egressos.model.repository.EgressoRepo;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.StringMatcher;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 @Service
-public class EgressoService {
+public class EgressoService implements UserDetailsService {
 
     @Autowired
     private EgressoRepo repo;
@@ -148,8 +154,8 @@ public class EgressoService {
             throw new ServiceRuntimeException("Email do egresso deve ser informado");
         if ((egresso.getCpf() == null) || (egresso.getCpf().isEmpty()))
             throw new ServiceRuntimeException("CPF do egresso deve ser informado");
-        //if ((egresso.getSenha() == null) || (egresso.getSenha().isEmpty()))
-            //throw new ServiceRuntimeException("Senha do egresso deve ser informada");
+        // if ((egresso.getSenha() == null) || (egresso.getSenha().isEmpty()))
+        // throw new ServiceRuntimeException("Senha do egresso deve ser informada");
     }
 
     private void verificarId(Egresso egresso) {
@@ -157,6 +163,15 @@ public class EgressoService {
                 !(repo.existsById(egresso.getId()))) {
             throw new ServiceRuntimeException("ID de egresso inválido");
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<Egresso> usr = repo.findByEmail(email);
+        if (!usr.isPresent())
+            throw new UsernameNotFoundException(email);
+        Egresso a = usr.get();
+        return new User(a.getEmail(), a.getSenha(), Collections.emptyList());
     }
 
 }

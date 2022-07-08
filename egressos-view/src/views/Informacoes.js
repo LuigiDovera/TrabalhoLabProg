@@ -113,7 +113,7 @@ class Informacoes extends React.Component {
                         }
                         // Remover
                         if (data.length === 0) {
-                            data = [1,2,3]
+                            data = [1, 2, 3]
                             rotulos = ["Cargo1", "Cargo2", "Cargo3"]
                         }
                         this.setState({
@@ -122,7 +122,7 @@ class Informacoes extends React.Component {
                     })
             }).catch(error => {
                 console.log(error)
-                let data = [1,2,3]
+                let data = [1, 2, 3]
                 let rotulos = ["Cargo1", "Cargo2", "Cargo3"]
                 this.setState({
                     egressosPorCargo: this.prepararGrafico(data, rotulos)
@@ -153,7 +153,7 @@ class Informacoes extends React.Component {
                         }
                         // Remover
                         if (data.length === 0) {
-                            data = [1,2,3]
+                            data = [1, 2, 3]
                             rotulos = ["Curso1", "Curso2", "Curso3"]
                         }
                         this.setState({
@@ -162,7 +162,7 @@ class Informacoes extends React.Component {
                     })
             }).catch(error => {
                 console.log(error)
-                let data = [1,2,3]
+                let data = [1, 2, 3]
                 let rotulos = ["Curso1", "Curso2", "Curso3"]
                 this.setState({
                     egressosPorCurso: this.prepararGrafico(data, rotulos)
@@ -193,7 +193,7 @@ class Informacoes extends React.Component {
                         }
                         // Remover
                         if (data.length === 0) {
-                            data = [1,2,3]
+                            data = [1, 2, 3]
                             rotulos = ["FaixaSalarial1", "FaixaSalarial2", "FaixaSalarial3"]
                         }
                         this.setState({
@@ -202,7 +202,7 @@ class Informacoes extends React.Component {
                     })
             }).catch(error => {
                 console.log(error)
-                let data = [1,2,3]
+                let data = [1, 2, 3]
                 let rotulos = ["FaixaSalarial1", "FaixaSalarial2", "FaixaSalarial3"]
                 this.setState({
                     egressosPorFaixaSalarial: this.prepararGrafico(data, rotulos)
