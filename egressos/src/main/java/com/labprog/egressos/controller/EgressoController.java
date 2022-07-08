@@ -28,7 +28,7 @@ import com.labprog.egressos.model.dto.EgressoDTO;
 import com.labprog.egressos.service.EgressoService;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
-@CrossOrigin(maxAge = 3600)
+//@CrossOrigin(maxAge = 3600)
 @SuppressWarnings("rawtypes")
 @RestController
 @RequestMapping("/api/egressos")

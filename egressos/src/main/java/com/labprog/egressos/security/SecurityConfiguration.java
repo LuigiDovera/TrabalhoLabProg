@@ -1,20 +1,15 @@
 package com.labprog.egressos.security;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.intercept.AuthorizationFilter;
-import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -25,8 +20,10 @@ import com.labprog.egressos.service.EgressoService;
 @EnableWebSecurity
 public class SecurityConfiguration
         extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private EgressoService service;
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -41,9 +38,9 @@ public class SecurityConfiguration
                 .anyRequest().authenticated()
                 .and()
                 // quem vai autenticar e como
-                .addFilter(new AuthenticationFilter(authenticationManager(), null))
+                .addFilter(new AuthenticationFilter(authenticationManager()))
                 // quem vai autorizar e como
-                .addFilter(new AuthorizationFilter((AuthorizationManager<HttpServletRequest>) authenticationManager()))
+                .addFilter(new AuthorizationFilter(authenticationManager()))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
