@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.labprog.egressos.model.Cargo;
 import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.ProfEgresso;
 import com.labprog.egressos.model.dto.CargoDTO;
 import com.labprog.egressos.service.CargoService;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+@CrossOrigin(maxAge = 3600)
 @SuppressWarnings("rawtypes")
 @RestController
 @RequestMapping("/api/cargos")
@@ -85,9 +89,9 @@ public class CargoController {
     }
 
     @GetMapping("/buscar_por_egresso/{id_egresso}")
-    public ResponseEntity buscarPorEgresso(@PathVariable Long idEgresso){
+    public ResponseEntity buscarPorEgresso(@PathVariable Long id_egresso){
         Egresso filtro = Egresso.builder()
-                .id(idEgresso)
+                .id(id_egresso)
                 .build();
         try {
             List<Cargo> cargos = service.buscarCargoPorEgresso(filtro);
@@ -96,6 +100,20 @@ public class CargoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/buscar_por_profegresso/{id_profegresso}")
+    public ResponseEntity buscarPorProfEgresso(@PathVariable Long id_profegresso){
+        ProfEgresso filtro = ProfEgresso.builder()
+                .id(id_profegresso)
+                .build();
+        try {
+            Cargo cargo = service.buscarPorProfEgresso(filtro);
+            return ResponseEntity.status(HttpStatus.OK).body(cargo);
+        } catch (ServiceRuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/quantidade_egressos_por_cargo/{id}")
     public ResponseEntity quantidadeEgressoPorCargo(@PathVariable Long id){
         Cargo filtro = Cargo.builder()
