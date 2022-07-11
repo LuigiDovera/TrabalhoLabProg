@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.labprog.egressos.model.Cargo;
 import com.labprog.egressos.model.Egresso;
+import com.labprog.egressos.model.ProfEgresso;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface CargoRepo 
     extends JpaRepository<Cargo, Long>{
+
+        public Cargo findByProfsEgressos(ProfEgresso profEgresso);
 
         @Query("select c from Cargo c "+
                 "join c.profsEgressos pe "+

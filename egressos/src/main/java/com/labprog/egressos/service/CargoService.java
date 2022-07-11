@@ -73,9 +73,9 @@ public class CargoService {
 
     
     
-    public List<ProfEgresso> buscarPorProfEgresso (Cargo car){
-        List<ProfEgresso> profsEgressos = profEgressoRep.findByCargo(car);
-        return profsEgressos;
+    public Cargo buscarPorProfEgresso (ProfEgresso pf){
+        Cargo cargo = repository.findByProfsEgressos(pf);
+        return cargo;
     }
     /*
         Percebi depois de fazer que não era essa a funcionalidade pedida >:^)

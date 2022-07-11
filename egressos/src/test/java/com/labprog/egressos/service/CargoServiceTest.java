@@ -98,6 +98,7 @@ public class CargoServiceTest {
                 Assertions.assertEquals(buscado.getDescricao(), cargo.getDescricao());
         }
 
+        /* 
         @Test
         void buscaProfEgressoPorCargo() {
                 //cenário
@@ -147,7 +148,8 @@ public class CargoServiceTest {
                 Assertions.assertEquals(buscado.getDescricao(), profEgresso.getDescricao());
                 Assertions.assertEquals(buscado.getDataRegistro(), profEgresso.getDataRegistro());
         }
-
+        */
+        
         @Test
         void deveBuscarCargoPorEgresso() {
                 //cenário
