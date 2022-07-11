@@ -14,14 +14,14 @@ export class DataScrollerDepoimentos extends Component {
         super(props);
 
         this.state = {
-            depoimentos: []
+            depoimentos: this.props.depoimentos
         };
+        
+        
+
+        console.log(this.props.depoimentos);
 
         this.depoimentoTemplate = this.depoimentoTemplate.bind(this);
-    }
-
-    componentDidMount() {
-        this.setState({ depoimentos: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] });
     }
 
     depoimentoTemplate(data) {
@@ -30,10 +30,7 @@ export class DataScrollerDepoimentos extends Component {
                 <Row>
                     <Col className="col-sm-11">
                         <p className="texto-depoimento my-2">
-                            Lorem ipissão Lorem ipissão Lorem ipissão Lorem ipissão Lorem ipissão
-                            Lorem ipissão Lorem ipissão Lorem ipissão Lorem ipissão Lorem ipissão
-                            Lorem ipissão Lorem ipissão Lorem ipissão Lorem ipissão Lorem ipissão
-                            Lorem ipissão Lorem ipissão Lorem ipissão Lorem ipissão Lorem ipissão
+                            {data.texto}
                         </p>
                     </Col>
                     <Col className="col-sm-1">
@@ -44,10 +41,10 @@ export class DataScrollerDepoimentos extends Component {
                 <Row>
                     <Col className="col-sm-9">
                         <Row>
-                            <p className="nome-depoimento my-0">Nome Egresso</p>
+                            <p className="nome-depoimento my-0">{data.nome}</p>
                         </Row>
                         <Row>
-                            <p className="date-depoimento my-0">Dezembro, 2020</p>
+                            <p className="date-depoimento my-0">{data.data}</p>
                         </Row>
                     </Col>
                     <Col className="col-sm-3">
