@@ -93,7 +93,7 @@ class Informacoes extends React.Component {
     carregarEgressosPorCargo() {
         this.cargoService.obterCargos()
             .then(response => {
-                console.log(response.data)
+                ////console.log(response.data)
                 let idsCargos = []
                 let rotulos = []
                 for (let i = 0; i < response.data.length; i++) {
@@ -133,7 +133,7 @@ class Informacoes extends React.Component {
     carregarEgressosPorCurso() {
         this.cursoService.obterCursos()
             .then(response => {
-                console.log(response.data)
+                //console.log(response.data)
                 let idsCursos = []
                 let rotulos = []
                 for (let i = 0; i < response.data.length; i++) {
@@ -173,7 +173,7 @@ class Informacoes extends React.Component {
     carregarEgressosPorFaixaSalarial() {
         this.faixaSalarialService.obterFaixasSalariais()
             .then(response => {
-                console.log(response.data)
+                //console.log(response.data)
                 let descricoesFaixas = []
                 let rotulos = []
                 for (let i = 0; i < response.data.length; i++) {

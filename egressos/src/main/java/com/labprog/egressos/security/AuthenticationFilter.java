@@ -59,7 +59,11 @@ public class AuthenticationFilter
                         + SecurityConstants.EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.KEY)
                 .compact();
-        res.addHeader("token", JWT);
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
+        res.getWriter().write(
+                "{\"" + SecurityConstants.HEADER_NAME + "\":\"" + JWT + "\"}");
+        // res.addHeader("token", JWT);
     }
 
 }

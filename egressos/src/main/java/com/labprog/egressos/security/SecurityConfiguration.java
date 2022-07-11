@@ -29,8 +29,12 @@ public class SecurityConfiguration
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //webSecurity.ignoring().antMatchers(HttpMethod.POST, "/v2/session");
         http.cors().and().csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET, SecurityConstants.CURSO_URL).permitAll()
+                .antMatchers(HttpMethod.GET, SecurityConstants.FAIXA_SALARIO_URL).permitAll()
+                .antMatchers(HttpMethod.GET, SecurityConstants.GARGO_URL).permitAll()
                 // a linha a seguir pode ser retirada
                 .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
                 // URL pública

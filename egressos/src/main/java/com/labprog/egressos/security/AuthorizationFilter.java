@@ -41,7 +41,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken authenticate(HttpServletRequest request) {
         //pega o token
         String token = request.getHeader(SecurityConstants.HEADER_NAME);
-        if (token != null) {
+        if (token != null && !token.equals("null")) {
             // faz parse do token
             String user = Jwts.parser()
                 .setSigningKey(SecurityConstants.KEY)

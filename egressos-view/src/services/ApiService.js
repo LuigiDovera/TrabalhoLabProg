@@ -5,8 +5,10 @@ const instance = axios.create({
 });
 
 class ApiService {
-    constructor(apiUrl) {
+    constructor(apiUrl, apiToken = null) {
         this.apiUrl = apiUrl
+        instance.defaults.headers.common['Authorization'] = apiToken;
+        this.loginUrl = 'login'
     }
 
     post(url, objeto) {
@@ -20,6 +22,9 @@ class ApiService {
     }
     get(url) {
         return instance.get(`${this.apiUrl}${url}`)
+    }
+    login(objeto) {
+        return instance.post(`${this.loginUrl}`, objeto)
     }
 }
 

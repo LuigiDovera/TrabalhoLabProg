@@ -4,16 +4,42 @@ import styles from './Cadastro.module.css';
 import "./Cadastro.css";
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
-
+import UsuarioService from '../../services/UsuarioService';
 import Botao from '../../components/Botao';
+import {withRouter} from '../../withRouter';
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            email: null,
-            senha: null
+            email: "",
+            senha: ""
         };
+        this.UsuarioService = new UsuarioService();
+
+        this.handleOnClick = this.handleOnClick.bind(this);
+    } // ana@gmail.com
+
+    handleOnClick() {
+        this.UsuarioService.logar(this.state.email, this.state.senha)
+            .then(response => {
+                console.log(response);
+                this.props.navigate('/');
+            }).catch(error => {
+                console.log(error);
+                if (error.response.status === 403) {
+                    alert("Credenciais incorretas")
+                } else  {
+                    alert("Erro ao logar")
+                }
+            }).finally(() => {
+                this.setState({
+                    email: "",
+                    senha: ""
+                });
+            }
+            );
     }
 
     render() {
@@ -35,13 +61,13 @@ class Login extends React.Component {
                         <Password id="inputsenha" className="w-full"
                             value={this.state.senha}
                             onChange={(e) => this.setState({ senha: e.target.value })}
-                            feedback={false}/>
+                            feedback={false} />
                         <label htmlFor="inputsenha">Senha</label>
                     </span>
                 </div>
 
                 <div className="text-center mt-3 mb-3">
-                    <Botao title="Entrar" icon="pi pi-user" className="w-50" />
+                    <Botao title="Entrar" icon="pi pi-user" className="w-50" onClick={this.handleOnClick} />
                 </div>
             </div>
 
@@ -50,4 +76,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login
+export default withRouter(Login)
