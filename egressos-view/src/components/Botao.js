@@ -19,7 +19,7 @@ export default class Botao extends Component {
         return(
             <Button 
                 className={`${styles.botao} ${this.props.className}`}
-                onPress = {this.props.onPress}
+                onClick = {this.props.onPress}
                 icon = {this.state.icon}
                 >
                 <span className={styles.titulo}>
