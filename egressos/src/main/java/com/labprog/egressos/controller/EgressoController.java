@@ -27,6 +27,9 @@ import com.labprog.egressos.model.dto.EgressoDTO;
 import com.labprog.egressos.service.EgressoService;
 import com.labprog.egressos.service.exceptions.ServiceRuntimeException;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+@CrossOrigin(maxAge = 3600)
 @SuppressWarnings("rawtypes")
 @RestController
 @RequestMapping("/api/egressos")
@@ -168,6 +171,20 @@ public class EgressoController {
         try {
             List<Egresso> egressos = service.buscar();
             return ResponseEntity.status(HttpStatus.OK).body(egressos);
+        } catch (ServiceRuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/buscar_id/{id}")
+    public ResponseEntity buscar(@PathVariable Long id) {
+        Egresso filtro = Egresso.builder()
+                .id(id)
+                .build();
+
+        try {
+            Egresso egresso = service.buscar(filtro).get(0);
+            return ResponseEntity.status(HttpStatus.OK).body(egresso);
         } catch (ServiceRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
