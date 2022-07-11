@@ -63,7 +63,6 @@ public class Egresso {
         name = "contato_egresso", 
         joinColumns = @JoinColumn(name = "egresso_id"), 
         inverseJoinColumns = @JoinColumn(name = "contato_id"))
-    @JsonIgnore
     private List<Contato> contatos;
     
     @OneToMany(mappedBy = "egresso", cascade = CascadeType.ALL)
