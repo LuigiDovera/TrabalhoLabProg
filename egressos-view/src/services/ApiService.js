@@ -7,21 +7,22 @@ const instance = axios.create({
 class ApiService {
     constructor(apiUrl, apiToken = null) {
         this.apiUrl = apiUrl
-        instance.defaults.headers.common['Authorization'] = apiToken;
+        //instance.defaults.headers.common['Authorization'] = apiToken;
         this.loginUrl = 'login'
+        this.authHeader = 'Authorization'
     }
 
-    post(url, objeto) {
-        return instance.post(`${this.apiUrl}${url}`, objeto)
+    post(url, objeto, token=null) {
+        return instance.post(`${this.apiUrl}${url}`, objeto, {headers: {[`${this.authHeader}`] : `${token}`}})
     }
-    put(url, objeto) {
-        return instance.put(`${this.apiUrl}${url}`, objeto)
+    put(url, objeto, token=null) {
+        return instance.put(`${this.apiUrl}${url}`, objeto, {headers: {[`${this.authHeader}`] : `${token}`}})
     }
-    delete(url) {
-        return instance.delete(`${this.apiUrl}${url}`)
+    delete(url, token=null) {
+        return instance.delete(`${this.apiUrl}${url}`, {headers: {[`${this.authHeader}`] : `${token}`}})
     }
-    get(url) {
-        return instance.get(`${this.apiUrl}${url}`)
+    get(url, token=null) {
+        return instance.get(`${this.apiUrl}${url}`, {headers: {[`${this.authHeader}`] : `${token}`}})
     }
     login(objeto) {
         return instance.post(`${this.loginUrl}`, objeto)

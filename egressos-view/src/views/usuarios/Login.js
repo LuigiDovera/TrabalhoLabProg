@@ -6,7 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import UsuarioService from '../../services/UsuarioService';
 import Botao from '../../components/Botao';
-import {withRouter} from '../../withRouter';
+import { withRouter } from '../../withRouter';
 
 class Login extends React.Component {
     constructor(props) {
@@ -24,13 +24,20 @@ class Login extends React.Component {
     handleOnClick() {
         this.UsuarioService.logar(this.state.email, this.state.senha)
             .then(response => {
-                console.log(response);
-                this.props.navigate('/');
+                console.log(response)
+                let token = response.data.Authorization;
+                sessionStorage.setItem('token', token);
+                this.UsuarioService.buscarEgresso(this.state.email, token)
+                    .then(response => {
+                        sessionStorage.setItem('egresso', JSON.stringify(response.data));
+                        this.props.navigate('/');
+                    })
             }).catch(error => {
+                sessionStorage.removeItem('token');
                 console.log(error);
                 if (error.response.status === 403) {
                     alert("Credenciais incorretas")
-                } else  {
+                } else {
                     alert("Erro ao logar")
                 }
             }).finally(() => {

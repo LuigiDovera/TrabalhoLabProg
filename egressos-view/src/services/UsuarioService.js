@@ -6,11 +6,14 @@ class UsuarioService extends ApiService {
     logar(email, senha) {
         return this.login({ "email": email, "senha": senha })
     }
+    cadastrar(egresso) {
+        return this.post('/salvar', egresso)
+    }
     obterEgressos() {
         return this.get('/buscar')
     }
-    buscarEgresso(email) {
-        return this.get(`/buscar/${email}`)
+    buscarEgresso(email, token) {
+        return this.get(`/buscar/${email}`, token)
     }
 }
 export default UsuarioService
