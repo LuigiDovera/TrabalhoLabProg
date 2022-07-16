@@ -4,6 +4,10 @@ import { DataScrollerDepoimentos } from '../components/DataScrollerDepoimentos'
 import styles from './Home.module.css'
 
 class Home extends React.Component {
+    componentDidMount() {
+        console.log(sessionStorage.getItem('token'))
+        console.log(sessionStorage.getItem('egresso'))
+    }
     render() {
         return (
             <div>

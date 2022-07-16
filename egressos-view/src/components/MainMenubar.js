@@ -44,6 +44,8 @@ export class MainMenubar extends Component {
                     {
                         label: 'Logout',
                         icon: 'pi pi-fw pi-sign-out',
+                        command:()=>{ sessionStorage.clear(); },
+                        url: '#/Home'
                     }
                 ]
             }

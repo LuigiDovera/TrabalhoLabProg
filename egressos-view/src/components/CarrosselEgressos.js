@@ -70,7 +70,7 @@ export class CarrosselEgressos extends Component {
 
         return (
             <Carousel value={this.state.egressos} numVisible={3} numScroll={1} responsiveOptions={this.responsiveOptions}
-                className="carrossel-egressos mt-3 mb-3" circular={true} autoplayInterval={300000} itemTemplate={this.cardTemplate} />
+                className="carrossel-egressos mt-3 mb-3" circular={true} autoplayInterval={5000} itemTemplate={this.cardTemplate} />
         );
     }
 }
