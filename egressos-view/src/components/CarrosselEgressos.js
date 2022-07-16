@@ -13,7 +13,7 @@ export class CarrosselEgressos extends Component {
         super(props);
 
         this.state = {
-            egressos: []
+            egressos: this.props.egressos
         };
 
         this.responsiveOptions = [
@@ -38,15 +38,15 @@ export class CarrosselEgressos extends Component {
     }
 
     componentDidMount() {
-        this.setState({ egressos: [1, 2, 3, 4, 5, 6, 7, 8, 9] });
+        //console.log(this.state.egressos);
     }
 
 
-    cardTemplate(cardEgresso) {
+    cardTemplate(egresso) {
 
         const header = (
 
-            <Link to="../Egresso" className="botao-informacao card-egresso" style={{ textDecoration: 'none' }}>
+            <Link to={`../Egresso/${egresso.id}`} className="botao-informacao card-egresso" style={{ textDecoration: 'none' }}>
                 <img className='imagem-card-egresso' alt="Card" src={foto_placeholder} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} />
             </Link>
         );
@@ -61,8 +61,8 @@ export class CarrosselEgressos extends Component {
             </Row>
         );
 
-        return (
-            <Card className='card-egresso mx-4' title="Nome Egresso" subTitle="Cargo" footer={footer} header={header} ></Card>
+        return ( 
+            <Card className='card-egresso mx-4' title={egresso.nome} subTitle={egresso.cargo} footer={footer} header={header} ></Card>
         )
     }
 

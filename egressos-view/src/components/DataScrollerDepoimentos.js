@@ -16,13 +16,12 @@ export class DataScrollerDepoimentos extends Component {
         this.state = {
             depoimentos: this.props.depoimentos
         };
-        
-        
 
-        console.log(this.props.depoimentos);
+        //console.log(this.props.depoimentos);
 
         this.depoimentoTemplate = this.depoimentoTemplate.bind(this);
     }
+        
 
     depoimentoTemplate(data) {
         return (
@@ -66,7 +65,7 @@ export class DataScrollerDepoimentos extends Component {
 
         return (
             <div className="datascroller-depoimentos">
-                <DataScroller ref={(el) => this.ds = el} value={this.state.depoimentos} itemTemplate={this.depoimentoTemplate} rows={3}
+                <DataScroller ref={(el) => this.ds = el} value={this.state.depoimentos} itemTemplate={this.depoimentoTemplate} rows={2}
                     loader footer={footer} emptyMessage="Sem depoimentos" />
             </div>
         );

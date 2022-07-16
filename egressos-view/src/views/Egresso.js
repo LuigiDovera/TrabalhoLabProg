@@ -6,6 +6,8 @@ import { Button } from 'primereact/button';
 import styles from './Egresso.module.css'
 import EgressoService from '../services/EgressoService';
 import CargoService from '../services/CargoService';
+import { withRouter } from '../withRouter';
+
 class Egresso extends React.Component {
 
     constructor(props) {
@@ -29,44 +31,50 @@ class Egresso extends React.Component {
         this.egressoService.obterEgressoPorId(id)
             .then(response => {
                 console.log(response.data);
-                
+
                 this.setState({ egresso: response.data });
-    
-                //TODO: Necessita de um fail-proof para não dar erro quando um egresso não possuir um cargo
+
                 //TODO: Adicionar um order by no retorno de profissões, para o ulitmo sempre ser a profissão mais recente
-                this.setState({ ultimoProfEgresso: response.data.profsEgressos[this.state.egresso.profsEgressos.length - 1] });
+                try {
+                    this.setState({ ultimoProfEgresso: response.data.profsEgressos[response.data.profsEgressos.length - 1] });
+                    Promise.resolve(this.cargoService.obterCargoPorIdProfEgresso(response.data.profsEgressos[response.data.profsEgressos.length - 1].id))
+                        .then(response => {
+                            this.setState({ cargo: response.data });
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                } catch (error) {
+                    this.setState({ ultimoProfEgresso: { empresa: "" } });
+                    this.setState({ cargo: ""  });
+                }
 
                 let depoimentos = response.data.depoimentos;
                 depoimentos.forEach(depoimento => {
                     depoimento.nome = response.data.nome;
                 });
-                this.setState({ depoimentos: response.data.depoimentos });             
+                depoimentos.forEach(depoimento => {
+                    depoimento.data = depoimento.data.split('-').reverse().join('/');
+                });
 
-                this.setState({ isLoading: false});
-                
-                Promise.resolve(this.cargoService.obterCargoPorIdProfEgresso(response.data.profsEgressos[this.state.egresso.profsEgressos.length - 1].id))
-                    .then(response => {
-                        this.setState({ cargo: response.data });
-                    }).catch(error => {
-                        console.log(error);
-                    });
+                this.setState({ depoimentos: depoimentos });
 
-                
+                this.setState({ isLoading: false });
+
+
             }).catch(error => {
                 console.log(error);
             });
 
     }
-    
-    
-    
-    componentDidMount(){
-        let id = 1;
 
+
+
+    componentDidMount() {
+        const { id } = this.props.params
         this.carregarEgresso(id);
-        
+
     }
-    
+
     render() {
         const isLoading = this.state.isLoading;
         if (isLoading) {
@@ -94,6 +102,9 @@ class Egresso extends React.Component {
                             <Row className="text-start">
                                 <div className={styles.empresaEgresso}>{this.state.ultimoProfEgresso.empresa}</div>
                             </Row>
+                            <Row className="text-start">
+                                <div className={styles.resumoEgresso}>{this.state.egresso.resumo}</div>
+                            </Row>
                         </Col>
                         <Col className="col-sm-1">
                             <Row>
@@ -116,11 +127,11 @@ class Egresso extends React.Component {
 
                     <h1 className='titulo mt-3'>Depoimentos</h1>
                     <DataScrollerDepoimentos depoimentos={this.state.depoimentos} />
-                    
+
                 </Container>
             </div>
         )
     }
 }
 
-export default Egresso
+export default withRouter(Egresso)

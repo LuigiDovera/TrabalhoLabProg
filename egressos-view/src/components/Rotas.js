@@ -16,7 +16,7 @@ function Rotas() {
                 <Route path="/Informacoes" element={<Informacoes />} />
                 <Route path="/Cadastro" element={<Cadastro />} />
                 <Route path="/Login" element={<Login />} />
-                <Route path="/Egresso" element={<Egresso />} />
+                <Route path="/Egresso/:id" element={<Egresso />} />
                 <Route path="/" element={<Home />} />
             </Routes>
         </HashRouter>
