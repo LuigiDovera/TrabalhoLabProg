@@ -54,6 +54,11 @@ public class EgressoService implements UserDetailsService {
     public Egresso atualizar(Egresso egresso) {
         verificarEgresso(egresso);
         verificarId(egresso);
+        // if senha is null or empty then use the one from database
+        if (egresso.getSenha() == null || egresso.getSenha().isEmpty()) {
+            Egresso egressoDb = repo.findById(egresso.getId()).get();
+            egresso.setSenha(egressoDb.getSenha());
+        }
         return repo.save(egresso);
     }
 
