@@ -97,10 +97,15 @@ public class DepoimentoController {
         }
     }
 
-    @GetMapping("/buscar_ordenado")
-    public ResponseEntity buscarOrdenado() {
+    @GetMapping("/buscar_ordenado/{ordem}")
+    public ResponseEntity buscarOrdenado(@PathVariable int ordem) {
         try {
-            List<Depoimento> depoimentos = service.listarDepoimentosOrdenadosPeloMaisRecente();
+            List<Depoimento> depoimentos;
+            if(ordem == 1) {
+                depoimentos = service.listarDepoimentosOrdenadosPeloMaisRecente();
+            } else {
+                depoimentos = service.listarDepoimentosOrdenadosPeloMaisAntigo();
+            }
             return ResponseEntity.status(HttpStatus.OK).body(depoimentos);
         } catch (ServiceRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

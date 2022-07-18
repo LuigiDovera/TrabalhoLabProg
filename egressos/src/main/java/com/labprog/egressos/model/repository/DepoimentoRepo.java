@@ -18,6 +18,9 @@ public interface DepoimentoRepo
         @Query("select d from Depoimento d order by d.data desc")
         List<Depoimento> obterDepoimentosOrdenadosPeloMaisRecente();
 
+        @Query("select d from Depoimento d order by d.data asc")
+        List<Depoimento> obterDepoimentosOrdenadosPeloMaisAntigo();
+
         
         @Query("select d from Depoimento d where d.egresso = :egresso")
         List<Depoimento> obterDepoimentosPorEgresso(

@@ -73,6 +73,10 @@ public class DepoimentoService {
         return repo.obterDepoimentosOrdenadosPeloMaisRecente();
     }
 
+    public List<Depoimento> listarDepoimentosOrdenadosPeloMaisAntigo() {
+        return repo.obterDepoimentosOrdenadosPeloMaisAntigo();
+    }
+
     public List<Depoimento> obterDepoimentosPorEgresso(Egresso egresso) {
         return repo.obterDepoimentosPorEgresso(egresso);
     }
