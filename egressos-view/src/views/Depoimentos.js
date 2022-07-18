@@ -3,7 +3,7 @@ import { Row, Col } from 'react-bootstrap';
 import Botao from '../components/Botao';
 import { DataScrollerDepoimentos } from '../components/DataScrollerDepoimentos';
 import styles from './Home.module.css';
-import { Link, useNavigate } from "react-router-dom";  
+import { Link } from "react-router-dom";  
 
 import EgressoService from '../services/EgressoService';
 import DepoimentoService from '../services/DepoimentoService';

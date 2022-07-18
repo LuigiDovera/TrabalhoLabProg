@@ -59,11 +59,11 @@ class Egresso extends React.Component {
                     let contatos = response.data.contatos;
                     contatos.forEach(contato => {
                         let contatoIcone;
-                        if (contato.nome == "Facebook") {
+                        if (contato.nome === "Facebook") {
                             contatoIcone = "pi pi-facebook";
-                        } else if (contato.nome == "Linkedin") {
+                        } else if (contato.nome === "Linkedin") {
                             contatoIcone = "pi pi-linkedin";
-                        } else if (contato.nome == "Instagram") {
+                        } else if (contato.nome === "Instagram") {
                             contatoIcone = "pi pi-instagram";
                         }
 
@@ -119,7 +119,11 @@ class Egresso extends React.Component {
 
     componentDidMount() {
         const { id } = this.props.params
-        this.carregarEgresso(id);
+        if (id == 0) {
+            this.props.navigate('/Cadastro');
+        } else {
+            this.carregarEgresso(id);
+        }
     }
 
     render() {

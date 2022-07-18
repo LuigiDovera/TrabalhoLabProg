@@ -60,7 +60,7 @@ public class EgressoController {
         }
     }
 
-    @PutMapping("/atualizar/{id}")
+    @PostMapping("/atualizar/{id}")
     public ResponseEntity atualizar(
             @RequestBody EgressoDTO dto,
             @PathVariable Long id) {

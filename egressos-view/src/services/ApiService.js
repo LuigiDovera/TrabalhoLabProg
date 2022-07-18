@@ -2,12 +2,15 @@ import axios from 'axios'
 
 const instance = axios.create({
     baseURL: 'http://localhost:8080',
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+    }
 });
 
 class ApiService {
     constructor(apiUrl, apiToken = null) {
         this.apiUrl = apiUrl
-        //instance.defaults.headers.common['Authorization'] = apiToken;
+        instance.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
         this.loginUrl = 'login'
         this.authHeader = 'Authorization'
     }

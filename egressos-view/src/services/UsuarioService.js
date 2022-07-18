@@ -10,7 +10,7 @@ class UsuarioService extends ApiService {
         return this.post('/salvar', egresso)
     }
     atualizar(egresso, token) {
-        return this.put(`/atualizar/${egresso.id}`, egresso, token)
+        return this.post(`/atualizar/${egresso.id}`, egresso, token)
     }
     obterEgressos() {
         return this.get('/buscar')

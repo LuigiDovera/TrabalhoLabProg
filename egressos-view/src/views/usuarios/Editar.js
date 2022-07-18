@@ -35,6 +35,7 @@ class Editar extends React.Component {
 
     handleOnClick() {
         let egresso = {
+            id: this.state.egresso.id,
             nome: this.state.nome,
             cpf: this.state.cpf,
             email: this.state.email,
