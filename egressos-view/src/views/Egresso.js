@@ -7,6 +7,7 @@ import styles from './Egresso.module.css'
 import EgressoService from '../services/EgressoService';
 import CargoService from '../services/CargoService';
 import { withRouter } from '../withRouter';
+import Botao from '../components/Botao';
 
 class Egresso extends React.Component {
 
@@ -25,12 +26,13 @@ class Egresso extends React.Component {
         }
 
         this.carregarEgresso = this.carregarEgresso.bind(this);
+        this.editarClickHandler = this.editarClickHandler.bind(this);
     }
 
     carregarEgresso(id) {
         this.egressoService.obterEgressoPorId(id)
             .then(response => {
-                console.log(response.data);
+                //console.log(response.data);
 
                 this.setState({ egresso: response.data });
 
@@ -67,7 +69,14 @@ class Egresso extends React.Component {
 
     }
 
-
+    editarClickHandler() {
+        if (sessionStorage.getItem('token') === null) {
+            //this.props.navigate(`/Editar/${this.state.egresso.id}`);
+            this.props.navigate('/Login');
+        } else {
+            this.props.navigate(`/Editar/${this.state.egresso.id}`);
+        }
+    }
 
     componentDidMount() {
         const { id } = this.props.params
@@ -89,6 +98,11 @@ class Egresso extends React.Component {
                             <Row>
                                 <div className="img-fluid rounded-circle">
                                     <img className="img-fluid rounded-circle bg-white" alt="Card" src={foto_placeholder} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} />
+                                </div>
+                            </Row>
+                            <Row>
+                                <div className="text-center ">
+                                    <Botao title="Editar" icon="pi pi-pencil" onClick={this.editarClickHandler} />
                                 </div>
                             </Row>
                         </Col>

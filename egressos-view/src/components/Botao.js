@@ -11,7 +11,8 @@ export default class Botao extends Component {
         var className = this.props.className;
         this.state = { 
             title: titulo,
-            icon: icone
+            icon: icone,
+            className: className
         }
     }
     

@@ -9,6 +9,9 @@ class UsuarioService extends ApiService {
     cadastrar(egresso) {
         return this.post('/salvar', egresso)
     }
+    atualizar(egresso, token) {
+        return this.put(`/atualizar/${egresso.id}`, egresso, token)
+    }
     obterEgressos() {
         return this.get('/buscar')
     }

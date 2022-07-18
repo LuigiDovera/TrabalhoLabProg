@@ -73,6 +73,9 @@ public class EgressoController {
                 .urlFoto(dto.getUrlFoto())
                 .senha(dto.getSenha())
                 .build();
+        if (dto.getSenha() != null && !dto.getSenha().isEmpty()) {
+            egresso.setSenha(passwordEncoder.encode(dto.getSenha()));
+        }
         try {
             Egresso salvo = service.atualizar(egresso);
             return ResponseEntity.status(HttpStatus.OK).body(salvo);
