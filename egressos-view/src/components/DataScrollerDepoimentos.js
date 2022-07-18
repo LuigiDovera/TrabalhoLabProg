@@ -14,14 +14,47 @@ export class DataScrollerDepoimentos extends Component {
         super(props);
 
         this.state = {
-            depoimentos: this.props.depoimentos
+            depoimentos: {},
         };
+        this.state.depoimentos = this.props.depoimentos;
 
         //console.log(this.props.depoimentos);
 
         this.depoimentoTemplate = this.depoimentoTemplate.bind(this);
+        this.montarContatos = this.montarContatos.bind(this);
     }
+    
+    montarContatos(){
+        try { 
+            let depoimentos = this.state.depoimentos;
+            depoimentos.forEach(function(depoimento, index) {
+                let contatos = depoimento.contatos;
+                contatos.forEach(contato => {
+                    let contatoIcone;
+                    if (contato.nome == "Facebook") {
+                        contatoIcone = "pi pi-facebook";
+                    } else if (contato.nome == "Linkedin") {
+                        contatoIcone = "pi pi-linkedin";
+                    } else if (contato.nome == "Instagram") {
+                        contatoIcone = "pi pi-instagram";
+                    }
+
+                    let contatoBotao = <Button className="botao-informacao mx-1 my-1" icon={`${contatoIcone}`} />
+                    
+                    //console.log(index);
+                    //console.log(this.state.depoimentos);
+                    //this.state.depoimentos[index].contatosBloco.push(contatoBotao);
+                });
+            });
+        } catch (error) {
+            console.log(error);
+        }
         
+    }
+
+    componentDidMount(){
+        this.montarContatos();
+    }
 
     depoimentoTemplate(data) {
         return (
@@ -49,9 +82,7 @@ export class DataScrollerDepoimentos extends Component {
                     <Col className="col-sm-3">
                         <Row>
                             <div className='botoes-contato-card-egresso'>
-                                <Button className="botao-informacao mx-1 my-1" icon="pi pi-envelope" />
-                                <Button className="botao-informacao mx-1 my-1" icon="pi pi-linkedin" />
-                                <Button className="botao-informacao mx-1 my-1" icon="pi pi-instagram" />
+                                {data.contatosBloco}
                             </div>
                         </Row>
                     </Col>

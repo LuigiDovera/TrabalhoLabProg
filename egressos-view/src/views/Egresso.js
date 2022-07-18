@@ -21,6 +21,8 @@ class Egresso extends React.Component {
             ultimoProfEgresso: {},
             cargo: {},
             depoimentos: {},
+            contatos: {},
+            contatosBloco: [],
 
             isLoading: true,
         }
@@ -39,6 +41,7 @@ class Egresso extends React.Component {
                 //TODO: Adicionar um order by no retorno de profissões, para o ulitmo sempre ser a profissão mais recente
                 try {
                     this.setState({ ultimoProfEgresso: response.data.profsEgressos[response.data.profsEgressos.length - 1] });
+                    this.state({ contatos: response.data.contatos });
                     Promise.resolve(this.cargoService.obterCargoPorIdProfEgresso(response.data.profsEgressos[response.data.profsEgressos.length - 1].id))
                         .then(response => {
                             this.setState({ cargo: response.data });
@@ -47,12 +50,48 @@ class Egresso extends React.Component {
                         });
                 } catch (error) {
                     this.setState({ ultimoProfEgresso: { empresa: "" } });
-                    this.setState({ cargo: ""  });
+                    this.setState({ contatos: { nome: "" } });
+                    this.setState({ cargo: "" });
                 }
 
+                //Contatos
+                try {
+                    let contatos = response.data.contatos;
+                    contatos.forEach(contato => {
+                        let contatoIcone;
+                        if (contato.nome == "Facebook") {
+                            contatoIcone = "pi pi-facebook";
+                        } else if (contato.nome == "Linkedin") {
+                            contatoIcone = "pi pi-linkedin";
+                        } else if (contato.nome == "Instagram") {
+                            contatoIcone = "pi pi-instagram";
+                        }
+
+                        let contatoBotao =
+                            <Row>
+                                <div className='botoes-contato-card-egresso'>
+                                    <Button className="botao-informacao mx-1 my-1" icon={`${contatoIcone}`} />
+                                </div>
+                            </Row>;
+
+                        this.state.contatosBloco.push(contatoBotao);
+                    });
+
+                    //Evitando duplicações de contatos
+                    if (response.data.contatos.length < this.state.contatosBloco.length){
+                        this.setState({ contatosBloco: this.state.contatosBloco.slice(0, response.data.contatos.length) });
+                    }
+                    
+                }
+                catch (error) {
+                    console.log(error);
+                }
+
+                //Depoimentos
                 let depoimentos = response.data.depoimentos;
                 depoimentos.forEach(depoimento => {
                     depoimento.nome = response.data.nome;
+                    depoimento.contatos = response.data.contatos;
                 });
                 depoimentos.forEach(depoimento => {
                     depoimento.data = depoimento.data.split('-').reverse().join('/');
@@ -81,7 +120,6 @@ class Egresso extends React.Component {
     componentDidMount() {
         const { id } = this.props.params
         this.carregarEgresso(id);
-
     }
 
     render() {
@@ -121,21 +159,7 @@ class Egresso extends React.Component {
                             </Row>
                         </Col>
                         <Col className="col-sm-1">
-                            <Row>
-                                <div className='botoes-contato-card-egresso'>
-                                    <Button className="botao-informacao mx-1 my-1" icon="pi pi-envelope" />
-                                </div>
-                            </Row>
-                            <Row>
-                                <div className='botoes-contato-card-egresso'>
-                                    <Button className="botao-informacao mx-1 my-1" icon="pi pi-linkedin" />
-                                </div>
-                            </Row>
-                            <Row>
-                                <div className='botoes-contato-card-egresso'>
-                                    <Button className="botao-informacao mx-1 my-1" icon="pi pi-instagram" />
-                                </div>
-                            </Row>
+                            {this.state.contatosBloco}
                         </Col>
                     </Row>
 
