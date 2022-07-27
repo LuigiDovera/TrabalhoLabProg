@@ -105,7 +105,7 @@ public class EgressoService implements UserDetailsService {
             if (depoimento.getId() == null) {
                 depoimentosValidados.add(depoimentoService.salvar(depoimento));
             } else {
-                depoimentosValidados.add(depoimentoService.atualizar(depoimento));
+                depoimentosValidados.add(depoimento);
             }
         }
         egresso.setDepoimentos(depoimentosValidados);

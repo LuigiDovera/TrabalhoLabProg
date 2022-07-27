@@ -10,5 +10,8 @@ class EgressoService extends ApiService {
     obterEgressoPorId(id) {
         return this.get(`/buscar_id/${id}`)
     }
+    atualizarDepoimentos(egresso, token) {
+        return this.put(`/atualizar_depoimentos/${egresso.id}`, egresso, token)
+    }
 }
 export default EgressoService

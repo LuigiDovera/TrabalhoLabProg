@@ -8,6 +8,7 @@ import EgressoService from '../services/EgressoService';
 import CargoService from '../services/CargoService';
 import { withRouter } from '../withRouter';
 import Botao from '../components/Botao';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 class Egresso extends React.Component {
 
@@ -23,18 +24,20 @@ class Egresso extends React.Component {
             depoimentos: {},
             contatos: {},
             contatosBloco: [],
+            depoimento_txt: "",
 
             isLoading: true,
         }
 
         this.carregarEgresso = this.carregarEgresso.bind(this);
         this.editarClickHandler = this.editarClickHandler.bind(this);
+        this.salvarClickHandler = this.salvarClickHandler.bind(this);
     }
 
     carregarEgresso(id) {
         this.egressoService.obterEgressoPorId(id)
             .then(response => {
-                //console.log(response.data);
+                console.log(response.data);
 
                 this.setState({ egresso: response.data });
 
@@ -78,10 +81,10 @@ class Egresso extends React.Component {
                     });
 
                     //Evitando duplicações de contatos
-                    if (response.data.contatos.length < this.state.contatosBloco.length){
+                    if (response.data.contatos.length < this.state.contatosBloco.length) {
                         this.setState({ contatosBloco: this.state.contatosBloco.slice(0, response.data.contatos.length) });
                     }
-                    
+
                 }
                 catch (error) {
                     console.log(error);
@@ -115,6 +118,32 @@ class Egresso extends React.Component {
         } else {
             this.props.navigate(`/Editar/${this.state.egresso.id}`);
         }
+    }
+
+    salvarClickHandler() {
+        let depoimento = {
+            texto: this.state.depoimento_txt
+        };
+        let egresso = this.state.egresso;
+        egresso.depoimentos.push(depoimento);
+        for (let index = 0; index < egresso.depoimentos.length; index++) {
+            try {
+            let diaMesAno = egresso.depoimentos[index].data.split("/");
+            egresso.depoimentos[index].data = diaMesAno[2] + "-" + diaMesAno[1] + "-" + diaMesAno[0];
+            //console.log(diaMesAno);
+            } catch (e) {
+
+            }
+        }
+        //console.log(egresso)
+        let token = sessionStorage.getItem("token");
+        this.egressoService.atualizarDepoimentos(egresso, token).then(response => {
+            sessionStorage.setItem("egresso", JSON.stringify(response.data));
+            this.carregarEgresso(response.data.id);
+            this.setState({ depoimento_txt: "" })
+        }).catch(error => {
+            console.log(error);
+        });
     }
 
     componentDidMount() {
@@ -168,6 +197,10 @@ class Egresso extends React.Component {
                     </Row>
 
                     <h1 className='titulo mt-3'>Depoimentos</h1>
+                    <InputTextarea id="textresumo" rows={3} className="w-full"
+                        value={this.state.depoimento_txt} placeholder="Escreva seu depoimento"
+                        onChange={(e) => this.setState({ depoimento_txt: e.target.value })} />
+                    <Botao title="Salvar" onClick={this.salvarClickHandler} />
                     <DataScrollerDepoimentos depoimentos={this.state.depoimentos} />
 
                 </Container>
