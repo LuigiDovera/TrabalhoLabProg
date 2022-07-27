@@ -19,7 +19,7 @@ class ApiService {
         return instance.post(`${this.apiUrl}${url}`, objeto, {headers: {[`${this.authHeader}`] : `${token}`}})
     }
     put(url, objeto, token=null) {
-        return instance.post(`${this.apiUrl}${url}`, objeto, {headers: {[`${this.authHeader}`] : `${token}`}})
+        return instance.put(`${this.apiUrl}${url}`, objeto, {headers: {[`${this.authHeader}`] : `${token}`}})
     }
     delete(url, token=null) {
         return instance.delete(`${this.apiUrl}${url}`, {headers: {[`${this.authHeader}`] : `${token}`}})

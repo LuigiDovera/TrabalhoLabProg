@@ -1,5 +1,7 @@
 package com.labprog.egressos.security;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +25,7 @@ public class SecurityConfiguration
 
     @Autowired
     private EgressoService service;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -61,9 +63,12 @@ public class SecurityConfiguration
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTION"));
+
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source
-                .registerCorsConfiguration("/**", new CorsConfiguration()
+                .registerCorsConfiguration("/**", configuration
                         .applyPermitDefaultValues());
         return source;
     }
