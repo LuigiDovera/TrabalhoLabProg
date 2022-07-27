@@ -121,29 +121,33 @@ class Egresso extends React.Component {
     }
 
     salvarClickHandler() {
-        let depoimento = {
-            texto: this.state.depoimento_txt
-        };
-        let egresso = this.state.egresso;
-        egresso.depoimentos.push(depoimento);
-        for (let index = 0; index < egresso.depoimentos.length; index++) {
-            try {
-            let diaMesAno = egresso.depoimentos[index].data.split("/");
-            egresso.depoimentos[index].data = diaMesAno[2] + "-" + diaMesAno[1] + "-" + diaMesAno[0];
-            //console.log(diaMesAno);
-            } catch (e) {
+        if ("egresso" in sessionStorage && this.state.egresso.id == JSON.parse(sessionStorage.getItem('egresso')).id) {
+            let depoimento = {
+                texto: this.state.depoimento_txt
+            };
+            let egresso = this.state.egresso;
+            egresso.depoimentos.push(depoimento);
+            for (let index = 0; index < egresso.depoimentos.length; index++) {
+                try {
+                    let diaMesAno = egresso.depoimentos[index].data.split("/");
+                    egresso.depoimentos[index].data = diaMesAno[2] + "-" + diaMesAno[1] + "-" + diaMesAno[0];
+                    //console.log(diaMesAno);
+                } catch (e) {
 
+                }
             }
+            //console.log(egresso)
+            let token = sessionStorage.getItem("token");
+            this.egressoService.atualizarDepoimentos(egresso, token).then(response => {
+                sessionStorage.setItem("egresso", JSON.stringify(response.data));
+                this.carregarEgresso(response.data.id);
+                this.setState({ depoimento_txt: "" })
+            }).catch(error => {
+                console.log(error);
+            });
+        } else {
+            this.props.navigate('/Cadastro');
         }
-        //console.log(egresso)
-        let token = sessionStorage.getItem("token");
-        this.egressoService.atualizarDepoimentos(egresso, token).then(response => {
-            sessionStorage.setItem("egresso", JSON.stringify(response.data));
-            this.carregarEgresso(response.data.id);
-            this.setState({ depoimento_txt: "" })
-        }).catch(error => {
-            console.log(error);
-        });
     }
 
     componentDidMount() {
