@@ -146,7 +146,7 @@ class Egresso extends React.Component {
                 console.log(error);
             });
         } else {
-            this.props.navigate('/Cadastro');
+            this.props.navigate('/Login');
         }
     }
 
@@ -205,8 +205,12 @@ class Egresso extends React.Component {
                         value={this.state.depoimento_txt} placeholder="Escreva seu depoimento"
                         onChange={(e) => this.setState({ depoimento_txt: e.target.value })} />
                     <Botao title="Salvar" onClick={this.salvarClickHandler} />
-                    <DataScrollerDepoimentos depoimentos={this.state.depoimentos} />
 
+                </Container>
+                <Container className="w-75 py-4">
+                    <Row className="align-items-center">
+                        <DataScrollerDepoimentos depoimentos={this.state.depoimentos} />
+                    </Row>
                 </Container>
             </div>
         )

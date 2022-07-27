@@ -39,6 +39,10 @@
     height: auto;
 }
 
+.datascroller-depoimentos {
+    width: 75vw;
+}
+
 .card-depoimento {
     background-color: var(--branco);
     color: var(--preto);
